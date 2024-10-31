@@ -1,0 +1,202 @@
+/******************************************************************************
+________________________________________________________________________________________________
+
+
+            Synchronous High-Density Single-Port SRAM Compiler
+
+                UMC 0.11um LL AE Logic Process
+
+________________________________________________________________________________________________
+
+              
+        Copyright (C) 2024 Faraday Technology Corporation. All Rights Reserved.       
+               
+        This source code is an unpublished work belongs to Faraday Technology Corporation       
+        It is considered a trade secret and is not to be divulged or       
+        used by parties who have not received written authorization from       
+        Faraday Technology Corporation       
+               
+        Faraday's home page can be found at: http://www.faraday-tech.com/       
+               
+________________________________________________________________________________________________
+
+       IP Name            :  FSR0K_D_SH                
+       IP Version         :  1.3.0                     
+       IP Release Status  :  Active                    
+       Word               :  4096                      
+       Bit                :  8                         
+       Byte               :  8                         
+       Mux                :  1                         
+       Output Loading     :  0.01                      
+       Clock Input Slew   :  0.016                     
+       Data Input Slew    :  0.016                     
+       Ring Type          :  Ring Shape Model          
+       Ring Width         :  2                         
+       Bus Format         :  0                         
+       Memaker Path       :  /home/mem/Desktop/memlib  
+       GUI Version        :  m20230904                 
+       Date               :  2024/10/18 10:29:44       
+________________________________________________________________________________________________
+
+******************************************************************************/
+
+
+
+   Description:
+
+     The FSR0K_D_SH is a synchronous high-density single-port SRAM compiler. 
+     It is implemented using UMC 0.11um LL AE logic process design rules and can be
+     incorporated with Faraday's 0.11um standard cell masterchips. This product allows 
+     different combinations of words, bits, and aspect ratios to be used for generating 
+     the most desirable configurations.
+
+     By requesting the desired size and timing constraints, the FSR0K_D_SH
+     compiler is capable of providing suitable synchronous RAM layout instances
+     in seconds.  It can automatically generate data sheets, Verilog / VHDL
+     behavioral simulation models, place & route models, and test patterns for
+     use in ASIC designs.  The duty cycle length can be neglected as long as
+     the setup / hold time and minimum high / low pulse widths are satisfied.
+     This provides the flexibility of CK falling edge during each operation.
+     Both word write and byte write operations or simulation models are
+     supported.
+
+
+
+   Features:
+
+       - Synchronous read and write operations
+       - Full custom layout density per customer configuration
+       - High density, available for 1.08V ~ 1.32V
+       - Automatic power down to eliminate DC current
+       - Clocked address inputs and CS to RAM with CK rising edge
+       - Clocked WEB input pin to RAM with CK rising edge
+       - Clocked DI input pins to RAM with CK rising edge
+       - Byte write or word write operations available
+       - Verilog / VHDL timing / simulation model generator
+       - SPICE netlist generator
+       - GDSII layout generator
+       - Memory compiler preview UI (memaker)
+       - BIST circuitry supported
+       - Multi-block options for the best aspect ratio
+      
+
+   Input Pins and Capacitance:
+ 
+       Pin Name  Capacitance  Unit  Descriptions                                 
+       A[11:0]   0.011        pF    Address signals of width 12                  
+       CK        0.014        pF    Clock signal for addresses, WEB, CS, and DI  
+       CS        0.012        pF    Chip select, active high                     
+       OE        0.008        pF    Output enable signal, active high            
+       DI[63:0]  0.005        pF    Input data of width 64                       
+       WEB[7:0]  0.005        pF    Write enable signals of 8 bytes, active low  
+
+   Output Pins and Capacitance: 
+
+       Pin Name  Capacitance  Unit  Descriptions                         
+       DO[63:0]  0.016        pF    Output data of width 64 (tri-state)  
+
+
+   Approximated Area Information: 
+
+       RAM area = 1379.500 um (Width) x 551.210 um (Height) = 0.760 mm^2
+       Power ring width = 2 um
+
+
+   Process metal options:
+
+       
+       |------------------------------------------------------------|
+       |Metal usages of block layer |  M1, M2, M3, M4               |
+       |------------------------------------------------------------|
+       |Drawing metal layers        |  1xM1, 1xM2, 1xM3, 1xM4       |
+        ------------------------------------------------------------
+
+   Recommended operating conditions:
+
+       Symbol  FF1P32VM40C  TT1P2V25C  TT1P2V60C  TT1P2V85C  TT1P2V125C  SS1P08V125C  FF1P32V0C  FF1P32V125C  Units  
+       VCC     1.32         1.2        1.2        1.2        1.2         1.08         1.32       1.32         V      
+       TJ      -40          25         60         85         125         125          0          125          C      
+
+       Notes:
+         1. VCC: Power supply for memory block
+         2. TJ : Junction operating temperature
+
+
+   Operating Conditions:
+
+       Corner       Process  Voltage(v)  Temperature(C)  
+       FF1P32VM40C  PFNF     1.32        -40             
+       TT1P2V25C    PTNT     1.2         25              
+       TT1P2V60C    PTNT     1.2         60              
+       TT1P2V85C    PTNT     1.2         85              
+       TT1P2V125C   PTNT     1.2         125             
+       SS1P08V125C  PSNS     1.08        125             
+       FF1P32V0C    PFNF     1.32        0               
+       FF1P32V125C  PFNF     1.32        125             
+
+
+   Clock Slew Rate & Loading Look Up Table (3x5):
+       Index                    1      2      3      4      5
+       Clock Slew (ns)*     0.016  0.400  0.800
+       Output Loading(pF)   0.010  0.050  0.150  0.500  1.300
+
+   Clock & Data Slew Rate Look Up Table (3x3):
+       Index                    1      2      3
+       Data  Slew (ns)*     0.016  0.400  0.800
+       Clock Slew (ns)*     0.016  0.400  0.800
+
+       * For FF1P32VM40C: 10.0% ~ 90.0%
+       * For TT1P2V25C: 10.0% ~ 90.0%
+       * For TT1P2V60C: 10.0% ~ 90.0%
+       * For TT1P2V85C: 10.0% ~ 90.0%
+       * For TT1P2V125C: 10.0% ~ 90.0%
+       * For SS1P08V125C: 10.0% ~ 90.0%
+       * For FF1P32V0C: 10.0% ~ 90.0%
+       * For FF1P32V125C: 10.0% ~ 90.0%
+
+   Power Consumption:
+
+       Power Type       FF1P32VM40C  TT1P2V25C  TT1P2V60C  TT1P2V85C  TT1P2V125C  SS1P08V125C  FF1P32V0C  FF1P32V125C  Unit         
+       Standby Current  0.502        1.073      4.996      15.521     72.690      8.180        5.205      755.781      uA (CS = 0)  
+       DC Current       0.502        1.073      4.996      15.521     72.690      8.180        5.205      755.781      uA (CS = 1)  
+       Max. AC Current  95.111       82.520     82.628     83.292     84.220      68.494       96.240     100.011      uA/MHz       
+
+       Total current   = AC current * Freq + DC current   
+       Notes:
+        1. All cycles are active
+        2. All address bits switching
+        3. All data bits switching
+        4. Worst of read / write operation
+ 
+ 
+   Timing Information:
+
+       - CK input slope = 0.016 ns.
+       - Data input slope = 0.016 ns.
+       - All timing parameters are measured from 50% of input.
+       - Output reference voltage "H" = 50% of VDD, "L" = 50% of VDD.
+       - Output loading = 0.01 pF.
+       - Toh/Twdx is set at minimum slew/load.
+       - Delay timing parameters in nano second.
+
+   symbol  FF1P32VM40C  TT1P2V25C  TT1P2V60C  TT1P2V85C  TT1P2V125C  SS1P08V125C  FF1P32V0C  FF1P32V125C  Descriptions                                 
+   taa     2.092        3.298      3.346      3.392      3.464       5.781        2.190      2.471        Data access time from CK rising              
+   toh     0.889        1.436      1.462      1.488      1.533       2.529        0.938      1.091        Output data hold time after CK rising        
+   trc     2.331        3.624      3.673      3.722      3.802       6.235        2.438      2.748        Read cycle time                              
+   tcss    0.415        0.697      0.700      0.708      0.724       1.252        0.435      0.498        CS setup time before CK rising               
+   tcshr   0.089        0.137      0.140      0.143      0.149       0.235        0.093      0.110        CS hold time after CK rising in read cycle   
+   tcshw   0.089        0.137      0.140      0.143      0.149       0.235        0.093      0.110        CS hold time after CK rising in write cycle  
+   twh     0.000        0.000      0.000      0.000      0.000       0.000        0.000      0.000        WEB hold time after CK rising                
+   tah     0.009        0.006      0.002      0.003      0.005       0.000        0.010      0.015        Address hold time after CK rising            
+   tas     0.415        0.697      0.700      0.708      0.724       1.252        0.435      0.498        Address setup time before CK rising          
+   twc     2.331        3.624      3.673      3.722      3.802       6.235        2.438      2.748        Write cycle time                             
+   tws     0.195        0.325      0.323      0.325      0.335       0.569        0.204      0.240        WEB setup time before CK rising              
+   tdh     0.000        0.000      0.000      0.000      0.000       0.000        0.000      0.000        Input data hold time after CK rising         
+   tds     0.162        0.265      0.267      0.270      0.278       0.473        0.170      0.196        Input data setup time before CK rising       
+   twdv    1.569        2.473      2.510      2.544      2.598       4.336        1.642      1.853        Output data valid after CK rising            
+   twdx    0.889        1.436      1.462      1.488      1.533       2.529        0.938      1.091        Output data invalid after CK rising          
+   thpw    0.368        0.567      0.587      0.604      0.635       0.981        0.392      0.479        Clock high pulse width                       
+   tlpw    0.368        0.567      0.587      0.604      0.635       0.981        0.392      0.479        Clock low pulse width                        
+   toe     0.508        0.796      0.817      0.825      0.842       1.356        0.529      0.593        Output data valid after OE rising            
+   toz     0.611        0.920      0.958      0.979      1.015       1.539        0.644      0.754        Output data go to Hi-Z after OE falling      
+

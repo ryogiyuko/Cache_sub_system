@@ -1,0 +1,1612 @@
+/*******************************************************************************
+________________________________________________________________________________________________
+
+
+            Synchronous One-Port Register File Compiler
+
+                UMC 0.11um LL AE Logic Process
+
+________________________________________________________________________________________________
+
+              
+        Copyright (C) 2024 Faraday Technology Corporation. All Rights Reserved.       
+               
+        This source code is an unpublished work belongs to Faraday Technology Corporation       
+        It is considered a trade secret and is not to be divulged or       
+        used by parties who have not received written authorization from       
+        Faraday Technology Corporation       
+               
+        Faraday's home page can be found at: http://www.faraday-tech.com/       
+               
+________________________________________________________________________________________________
+
+       IP Name            :  FSR0K_B_SY                
+       IP Version         :  1.4.0                     
+       IP Release Status  :  Active                    
+       Word               :  128                       
+       Bit                :  7                         
+       Byte               :  1                         
+       Mux                :  4                         
+       Output Loading     :  0.01                      
+       Clock Input Slew   :  0.016                     
+       Data Input Slew    :  0.016                     
+       Ring Type          :  Ringless Model            
+       Ring Width         :  0                         
+       Bus Format         :  0                         
+       Memaker Path       :  /home/mem/Desktop/memlib  
+       GUI Version        :  m20230904                 
+       Date               :  2024/09/06 21:04:39       
+________________________________________________________________________________________________
+
+********************************************************************************/
+library(SYKB110_128X7X1CM4_tt1p2v85c) {
+    date : "2024/09/06 21:04:55";
+    revision : 1.4.0;
+    comment : "Copyright (c) 2024 by Faraday Technology Corporation. All Rights Reserved.";
+
+
+    delay_model : table_lookup ;
+    time_unit : "1ns" ;
+    capacitive_load_unit(1.0,pf) ;
+    voltage_unit : "1V" ;
+    current_unit : "1mA" ;
+    leakage_power_unit : "1pW" ;
+    pulling_resistance_unit : "1kohm" ;
+    
+    
+    default_inout_pin_cap        : 0.005000 ;
+    default_input_pin_cap        : 0.005000 ;
+    default_output_pin_cap       : 0.0 ;
+    default_max_fanout           : 999.0 ;
+    default_max_transition       : 0.8 ;
+    default_fanout_load          : 1.0 ;
+    default_cell_leakage_power   : 0.0 ;
+    default_leakage_power_density : 0.0 ;
+    library_features (report_delay_calculation);
+    
+    
+    slew_derate_from_library      : 1.00 ;
+    slew_lower_threshold_pct_rise : 10.0 ;
+    slew_upper_threshold_pct_rise : 90.0 ;
+    slew_lower_threshold_pct_fall : 10.0 ;
+    slew_upper_threshold_pct_fall : 90.0 ;
+    input_threshold_pct_fall      : 50.00 ;
+    output_threshold_pct_fall     : 50.00 ;
+    input_threshold_pct_rise      : 50.00 ;
+    output_threshold_pct_rise     : 50.00 ;
+
+
+
+    nom_process       : 1.0 ;
+    nom_temperature   : 85 ;
+    nom_voltage       : 1.2 ;
+    operating_conditions(TCCOM) {
+     process : 1.0000 ;
+     temperature :  85 ;
+     voltage : 1.2 ;
+     tree_type : "worst_case_tree" ; 
+    }
+
+    voltage_map(VCC, 1.2);
+    voltage_map(GND, 0.0);    
+
+    define_group(fa_power_down_config,cell);
+    define(fa_library,cell,string);
+    define(fa_power_on_always,cell,boolean);
+    define(fa_power_down_state,pin,string);
+    define(power_down_clocked_function,fa_power_down_config,string);
+    define(power_down_function,fa_power_down_config,string);
+    define(power_down_special_config,fa_power_down_config,string);
+    define(fa_tie_insertion,pin,string);
+    define(fa_memory_words,cell,integer);
+    define(fa_memory_bits,cell,integer);
+    define(fa_memory_bytes,cell,integer);
+
+lu_table_template(SYKB110_128X7X1CM4_0) {
+   variable_1 : input_net_transition;
+   variable_2 : total_output_net_capacitance;
+   index_1("0.016, 0.4, 0.8");
+   index_2("0.01, 0.05, 0.15, 0.5, 1.3");
+}
+lu_table_template(SYKB110_128X7X1CM4_1) {
+   variable_1 : constrained_pin_transition;
+   variable_2 : related_pin_transition;
+   index_1("0.016, 0.4, 0.8");
+   index_2("0.016, 0.4, 0.8");
+}
+lu_table_template(SYKB110_128X7X1CM4_2) {
+   variable_1 : constrained_pin_transition;
+   index_1("0.016, 0.4, 0.8");
+}
+power_lut_template(POWER_3x1){
+  variable_1 : input_transition_time;
+  index_1 ("0.1000,1.0000,2.0000");
+}
+
+
+cell(SYKB110_128X7X1CM4) {
+
+  pg_pin(VCC) {
+    voltage_name : VCC; 
+    pg_type : primary_power;         
+  }
+  pg_pin(GND) {
+    voltage_name : GND; 
+    pg_type : primary_ground;         
+  }  
+  dont_touch : true ;
+  interface_timing : true;
+  area : 6787.560; /* Area is an approximate value */
+
+
+  cell_leakage_power : 135600.00000000003;
+  leakage_power() {
+     related_pg_pin : VCC; 
+     when : "CSB";
+     value : 135600.00000000003;
+  }
+  leakage_power() {
+     related_pg_pin : VCC; 
+     when : "!CSB";
+     value : 135600.00000000003;
+  }
+  
+  fa_memory_words : 128;
+  fa_memory_bits : 7;
+  fa_memory_bytes : 1;
+  fa_library : "fsr0k_w";
+  fa_power_on_always : false;
+  fa_power_down_config(iddq) {
+    power_down_special_config : "none";
+  }
+  memory() {
+    type : ram;
+    address_width : 7 ;
+    word_width : 7 ;
+  }
+
+
+
+  pin(DO0) {
+    power_down_function : "!VCC + GND"
+    related_power_pin : VCC;
+    related_ground_pin : GND;
+    direction : output ;
+    capacitance : 0.0073;
+    max_capacitance : 1.3;    
+    timing() {
+      related_pin : "CK";
+      when : "WEB";
+      sdf_cond : "NODELAY==0 && read";
+      timing_type : rising_edge;
+      timing_sense : non_unate;
+      cell_rise(SYKB110_128X7X1CM4_0) {
+        values("1.9061,1.9727,2.1209,2.6327,3.8040",\
+               "2.0050,2.0716,2.2198,2.7316,3.9029",\
+               "2.0630,2.1296,2.2778,2.7896,3.9610");
+      }
+      rise_transition(SYKB110_128X7X1CM4_0) {
+        values("0.0336,0.0813,0.2099,0.6680,1.7220",\
+               "0.0336,0.0813,0.2099,0.6680,1.7220",\
+               "0.0336,0.0813,0.2099,0.6680,1.7220");
+      }
+      cell_fall(SYKB110_128X7X1CM4_0) {
+        values("1.9061,1.9727,2.1209,2.6327,3.8040",\
+               "2.0050,2.0716,2.2198,2.7316,3.9029",\
+               "2.0630,2.1296,2.2778,2.7896,3.9610");
+      }
+      fall_transition(SYKB110_128X7X1CM4_0) {
+        values("0.0381,0.0689,0.1581,0.4993,1.2940",\
+               "0.0381,0.0689,0.1581,0.4993,1.2940",\
+               "0.0381,0.0689,0.1581,0.4993,1.2940");
+      }
+      retaining_rise(SYKB110_128X7X1CM4_0) {
+        values("1.6582,1.7249,1.8496,2.2479,3.1568",\
+               "1.7574,1.8241,1.9488,2.3471,3.2560",\
+               "1.8153,1.8820,2.0067,2.4050,3.3139");
+      }
+      retain_rise_slew(SYKB110_128X7X1CM4_0) {
+        values("0.0336,0.0813,0.2099,0.6680,1.7220",\
+               "0.0336,0.0813,0.2099,0.6680,1.7220",\
+               "0.0336,0.0813,0.2099,0.6680,1.7220");
+      }
+      retaining_fall(SYKB110_128X7X1CM4_0) {
+        values("1.6582,1.7249,1.8496,2.2479,3.1568",\
+               "1.7574,1.8241,1.9488,2.3471,3.2560",\
+               "1.8153,1.8820,2.0067,2.4050,3.3139");
+      }
+      retain_fall_slew(SYKB110_128X7X1CM4_0) {
+        values("0.0381,0.0689,0.1581,0.4993,1.2940",\
+               "0.0381,0.0689,0.1581,0.4993,1.2940",\
+               "0.0381,0.0689,0.1581,0.4993,1.2940");
+      }
+    }
+    timing() {
+      related_pin : "CK";
+      when : "!WEB";
+      sdf_cond : "NODELAY==0 && write";
+      timing_type : rising_edge;
+      timing_sense : non_unate;
+      cell_rise(SYKB110_128X7X1CM4_0) {
+        values("1.9061,1.9727,2.1209,2.6327,3.8040",\
+               "2.0050,2.0716,2.2198,2.7316,3.9029",\
+               "2.0630,2.1296,2.2778,2.7896,3.9610");
+      }
+      rise_transition(SYKB110_128X7X1CM4_0) {
+        values("0.0336,0.0813,0.2099,0.6680,1.7220",\
+               "0.0336,0.0813,0.2099,0.6680,1.7220",\
+               "0.0336,0.0813,0.2099,0.6680,1.7220");
+      }
+      cell_fall(SYKB110_128X7X1CM4_0) {
+        values("1.9061,1.9727,2.1209,2.6327,3.8040",\
+               "2.0050,2.0716,2.2198,2.7316,3.9029",\
+               "2.0630,2.1296,2.2778,2.7896,3.9610");
+      }
+      fall_transition(SYKB110_128X7X1CM4_0) {
+        values("0.0381,0.0689,0.1581,0.4993,1.2940",\
+               "0.0381,0.0689,0.1581,0.4993,1.2940",\
+               "0.0381,0.0689,0.1581,0.4993,1.2940");
+      }
+      retaining_rise(SYKB110_128X7X1CM4_0) {
+        values("1.6564,1.7231,1.8478,2.2461,3.1550",\
+               "1.7553,1.8220,1.9467,2.3450,3.2539",\
+               "1.8133,1.8800,2.0047,2.4030,3.3119");
+      }
+      retain_rise_slew(SYKB110_128X7X1CM4_0) {
+        values("0.0336,0.0813,0.2099,0.6680,1.7220",\
+               "0.0336,0.0813,0.2099,0.6680,1.7220",\
+               "0.0336,0.0813,0.2099,0.6680,1.7220");
+      }
+      retaining_fall(SYKB110_128X7X1CM4_0) {
+        values("1.6564,1.7231,1.8478,2.2461,3.1550",\
+               "1.7553,1.8220,1.9467,2.3450,3.2539",\
+               "1.8133,1.8800,2.0047,2.4030,3.3119");
+      }
+      retain_fall_slew(SYKB110_128X7X1CM4_0) {
+        values("0.0381,0.0689,0.1581,0.4993,1.2940",\
+               "0.0381,0.0689,0.1581,0.4993,1.2940",\
+               "0.0381,0.0689,0.1581,0.4993,1.2940");
+      }
+    }
+  }
+  pin(DO1) {
+    power_down_function : "!VCC + GND"
+    related_power_pin : VCC;
+    related_ground_pin : GND;
+    direction : output ;
+    capacitance : 0.0073;
+    max_capacitance : 1.3;    
+    timing() {
+      related_pin : "CK";
+      when : "WEB";
+      sdf_cond : "NODELAY==0 && read";
+      timing_type : rising_edge;
+      timing_sense : non_unate;
+      cell_rise(SYKB110_128X7X1CM4_0) {
+        values("1.9061,1.9727,2.1209,2.6327,3.8040",\
+               "2.0050,2.0716,2.2198,2.7316,3.9029",\
+               "2.0630,2.1296,2.2778,2.7896,3.9610");
+      }
+      rise_transition(SYKB110_128X7X1CM4_0) {
+        values("0.0336,0.0813,0.2099,0.6680,1.7220",\
+               "0.0336,0.0813,0.2099,0.6680,1.7220",\
+               "0.0336,0.0813,0.2099,0.6680,1.7220");
+      }
+      cell_fall(SYKB110_128X7X1CM4_0) {
+        values("1.9061,1.9727,2.1209,2.6327,3.8040",\
+               "2.0050,2.0716,2.2198,2.7316,3.9029",\
+               "2.0630,2.1296,2.2778,2.7896,3.9610");
+      }
+      fall_transition(SYKB110_128X7X1CM4_0) {
+        values("0.0381,0.0689,0.1581,0.4993,1.2940",\
+               "0.0381,0.0689,0.1581,0.4993,1.2940",\
+               "0.0381,0.0689,0.1581,0.4993,1.2940");
+      }
+      retaining_rise(SYKB110_128X7X1CM4_0) {
+        values("1.6582,1.7249,1.8496,2.2479,3.1568",\
+               "1.7574,1.8241,1.9488,2.3471,3.2560",\
+               "1.8153,1.8820,2.0067,2.4050,3.3139");
+      }
+      retain_rise_slew(SYKB110_128X7X1CM4_0) {
+        values("0.0336,0.0813,0.2099,0.6680,1.7220",\
+               "0.0336,0.0813,0.2099,0.6680,1.7220",\
+               "0.0336,0.0813,0.2099,0.6680,1.7220");
+      }
+      retaining_fall(SYKB110_128X7X1CM4_0) {
+        values("1.6582,1.7249,1.8496,2.2479,3.1568",\
+               "1.7574,1.8241,1.9488,2.3471,3.2560",\
+               "1.8153,1.8820,2.0067,2.4050,3.3139");
+      }
+      retain_fall_slew(SYKB110_128X7X1CM4_0) {
+        values("0.0381,0.0689,0.1581,0.4993,1.2940",\
+               "0.0381,0.0689,0.1581,0.4993,1.2940",\
+               "0.0381,0.0689,0.1581,0.4993,1.2940");
+      }
+    }
+    timing() {
+      related_pin : "CK";
+      when : "!WEB";
+      sdf_cond : "NODELAY==0 && write";
+      timing_type : rising_edge;
+      timing_sense : non_unate;
+      cell_rise(SYKB110_128X7X1CM4_0) {
+        values("1.9061,1.9727,2.1209,2.6327,3.8040",\
+               "2.0050,2.0716,2.2198,2.7316,3.9029",\
+               "2.0630,2.1296,2.2778,2.7896,3.9610");
+      }
+      rise_transition(SYKB110_128X7X1CM4_0) {
+        values("0.0336,0.0813,0.2099,0.6680,1.7220",\
+               "0.0336,0.0813,0.2099,0.6680,1.7220",\
+               "0.0336,0.0813,0.2099,0.6680,1.7220");
+      }
+      cell_fall(SYKB110_128X7X1CM4_0) {
+        values("1.9061,1.9727,2.1209,2.6327,3.8040",\
+               "2.0050,2.0716,2.2198,2.7316,3.9029",\
+               "2.0630,2.1296,2.2778,2.7896,3.9610");
+      }
+      fall_transition(SYKB110_128X7X1CM4_0) {
+        values("0.0381,0.0689,0.1581,0.4993,1.2940",\
+               "0.0381,0.0689,0.1581,0.4993,1.2940",\
+               "0.0381,0.0689,0.1581,0.4993,1.2940");
+      }
+      retaining_rise(SYKB110_128X7X1CM4_0) {
+        values("1.6564,1.7231,1.8478,2.2461,3.1550",\
+               "1.7553,1.8220,1.9467,2.3450,3.2539",\
+               "1.8133,1.8800,2.0047,2.4030,3.3119");
+      }
+      retain_rise_slew(SYKB110_128X7X1CM4_0) {
+        values("0.0336,0.0813,0.2099,0.6680,1.7220",\
+               "0.0336,0.0813,0.2099,0.6680,1.7220",\
+               "0.0336,0.0813,0.2099,0.6680,1.7220");
+      }
+      retaining_fall(SYKB110_128X7X1CM4_0) {
+        values("1.6564,1.7231,1.8478,2.2461,3.1550",\
+               "1.7553,1.8220,1.9467,2.3450,3.2539",\
+               "1.8133,1.8800,2.0047,2.4030,3.3119");
+      }
+      retain_fall_slew(SYKB110_128X7X1CM4_0) {
+        values("0.0381,0.0689,0.1581,0.4993,1.2940",\
+               "0.0381,0.0689,0.1581,0.4993,1.2940",\
+               "0.0381,0.0689,0.1581,0.4993,1.2940");
+      }
+    }
+  }
+  pin(DO2) {
+    power_down_function : "!VCC + GND"
+    related_power_pin : VCC;
+    related_ground_pin : GND;
+    direction : output ;
+    capacitance : 0.0073;
+    max_capacitance : 1.3;    
+    timing() {
+      related_pin : "CK";
+      when : "WEB";
+      sdf_cond : "NODELAY==0 && read";
+      timing_type : rising_edge;
+      timing_sense : non_unate;
+      cell_rise(SYKB110_128X7X1CM4_0) {
+        values("1.9061,1.9727,2.1209,2.6327,3.8040",\
+               "2.0050,2.0716,2.2198,2.7316,3.9029",\
+               "2.0630,2.1296,2.2778,2.7896,3.9610");
+      }
+      rise_transition(SYKB110_128X7X1CM4_0) {
+        values("0.0336,0.0813,0.2099,0.6680,1.7220",\
+               "0.0336,0.0813,0.2099,0.6680,1.7220",\
+               "0.0336,0.0813,0.2099,0.6680,1.7220");
+      }
+      cell_fall(SYKB110_128X7X1CM4_0) {
+        values("1.9061,1.9727,2.1209,2.6327,3.8040",\
+               "2.0050,2.0716,2.2198,2.7316,3.9029",\
+               "2.0630,2.1296,2.2778,2.7896,3.9610");
+      }
+      fall_transition(SYKB110_128X7X1CM4_0) {
+        values("0.0381,0.0689,0.1581,0.4993,1.2940",\
+               "0.0381,0.0689,0.1581,0.4993,1.2940",\
+               "0.0381,0.0689,0.1581,0.4993,1.2940");
+      }
+      retaining_rise(SYKB110_128X7X1CM4_0) {
+        values("1.6582,1.7249,1.8496,2.2479,3.1568",\
+               "1.7574,1.8241,1.9488,2.3471,3.2560",\
+               "1.8153,1.8820,2.0067,2.4050,3.3139");
+      }
+      retain_rise_slew(SYKB110_128X7X1CM4_0) {
+        values("0.0336,0.0813,0.2099,0.6680,1.7220",\
+               "0.0336,0.0813,0.2099,0.6680,1.7220",\
+               "0.0336,0.0813,0.2099,0.6680,1.7220");
+      }
+      retaining_fall(SYKB110_128X7X1CM4_0) {
+        values("1.6582,1.7249,1.8496,2.2479,3.1568",\
+               "1.7574,1.8241,1.9488,2.3471,3.2560",\
+               "1.8153,1.8820,2.0067,2.4050,3.3139");
+      }
+      retain_fall_slew(SYKB110_128X7X1CM4_0) {
+        values("0.0381,0.0689,0.1581,0.4993,1.2940",\
+               "0.0381,0.0689,0.1581,0.4993,1.2940",\
+               "0.0381,0.0689,0.1581,0.4993,1.2940");
+      }
+    }
+    timing() {
+      related_pin : "CK";
+      when : "!WEB";
+      sdf_cond : "NODELAY==0 && write";
+      timing_type : rising_edge;
+      timing_sense : non_unate;
+      cell_rise(SYKB110_128X7X1CM4_0) {
+        values("1.9061,1.9727,2.1209,2.6327,3.8040",\
+               "2.0050,2.0716,2.2198,2.7316,3.9029",\
+               "2.0630,2.1296,2.2778,2.7896,3.9610");
+      }
+      rise_transition(SYKB110_128X7X1CM4_0) {
+        values("0.0336,0.0813,0.2099,0.6680,1.7220",\
+               "0.0336,0.0813,0.2099,0.6680,1.7220",\
+               "0.0336,0.0813,0.2099,0.6680,1.7220");
+      }
+      cell_fall(SYKB110_128X7X1CM4_0) {
+        values("1.9061,1.9727,2.1209,2.6327,3.8040",\
+               "2.0050,2.0716,2.2198,2.7316,3.9029",\
+               "2.0630,2.1296,2.2778,2.7896,3.9610");
+      }
+      fall_transition(SYKB110_128X7X1CM4_0) {
+        values("0.0381,0.0689,0.1581,0.4993,1.2940",\
+               "0.0381,0.0689,0.1581,0.4993,1.2940",\
+               "0.0381,0.0689,0.1581,0.4993,1.2940");
+      }
+      retaining_rise(SYKB110_128X7X1CM4_0) {
+        values("1.6564,1.7231,1.8478,2.2461,3.1550",\
+               "1.7553,1.8220,1.9467,2.3450,3.2539",\
+               "1.8133,1.8800,2.0047,2.4030,3.3119");
+      }
+      retain_rise_slew(SYKB110_128X7X1CM4_0) {
+        values("0.0336,0.0813,0.2099,0.6680,1.7220",\
+               "0.0336,0.0813,0.2099,0.6680,1.7220",\
+               "0.0336,0.0813,0.2099,0.6680,1.7220");
+      }
+      retaining_fall(SYKB110_128X7X1CM4_0) {
+        values("1.6564,1.7231,1.8478,2.2461,3.1550",\
+               "1.7553,1.8220,1.9467,2.3450,3.2539",\
+               "1.8133,1.8800,2.0047,2.4030,3.3119");
+      }
+      retain_fall_slew(SYKB110_128X7X1CM4_0) {
+        values("0.0381,0.0689,0.1581,0.4993,1.2940",\
+               "0.0381,0.0689,0.1581,0.4993,1.2940",\
+               "0.0381,0.0689,0.1581,0.4993,1.2940");
+      }
+    }
+  }
+  pin(DO3) {
+    power_down_function : "!VCC + GND"
+    related_power_pin : VCC;
+    related_ground_pin : GND;
+    direction : output ;
+    capacitance : 0.0073;
+    max_capacitance : 1.3;    
+    timing() {
+      related_pin : "CK";
+      when : "WEB";
+      sdf_cond : "NODELAY==0 && read";
+      timing_type : rising_edge;
+      timing_sense : non_unate;
+      cell_rise(SYKB110_128X7X1CM4_0) {
+        values("1.9061,1.9727,2.1209,2.6327,3.8040",\
+               "2.0050,2.0716,2.2198,2.7316,3.9029",\
+               "2.0630,2.1296,2.2778,2.7896,3.9610");
+      }
+      rise_transition(SYKB110_128X7X1CM4_0) {
+        values("0.0336,0.0813,0.2099,0.6680,1.7220",\
+               "0.0336,0.0813,0.2099,0.6680,1.7220",\
+               "0.0336,0.0813,0.2099,0.6680,1.7220");
+      }
+      cell_fall(SYKB110_128X7X1CM4_0) {
+        values("1.9061,1.9727,2.1209,2.6327,3.8040",\
+               "2.0050,2.0716,2.2198,2.7316,3.9029",\
+               "2.0630,2.1296,2.2778,2.7896,3.9610");
+      }
+      fall_transition(SYKB110_128X7X1CM4_0) {
+        values("0.0381,0.0689,0.1581,0.4993,1.2940",\
+               "0.0381,0.0689,0.1581,0.4993,1.2940",\
+               "0.0381,0.0689,0.1581,0.4993,1.2940");
+      }
+      retaining_rise(SYKB110_128X7X1CM4_0) {
+        values("1.6582,1.7249,1.8496,2.2479,3.1568",\
+               "1.7574,1.8241,1.9488,2.3471,3.2560",\
+               "1.8153,1.8820,2.0067,2.4050,3.3139");
+      }
+      retain_rise_slew(SYKB110_128X7X1CM4_0) {
+        values("0.0336,0.0813,0.2099,0.6680,1.7220",\
+               "0.0336,0.0813,0.2099,0.6680,1.7220",\
+               "0.0336,0.0813,0.2099,0.6680,1.7220");
+      }
+      retaining_fall(SYKB110_128X7X1CM4_0) {
+        values("1.6582,1.7249,1.8496,2.2479,3.1568",\
+               "1.7574,1.8241,1.9488,2.3471,3.2560",\
+               "1.8153,1.8820,2.0067,2.4050,3.3139");
+      }
+      retain_fall_slew(SYKB110_128X7X1CM4_0) {
+        values("0.0381,0.0689,0.1581,0.4993,1.2940",\
+               "0.0381,0.0689,0.1581,0.4993,1.2940",\
+               "0.0381,0.0689,0.1581,0.4993,1.2940");
+      }
+    }
+    timing() {
+      related_pin : "CK";
+      when : "!WEB";
+      sdf_cond : "NODELAY==0 && write";
+      timing_type : rising_edge;
+      timing_sense : non_unate;
+      cell_rise(SYKB110_128X7X1CM4_0) {
+        values("1.9061,1.9727,2.1209,2.6327,3.8040",\
+               "2.0050,2.0716,2.2198,2.7316,3.9029",\
+               "2.0630,2.1296,2.2778,2.7896,3.9610");
+      }
+      rise_transition(SYKB110_128X7X1CM4_0) {
+        values("0.0336,0.0813,0.2099,0.6680,1.7220",\
+               "0.0336,0.0813,0.2099,0.6680,1.7220",\
+               "0.0336,0.0813,0.2099,0.6680,1.7220");
+      }
+      cell_fall(SYKB110_128X7X1CM4_0) {
+        values("1.9061,1.9727,2.1209,2.6327,3.8040",\
+               "2.0050,2.0716,2.2198,2.7316,3.9029",\
+               "2.0630,2.1296,2.2778,2.7896,3.9610");
+      }
+      fall_transition(SYKB110_128X7X1CM4_0) {
+        values("0.0381,0.0689,0.1581,0.4993,1.2940",\
+               "0.0381,0.0689,0.1581,0.4993,1.2940",\
+               "0.0381,0.0689,0.1581,0.4993,1.2940");
+      }
+      retaining_rise(SYKB110_128X7X1CM4_0) {
+        values("1.6564,1.7231,1.8478,2.2461,3.1550",\
+               "1.7553,1.8220,1.9467,2.3450,3.2539",\
+               "1.8133,1.8800,2.0047,2.4030,3.3119");
+      }
+      retain_rise_slew(SYKB110_128X7X1CM4_0) {
+        values("0.0336,0.0813,0.2099,0.6680,1.7220",\
+               "0.0336,0.0813,0.2099,0.6680,1.7220",\
+               "0.0336,0.0813,0.2099,0.6680,1.7220");
+      }
+      retaining_fall(SYKB110_128X7X1CM4_0) {
+        values("1.6564,1.7231,1.8478,2.2461,3.1550",\
+               "1.7553,1.8220,1.9467,2.3450,3.2539",\
+               "1.8133,1.8800,2.0047,2.4030,3.3119");
+      }
+      retain_fall_slew(SYKB110_128X7X1CM4_0) {
+        values("0.0381,0.0689,0.1581,0.4993,1.2940",\
+               "0.0381,0.0689,0.1581,0.4993,1.2940",\
+               "0.0381,0.0689,0.1581,0.4993,1.2940");
+      }
+    }
+  }
+  pin(DO4) {
+    power_down_function : "!VCC + GND"
+    related_power_pin : VCC;
+    related_ground_pin : GND;
+    direction : output ;
+    capacitance : 0.0073;
+    max_capacitance : 1.3;    
+    timing() {
+      related_pin : "CK";
+      when : "WEB";
+      sdf_cond : "NODELAY==0 && read";
+      timing_type : rising_edge;
+      timing_sense : non_unate;
+      cell_rise(SYKB110_128X7X1CM4_0) {
+        values("1.9061,1.9727,2.1209,2.6327,3.8040",\
+               "2.0050,2.0716,2.2198,2.7316,3.9029",\
+               "2.0630,2.1296,2.2778,2.7896,3.9610");
+      }
+      rise_transition(SYKB110_128X7X1CM4_0) {
+        values("0.0336,0.0813,0.2099,0.6680,1.7220",\
+               "0.0336,0.0813,0.2099,0.6680,1.7220",\
+               "0.0336,0.0813,0.2099,0.6680,1.7220");
+      }
+      cell_fall(SYKB110_128X7X1CM4_0) {
+        values("1.9061,1.9727,2.1209,2.6327,3.8040",\
+               "2.0050,2.0716,2.2198,2.7316,3.9029",\
+               "2.0630,2.1296,2.2778,2.7896,3.9610");
+      }
+      fall_transition(SYKB110_128X7X1CM4_0) {
+        values("0.0381,0.0689,0.1581,0.4993,1.2940",\
+               "0.0381,0.0689,0.1581,0.4993,1.2940",\
+               "0.0381,0.0689,0.1581,0.4993,1.2940");
+      }
+      retaining_rise(SYKB110_128X7X1CM4_0) {
+        values("1.6582,1.7249,1.8496,2.2479,3.1568",\
+               "1.7574,1.8241,1.9488,2.3471,3.2560",\
+               "1.8153,1.8820,2.0067,2.4050,3.3139");
+      }
+      retain_rise_slew(SYKB110_128X7X1CM4_0) {
+        values("0.0336,0.0813,0.2099,0.6680,1.7220",\
+               "0.0336,0.0813,0.2099,0.6680,1.7220",\
+               "0.0336,0.0813,0.2099,0.6680,1.7220");
+      }
+      retaining_fall(SYKB110_128X7X1CM4_0) {
+        values("1.6582,1.7249,1.8496,2.2479,3.1568",\
+               "1.7574,1.8241,1.9488,2.3471,3.2560",\
+               "1.8153,1.8820,2.0067,2.4050,3.3139");
+      }
+      retain_fall_slew(SYKB110_128X7X1CM4_0) {
+        values("0.0381,0.0689,0.1581,0.4993,1.2940",\
+               "0.0381,0.0689,0.1581,0.4993,1.2940",\
+               "0.0381,0.0689,0.1581,0.4993,1.2940");
+      }
+    }
+    timing() {
+      related_pin : "CK";
+      when : "!WEB";
+      sdf_cond : "NODELAY==0 && write";
+      timing_type : rising_edge;
+      timing_sense : non_unate;
+      cell_rise(SYKB110_128X7X1CM4_0) {
+        values("1.9061,1.9727,2.1209,2.6327,3.8040",\
+               "2.0050,2.0716,2.2198,2.7316,3.9029",\
+               "2.0630,2.1296,2.2778,2.7896,3.9610");
+      }
+      rise_transition(SYKB110_128X7X1CM4_0) {
+        values("0.0336,0.0813,0.2099,0.6680,1.7220",\
+               "0.0336,0.0813,0.2099,0.6680,1.7220",\
+               "0.0336,0.0813,0.2099,0.6680,1.7220");
+      }
+      cell_fall(SYKB110_128X7X1CM4_0) {
+        values("1.9061,1.9727,2.1209,2.6327,3.8040",\
+               "2.0050,2.0716,2.2198,2.7316,3.9029",\
+               "2.0630,2.1296,2.2778,2.7896,3.9610");
+      }
+      fall_transition(SYKB110_128X7X1CM4_0) {
+        values("0.0381,0.0689,0.1581,0.4993,1.2940",\
+               "0.0381,0.0689,0.1581,0.4993,1.2940",\
+               "0.0381,0.0689,0.1581,0.4993,1.2940");
+      }
+      retaining_rise(SYKB110_128X7X1CM4_0) {
+        values("1.6564,1.7231,1.8478,2.2461,3.1550",\
+               "1.7553,1.8220,1.9467,2.3450,3.2539",\
+               "1.8133,1.8800,2.0047,2.4030,3.3119");
+      }
+      retain_rise_slew(SYKB110_128X7X1CM4_0) {
+        values("0.0336,0.0813,0.2099,0.6680,1.7220",\
+               "0.0336,0.0813,0.2099,0.6680,1.7220",\
+               "0.0336,0.0813,0.2099,0.6680,1.7220");
+      }
+      retaining_fall(SYKB110_128X7X1CM4_0) {
+        values("1.6564,1.7231,1.8478,2.2461,3.1550",\
+               "1.7553,1.8220,1.9467,2.3450,3.2539",\
+               "1.8133,1.8800,2.0047,2.4030,3.3119");
+      }
+      retain_fall_slew(SYKB110_128X7X1CM4_0) {
+        values("0.0381,0.0689,0.1581,0.4993,1.2940",\
+               "0.0381,0.0689,0.1581,0.4993,1.2940",\
+               "0.0381,0.0689,0.1581,0.4993,1.2940");
+      }
+    }
+  }
+  pin(DO5) {
+    power_down_function : "!VCC + GND"
+    related_power_pin : VCC;
+    related_ground_pin : GND;
+    direction : output ;
+    capacitance : 0.0073;
+    max_capacitance : 1.3;    
+    timing() {
+      related_pin : "CK";
+      when : "WEB";
+      sdf_cond : "NODELAY==0 && read";
+      timing_type : rising_edge;
+      timing_sense : non_unate;
+      cell_rise(SYKB110_128X7X1CM4_0) {
+        values("1.9061,1.9727,2.1209,2.6327,3.8040",\
+               "2.0050,2.0716,2.2198,2.7316,3.9029",\
+               "2.0630,2.1296,2.2778,2.7896,3.9610");
+      }
+      rise_transition(SYKB110_128X7X1CM4_0) {
+        values("0.0336,0.0813,0.2099,0.6680,1.7220",\
+               "0.0336,0.0813,0.2099,0.6680,1.7220",\
+               "0.0336,0.0813,0.2099,0.6680,1.7220");
+      }
+      cell_fall(SYKB110_128X7X1CM4_0) {
+        values("1.9061,1.9727,2.1209,2.6327,3.8040",\
+               "2.0050,2.0716,2.2198,2.7316,3.9029",\
+               "2.0630,2.1296,2.2778,2.7896,3.9610");
+      }
+      fall_transition(SYKB110_128X7X1CM4_0) {
+        values("0.0381,0.0689,0.1581,0.4993,1.2940",\
+               "0.0381,0.0689,0.1581,0.4993,1.2940",\
+               "0.0381,0.0689,0.1581,0.4993,1.2940");
+      }
+      retaining_rise(SYKB110_128X7X1CM4_0) {
+        values("1.6582,1.7249,1.8496,2.2479,3.1568",\
+               "1.7574,1.8241,1.9488,2.3471,3.2560",\
+               "1.8153,1.8820,2.0067,2.4050,3.3139");
+      }
+      retain_rise_slew(SYKB110_128X7X1CM4_0) {
+        values("0.0336,0.0813,0.2099,0.6680,1.7220",\
+               "0.0336,0.0813,0.2099,0.6680,1.7220",\
+               "0.0336,0.0813,0.2099,0.6680,1.7220");
+      }
+      retaining_fall(SYKB110_128X7X1CM4_0) {
+        values("1.6582,1.7249,1.8496,2.2479,3.1568",\
+               "1.7574,1.8241,1.9488,2.3471,3.2560",\
+               "1.8153,1.8820,2.0067,2.4050,3.3139");
+      }
+      retain_fall_slew(SYKB110_128X7X1CM4_0) {
+        values("0.0381,0.0689,0.1581,0.4993,1.2940",\
+               "0.0381,0.0689,0.1581,0.4993,1.2940",\
+               "0.0381,0.0689,0.1581,0.4993,1.2940");
+      }
+    }
+    timing() {
+      related_pin : "CK";
+      when : "!WEB";
+      sdf_cond : "NODELAY==0 && write";
+      timing_type : rising_edge;
+      timing_sense : non_unate;
+      cell_rise(SYKB110_128X7X1CM4_0) {
+        values("1.9061,1.9727,2.1209,2.6327,3.8040",\
+               "2.0050,2.0716,2.2198,2.7316,3.9029",\
+               "2.0630,2.1296,2.2778,2.7896,3.9610");
+      }
+      rise_transition(SYKB110_128X7X1CM4_0) {
+        values("0.0336,0.0813,0.2099,0.6680,1.7220",\
+               "0.0336,0.0813,0.2099,0.6680,1.7220",\
+               "0.0336,0.0813,0.2099,0.6680,1.7220");
+      }
+      cell_fall(SYKB110_128X7X1CM4_0) {
+        values("1.9061,1.9727,2.1209,2.6327,3.8040",\
+               "2.0050,2.0716,2.2198,2.7316,3.9029",\
+               "2.0630,2.1296,2.2778,2.7896,3.9610");
+      }
+      fall_transition(SYKB110_128X7X1CM4_0) {
+        values("0.0381,0.0689,0.1581,0.4993,1.2940",\
+               "0.0381,0.0689,0.1581,0.4993,1.2940",\
+               "0.0381,0.0689,0.1581,0.4993,1.2940");
+      }
+      retaining_rise(SYKB110_128X7X1CM4_0) {
+        values("1.6564,1.7231,1.8478,2.2461,3.1550",\
+               "1.7553,1.8220,1.9467,2.3450,3.2539",\
+               "1.8133,1.8800,2.0047,2.4030,3.3119");
+      }
+      retain_rise_slew(SYKB110_128X7X1CM4_0) {
+        values("0.0336,0.0813,0.2099,0.6680,1.7220",\
+               "0.0336,0.0813,0.2099,0.6680,1.7220",\
+               "0.0336,0.0813,0.2099,0.6680,1.7220");
+      }
+      retaining_fall(SYKB110_128X7X1CM4_0) {
+        values("1.6564,1.7231,1.8478,2.2461,3.1550",\
+               "1.7553,1.8220,1.9467,2.3450,3.2539",\
+               "1.8133,1.8800,2.0047,2.4030,3.3119");
+      }
+      retain_fall_slew(SYKB110_128X7X1CM4_0) {
+        values("0.0381,0.0689,0.1581,0.4993,1.2940",\
+               "0.0381,0.0689,0.1581,0.4993,1.2940",\
+               "0.0381,0.0689,0.1581,0.4993,1.2940");
+      }
+    }
+  }
+  pin(DO6) {
+    power_down_function : "!VCC + GND"
+    related_power_pin : VCC;
+    related_ground_pin : GND;
+    direction : output ;
+    capacitance : 0.0073;
+    max_capacitance : 1.3;    
+    timing() {
+      related_pin : "CK";
+      when : "WEB";
+      sdf_cond : "NODELAY==0 && read";
+      timing_type : rising_edge;
+      timing_sense : non_unate;
+      cell_rise(SYKB110_128X7X1CM4_0) {
+        values("1.9061,1.9727,2.1209,2.6327,3.8040",\
+               "2.0050,2.0716,2.2198,2.7316,3.9029",\
+               "2.0630,2.1296,2.2778,2.7896,3.9610");
+      }
+      rise_transition(SYKB110_128X7X1CM4_0) {
+        values("0.0336,0.0813,0.2099,0.6680,1.7220",\
+               "0.0336,0.0813,0.2099,0.6680,1.7220",\
+               "0.0336,0.0813,0.2099,0.6680,1.7220");
+      }
+      cell_fall(SYKB110_128X7X1CM4_0) {
+        values("1.9061,1.9727,2.1209,2.6327,3.8040",\
+               "2.0050,2.0716,2.2198,2.7316,3.9029",\
+               "2.0630,2.1296,2.2778,2.7896,3.9610");
+      }
+      fall_transition(SYKB110_128X7X1CM4_0) {
+        values("0.0381,0.0689,0.1581,0.4993,1.2940",\
+               "0.0381,0.0689,0.1581,0.4993,1.2940",\
+               "0.0381,0.0689,0.1581,0.4993,1.2940");
+      }
+      retaining_rise(SYKB110_128X7X1CM4_0) {
+        values("1.6582,1.7249,1.8496,2.2479,3.1568",\
+               "1.7574,1.8241,1.9488,2.3471,3.2560",\
+               "1.8153,1.8820,2.0067,2.4050,3.3139");
+      }
+      retain_rise_slew(SYKB110_128X7X1CM4_0) {
+        values("0.0336,0.0813,0.2099,0.6680,1.7220",\
+               "0.0336,0.0813,0.2099,0.6680,1.7220",\
+               "0.0336,0.0813,0.2099,0.6680,1.7220");
+      }
+      retaining_fall(SYKB110_128X7X1CM4_0) {
+        values("1.6582,1.7249,1.8496,2.2479,3.1568",\
+               "1.7574,1.8241,1.9488,2.3471,3.2560",\
+               "1.8153,1.8820,2.0067,2.4050,3.3139");
+      }
+      retain_fall_slew(SYKB110_128X7X1CM4_0) {
+        values("0.0381,0.0689,0.1581,0.4993,1.2940",\
+               "0.0381,0.0689,0.1581,0.4993,1.2940",\
+               "0.0381,0.0689,0.1581,0.4993,1.2940");
+      }
+    }
+    timing() {
+      related_pin : "CK";
+      when : "!WEB";
+      sdf_cond : "NODELAY==0 && write";
+      timing_type : rising_edge;
+      timing_sense : non_unate;
+      cell_rise(SYKB110_128X7X1CM4_0) {
+        values("1.9061,1.9727,2.1209,2.6327,3.8040",\
+               "2.0050,2.0716,2.2198,2.7316,3.9029",\
+               "2.0630,2.1296,2.2778,2.7896,3.9610");
+      }
+      rise_transition(SYKB110_128X7X1CM4_0) {
+        values("0.0336,0.0813,0.2099,0.6680,1.7220",\
+               "0.0336,0.0813,0.2099,0.6680,1.7220",\
+               "0.0336,0.0813,0.2099,0.6680,1.7220");
+      }
+      cell_fall(SYKB110_128X7X1CM4_0) {
+        values("1.9061,1.9727,2.1209,2.6327,3.8040",\
+               "2.0050,2.0716,2.2198,2.7316,3.9029",\
+               "2.0630,2.1296,2.2778,2.7896,3.9610");
+      }
+      fall_transition(SYKB110_128X7X1CM4_0) {
+        values("0.0381,0.0689,0.1581,0.4993,1.2940",\
+               "0.0381,0.0689,0.1581,0.4993,1.2940",\
+               "0.0381,0.0689,0.1581,0.4993,1.2940");
+      }
+      retaining_rise(SYKB110_128X7X1CM4_0) {
+        values("1.6564,1.7231,1.8478,2.2461,3.1550",\
+               "1.7553,1.8220,1.9467,2.3450,3.2539",\
+               "1.8133,1.8800,2.0047,2.4030,3.3119");
+      }
+      retain_rise_slew(SYKB110_128X7X1CM4_0) {
+        values("0.0336,0.0813,0.2099,0.6680,1.7220",\
+               "0.0336,0.0813,0.2099,0.6680,1.7220",\
+               "0.0336,0.0813,0.2099,0.6680,1.7220");
+      }
+      retaining_fall(SYKB110_128X7X1CM4_0) {
+        values("1.6564,1.7231,1.8478,2.2461,3.1550",\
+               "1.7553,1.8220,1.9467,2.3450,3.2539",\
+               "1.8133,1.8800,2.0047,2.4030,3.3119");
+      }
+      retain_fall_slew(SYKB110_128X7X1CM4_0) {
+        values("0.0381,0.0689,0.1581,0.4993,1.2940",\
+               "0.0381,0.0689,0.1581,0.4993,1.2940",\
+               "0.0381,0.0689,0.1581,0.4993,1.2940");
+      }
+    }
+  }
+
+  pin(A0) {
+    related_power_pin : VCC;
+    related_ground_pin : GND;
+    direction : input ;    
+    capacitance : 0.0059;
+    max_transition : 0.8;
+    fa_tie_insertion : " VCC GND ";
+    fa_power_down_state : "driven";  
+    timing() {
+      related_pin : "CK";
+      sdf_edges : both_edges;
+      timing_type : setup_rising;
+      rise_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.4567,0.3574,0.2995",\
+               "0.5744,0.4752,0.4173",\
+               "0.6683,0.5690,0.5111");
+      }
+      fall_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.4567,0.3574,0.2995",\
+               "0.5744,0.4752,0.4173",\
+               "0.6683,0.5690,0.5111");
+      }
+    }
+    timing() {
+      related_pin : "CK";
+      sdf_edges : both_edges;
+      timing_type : hold_rising;
+      rise_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.1541,0.2645,0.3504",\
+               "0.0551,0.1655,0.2514",\
+               "0.0000,0.1102,0.1961");
+      }
+      fall_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.1541,0.2645,0.3504",\
+               "0.0551,0.1655,0.2514",\
+               "0.0000,0.1102,0.1961");
+      }
+    }
+  }
+  pin(A1) {
+    related_power_pin : VCC;
+    related_ground_pin : GND;
+    direction : input ;    
+    capacitance : 0.0059;
+    max_transition : 0.8;
+    fa_tie_insertion : " VCC GND ";
+    fa_power_down_state : "driven";  
+    timing() {
+      related_pin : "CK";
+      sdf_edges : both_edges;
+      timing_type : setup_rising;
+      rise_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.4567,0.3574,0.2995",\
+               "0.5744,0.4752,0.4173",\
+               "0.6683,0.5690,0.5111");
+      }
+      fall_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.4567,0.3574,0.2995",\
+               "0.5744,0.4752,0.4173",\
+               "0.6683,0.5690,0.5111");
+      }
+    }
+    timing() {
+      related_pin : "CK";
+      sdf_edges : both_edges;
+      timing_type : hold_rising;
+      rise_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.1541,0.2645,0.3504",\
+               "0.0551,0.1655,0.2514",\
+               "0.0000,0.1102,0.1961");
+      }
+      fall_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.1541,0.2645,0.3504",\
+               "0.0551,0.1655,0.2514",\
+               "0.0000,0.1102,0.1961");
+      }
+    }
+  }
+  pin(A2) {
+    related_power_pin : VCC;
+    related_ground_pin : GND;
+    direction : input ;    
+    capacitance : 0.0059;
+    max_transition : 0.8;
+    fa_tie_insertion : " VCC GND ";
+    fa_power_down_state : "driven";  
+    timing() {
+      related_pin : "CK";
+      sdf_edges : both_edges;
+      timing_type : setup_rising;
+      rise_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.4567,0.3574,0.2995",\
+               "0.5744,0.4752,0.4173",\
+               "0.6683,0.5690,0.5111");
+      }
+      fall_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.4567,0.3574,0.2995",\
+               "0.5744,0.4752,0.4173",\
+               "0.6683,0.5690,0.5111");
+      }
+    }
+    timing() {
+      related_pin : "CK";
+      sdf_edges : both_edges;
+      timing_type : hold_rising;
+      rise_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.1541,0.2645,0.3504",\
+               "0.0551,0.1655,0.2514",\
+               "0.0000,0.1102,0.1961");
+      }
+      fall_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.1541,0.2645,0.3504",\
+               "0.0551,0.1655,0.2514",\
+               "0.0000,0.1102,0.1961");
+      }
+    }
+  }
+  pin(A3) {
+    related_power_pin : VCC;
+    related_ground_pin : GND;
+    direction : input ;    
+    capacitance : 0.0059;
+    max_transition : 0.8;
+    fa_tie_insertion : " VCC GND ";
+    fa_power_down_state : "driven";  
+    timing() {
+      related_pin : "CK";
+      sdf_edges : both_edges;
+      timing_type : setup_rising;
+      rise_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.4567,0.3574,0.2995",\
+               "0.5744,0.4752,0.4173",\
+               "0.6683,0.5690,0.5111");
+      }
+      fall_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.4567,0.3574,0.2995",\
+               "0.5744,0.4752,0.4173",\
+               "0.6683,0.5690,0.5111");
+      }
+    }
+    timing() {
+      related_pin : "CK";
+      sdf_edges : both_edges;
+      timing_type : hold_rising;
+      rise_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.1541,0.2645,0.3504",\
+               "0.0551,0.1655,0.2514",\
+               "0.0000,0.1102,0.1961");
+      }
+      fall_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.1541,0.2645,0.3504",\
+               "0.0551,0.1655,0.2514",\
+               "0.0000,0.1102,0.1961");
+      }
+    }
+  }
+  pin(A4) {
+    related_power_pin : VCC;
+    related_ground_pin : GND;
+    direction : input ;    
+    capacitance : 0.0059;
+    max_transition : 0.8;
+    fa_tie_insertion : " VCC GND ";
+    fa_power_down_state : "driven";  
+    timing() {
+      related_pin : "CK";
+      sdf_edges : both_edges;
+      timing_type : setup_rising;
+      rise_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.4567,0.3574,0.2995",\
+               "0.5744,0.4752,0.4173",\
+               "0.6683,0.5690,0.5111");
+      }
+      fall_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.4567,0.3574,0.2995",\
+               "0.5744,0.4752,0.4173",\
+               "0.6683,0.5690,0.5111");
+      }
+    }
+    timing() {
+      related_pin : "CK";
+      sdf_edges : both_edges;
+      timing_type : hold_rising;
+      rise_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.1541,0.2645,0.3504",\
+               "0.0551,0.1655,0.2514",\
+               "0.0000,0.1102,0.1961");
+      }
+      fall_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.1541,0.2645,0.3504",\
+               "0.0551,0.1655,0.2514",\
+               "0.0000,0.1102,0.1961");
+      }
+    }
+  }
+  pin(A5) {
+    related_power_pin : VCC;
+    related_ground_pin : GND;
+    direction : input ;    
+    capacitance : 0.0059;
+    max_transition : 0.8;
+    fa_tie_insertion : " VCC GND ";
+    fa_power_down_state : "driven";  
+    timing() {
+      related_pin : "CK";
+      sdf_edges : both_edges;
+      timing_type : setup_rising;
+      rise_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.4567,0.3574,0.2995",\
+               "0.5744,0.4752,0.4173",\
+               "0.6683,0.5690,0.5111");
+      }
+      fall_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.4567,0.3574,0.2995",\
+               "0.5744,0.4752,0.4173",\
+               "0.6683,0.5690,0.5111");
+      }
+    }
+    timing() {
+      related_pin : "CK";
+      sdf_edges : both_edges;
+      timing_type : hold_rising;
+      rise_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.1541,0.2645,0.3504",\
+               "0.0551,0.1655,0.2514",\
+               "0.0000,0.1102,0.1961");
+      }
+      fall_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.1541,0.2645,0.3504",\
+               "0.0551,0.1655,0.2514",\
+               "0.0000,0.1102,0.1961");
+      }
+    }
+  }
+  pin(A6) {
+    related_power_pin : VCC;
+    related_ground_pin : GND;
+    direction : input ;    
+    capacitance : 0.0059;
+    max_transition : 0.8;
+    fa_tie_insertion : " VCC GND ";
+    fa_power_down_state : "driven";  
+    timing() {
+      related_pin : "CK";
+      sdf_edges : both_edges;
+      timing_type : setup_rising;
+      rise_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.4567,0.3574,0.2995",\
+               "0.5744,0.4752,0.4173",\
+               "0.6683,0.5690,0.5111");
+      }
+      fall_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.4567,0.3574,0.2995",\
+               "0.5744,0.4752,0.4173",\
+               "0.6683,0.5690,0.5111");
+      }
+    }
+    timing() {
+      related_pin : "CK";
+      sdf_edges : both_edges;
+      timing_type : hold_rising;
+      rise_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.1541,0.2645,0.3504",\
+               "0.0551,0.1655,0.2514",\
+               "0.0000,0.1102,0.1961");
+      }
+      fall_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.1541,0.2645,0.3504",\
+               "0.0551,0.1655,0.2514",\
+               "0.0000,0.1102,0.1961");
+      }
+    }
+  }
+
+  pin(DI0) {
+    related_power_pin : VCC;
+    related_ground_pin : GND;
+    direction : input ;       
+    capacitance : 0.0024;
+    max_transition : 0.8;
+    fa_tie_insertion : " VCC GND ";    
+    fa_power_down_state : "driven";   
+    timing() {
+      related_pin : "CK";
+      sdf_edges : both_edges;
+      timing_type : setup_rising;
+      rise_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.4599,0.3609,0.3027",\
+               "0.5753,0.4763,0.4181",\
+               "0.6562,0.5572,0.4990");
+      }
+      fall_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.4599,0.3609,0.3027",\
+               "0.5753,0.4763,0.4181",\
+               "0.6562,0.5572,0.4990");
+      }
+    }
+    timing() {
+      related_pin : "CK";
+      sdf_edges : both_edges;
+      timing_type : hold_rising;
+      rise_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.1303,0.2292,0.2872",\
+               "0.0138,0.1127,0.1707",\
+               "0.0000,0.0734,0.1316");
+      }
+      fall_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.1303,0.2292,0.2872",\
+               "0.0138,0.1127,0.1707",\
+               "0.0000,0.0734,0.1316");
+      }
+    }
+  }
+  pin(DI1) {
+    related_power_pin : VCC;
+    related_ground_pin : GND;
+    direction : input ;       
+    capacitance : 0.0024;
+    max_transition : 0.8;
+    fa_tie_insertion : " VCC GND ";    
+    fa_power_down_state : "driven";   
+    timing() {
+      related_pin : "CK";
+      sdf_edges : both_edges;
+      timing_type : setup_rising;
+      rise_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.4599,0.3609,0.3027",\
+               "0.5753,0.4763,0.4181",\
+               "0.6562,0.5572,0.4990");
+      }
+      fall_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.4599,0.3609,0.3027",\
+               "0.5753,0.4763,0.4181",\
+               "0.6562,0.5572,0.4990");
+      }
+    }
+    timing() {
+      related_pin : "CK";
+      sdf_edges : both_edges;
+      timing_type : hold_rising;
+      rise_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.1303,0.2292,0.2872",\
+               "0.0138,0.1127,0.1707",\
+               "0.0000,0.0734,0.1316");
+      }
+      fall_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.1303,0.2292,0.2872",\
+               "0.0138,0.1127,0.1707",\
+               "0.0000,0.0734,0.1316");
+      }
+    }
+  }
+  pin(DI2) {
+    related_power_pin : VCC;
+    related_ground_pin : GND;
+    direction : input ;       
+    capacitance : 0.0024;
+    max_transition : 0.8;
+    fa_tie_insertion : " VCC GND ";    
+    fa_power_down_state : "driven";   
+    timing() {
+      related_pin : "CK";
+      sdf_edges : both_edges;
+      timing_type : setup_rising;
+      rise_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.4599,0.3609,0.3027",\
+               "0.5753,0.4763,0.4181",\
+               "0.6562,0.5572,0.4990");
+      }
+      fall_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.4599,0.3609,0.3027",\
+               "0.5753,0.4763,0.4181",\
+               "0.6562,0.5572,0.4990");
+      }
+    }
+    timing() {
+      related_pin : "CK";
+      sdf_edges : both_edges;
+      timing_type : hold_rising;
+      rise_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.1303,0.2292,0.2872",\
+               "0.0138,0.1127,0.1707",\
+               "0.0000,0.0734,0.1316");
+      }
+      fall_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.1303,0.2292,0.2872",\
+               "0.0138,0.1127,0.1707",\
+               "0.0000,0.0734,0.1316");
+      }
+    }
+  }
+  pin(DI3) {
+    related_power_pin : VCC;
+    related_ground_pin : GND;
+    direction : input ;       
+    capacitance : 0.0024;
+    max_transition : 0.8;
+    fa_tie_insertion : " VCC GND ";    
+    fa_power_down_state : "driven";   
+    timing() {
+      related_pin : "CK";
+      sdf_edges : both_edges;
+      timing_type : setup_rising;
+      rise_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.4599,0.3609,0.3027",\
+               "0.5753,0.4763,0.4181",\
+               "0.6562,0.5572,0.4990");
+      }
+      fall_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.4599,0.3609,0.3027",\
+               "0.5753,0.4763,0.4181",\
+               "0.6562,0.5572,0.4990");
+      }
+    }
+    timing() {
+      related_pin : "CK";
+      sdf_edges : both_edges;
+      timing_type : hold_rising;
+      rise_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.1303,0.2292,0.2872",\
+               "0.0138,0.1127,0.1707",\
+               "0.0000,0.0734,0.1316");
+      }
+      fall_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.1303,0.2292,0.2872",\
+               "0.0138,0.1127,0.1707",\
+               "0.0000,0.0734,0.1316");
+      }
+    }
+  }
+  pin(DI4) {
+    related_power_pin : VCC;
+    related_ground_pin : GND;
+    direction : input ;       
+    capacitance : 0.0024;
+    max_transition : 0.8;
+    fa_tie_insertion : " VCC GND ";    
+    fa_power_down_state : "driven";   
+    timing() {
+      related_pin : "CK";
+      sdf_edges : both_edges;
+      timing_type : setup_rising;
+      rise_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.4599,0.3609,0.3027",\
+               "0.5753,0.4763,0.4181",\
+               "0.6562,0.5572,0.4990");
+      }
+      fall_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.4599,0.3609,0.3027",\
+               "0.5753,0.4763,0.4181",\
+               "0.6562,0.5572,0.4990");
+      }
+    }
+    timing() {
+      related_pin : "CK";
+      sdf_edges : both_edges;
+      timing_type : hold_rising;
+      rise_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.1303,0.2292,0.2872",\
+               "0.0138,0.1127,0.1707",\
+               "0.0000,0.0734,0.1316");
+      }
+      fall_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.1303,0.2292,0.2872",\
+               "0.0138,0.1127,0.1707",\
+               "0.0000,0.0734,0.1316");
+      }
+    }
+  }
+  pin(DI5) {
+    related_power_pin : VCC;
+    related_ground_pin : GND;
+    direction : input ;       
+    capacitance : 0.0024;
+    max_transition : 0.8;
+    fa_tie_insertion : " VCC GND ";    
+    fa_power_down_state : "driven";   
+    timing() {
+      related_pin : "CK";
+      sdf_edges : both_edges;
+      timing_type : setup_rising;
+      rise_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.4599,0.3609,0.3027",\
+               "0.5753,0.4763,0.4181",\
+               "0.6562,0.5572,0.4990");
+      }
+      fall_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.4599,0.3609,0.3027",\
+               "0.5753,0.4763,0.4181",\
+               "0.6562,0.5572,0.4990");
+      }
+    }
+    timing() {
+      related_pin : "CK";
+      sdf_edges : both_edges;
+      timing_type : hold_rising;
+      rise_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.1303,0.2292,0.2872",\
+               "0.0138,0.1127,0.1707",\
+               "0.0000,0.0734,0.1316");
+      }
+      fall_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.1303,0.2292,0.2872",\
+               "0.0138,0.1127,0.1707",\
+               "0.0000,0.0734,0.1316");
+      }
+    }
+  }
+  pin(DI6) {
+    related_power_pin : VCC;
+    related_ground_pin : GND;
+    direction : input ;       
+    capacitance : 0.0024;
+    max_transition : 0.8;
+    fa_tie_insertion : " VCC GND ";    
+    fa_power_down_state : "driven";   
+    timing() {
+      related_pin : "CK";
+      sdf_edges : both_edges;
+      timing_type : setup_rising;
+      rise_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.4599,0.3609,0.3027",\
+               "0.5753,0.4763,0.4181",\
+               "0.6562,0.5572,0.4990");
+      }
+      fall_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.4599,0.3609,0.3027",\
+               "0.5753,0.4763,0.4181",\
+               "0.6562,0.5572,0.4990");
+      }
+    }
+    timing() {
+      related_pin : "CK";
+      sdf_edges : both_edges;
+      timing_type : hold_rising;
+      rise_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.1303,0.2292,0.2872",\
+               "0.0138,0.1127,0.1707",\
+               "0.0000,0.0734,0.1316");
+      }
+      fall_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.1303,0.2292,0.2872",\
+               "0.0138,0.1127,0.1707",\
+               "0.0000,0.0734,0.1316");
+      }
+    }
+  }
+
+  pin(WEB) {
+    related_power_pin : VCC;
+    related_ground_pin : GND;
+    direction : input ;      
+    capacitance : 0.0222;
+    max_transition : 0.8;
+    fa_tie_insertion : " VCC GND "; 
+    fa_power_down_state : "driven";   
+    timing() {
+      related_pin : "CK";
+      sdf_edges : both_edges;
+      timing_type : setup_rising;
+      rise_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.4033,0.3042,0.2461",\
+               "0.5240,0.4249,0.3668",\
+               "0.6080,0.5089,0.4508");
+      }
+      fall_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.4033,0.3042,0.2461",\
+               "0.5240,0.4249,0.3668",\
+               "0.6080,0.5089,0.4508");
+      }
+    }
+    timing() {
+      related_pin : "CK";
+      sdf_edges : both_edges;
+      timing_type : hold_rising;
+      rise_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.3051,0.4040,0.4621",\
+               "0.1941,0.2930,0.3511",\
+               "0.1229,0.2218,0.2799");
+      }
+      fall_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.3051,0.4040,0.4621",\
+               "0.1941,0.2930,0.3511",\
+               "0.1229,0.2218,0.2799");
+      }
+    }
+  }
+
+  pin(CSB) {
+    related_power_pin : VCC;
+    related_ground_pin : GND;
+    direction : input ;    
+    capacitance : 0.0642;
+    max_transition : 0.8;
+    fa_tie_insertion : " VCC GND ";   
+    fa_power_down_state : "driven"; 
+    timing() {
+      related_pin : "CK";
+      sdf_edges : both_edges;
+      timing_type : setup_rising;
+      rise_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.6468,0.5476,0.4897",\
+               "0.7507,0.6514,0.5936",\
+               "0.8436,0.7443,0.6865");
+      }
+      fall_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.6468,0.5476,0.4897",\
+               "0.7507,0.6514,0.5936",\
+               "0.8436,0.7443,0.6865");
+      }
+    }
+    timing() {
+      related_pin : "CK";
+      sdf_edges : both_edges;
+      timing_type : hold_rising;
+      rise_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.2377,0.3369,0.3949",\
+               "0.2080,0.3072,0.3652",\
+               "0.2014,0.3006,0.3586");
+      }
+      fall_constraint(SYKB110_128X7X1CM4_1) {
+        values("0.2377,0.3369,0.3949",\
+               "0.2080,0.3072,0.3652",\
+               "0.2014,0.3006,0.3586");
+      }
+    }
+  }
+
+
+  pin(DVS0) {
+    related_power_pin : VCC;
+    related_ground_pin : GND;
+    direction : input ;    
+    capacitance : 0.0102;  
+    max_transition : 0.8; 
+    fa_tie_insertion : " VCC GND ";   
+    fa_power_down_state : "driven";  
+  }
+  pin(DVS1) {
+    related_power_pin : VCC;
+    related_ground_pin : GND;
+    direction : input ;    
+    capacitance : 0.0102;  
+    max_transition : 0.8; 
+    fa_tie_insertion : " VCC GND ";   
+    fa_power_down_state : "driven";  
+  }
+  pin(DVS2) {
+    related_power_pin : VCC;
+    related_ground_pin : GND;
+    direction : input ;    
+    capacitance : 0.0102;  
+    max_transition : 0.8; 
+    fa_tie_insertion : " VCC GND ";   
+    fa_power_down_state : "driven";  
+  }
+  pin(DVS3) {
+    related_power_pin : VCC;
+    related_ground_pin : GND;
+    direction : input ;    
+    capacitance : 0.0102;  
+    max_transition : 0.8; 
+    fa_tie_insertion : " VCC GND ";   
+    fa_power_down_state : "driven";  
+  }
+
+  pin(DVSE) {
+    related_power_pin : VCC;
+    related_ground_pin : GND;
+    direction : input ;   
+    capacitance : 0.0166; 
+    max_transition : 0.8;   
+    fa_tie_insertion : " VCC GND ";   
+    fa_power_down_state : "driven";    
+  }
+
+
+
+
+  pin(CK) {
+    related_power_pin : VCC;
+    related_ground_pin : GND;
+    direction : input ;   
+    capacitance : 0.0368;
+    max_transition : 0.8;
+    fa_tie_insertion : " VCC GND ";   
+    fa_power_down_state : "driven";    
+    clock : true;
+    timing() {
+      related_pin : "CK";
+      timing_type : min_pulse_width;
+      rise_constraint(SYKB110_128X7X1CM4_2) {
+        values("0.5370,0.8280,1.0860");
+      }
+      fall_constraint(SYKB110_128X7X1CM4_2) {
+        values("0.6635,0.9783,1.3000");
+      }
+    }
+    timing() {
+      related_pin : "CK";
+      timing_type : minimum_period;
+      rise_constraint(SYKB110_128X7X1CM4_2) {
+        values("2.6785,2.7776,2.8357");
+      }
+    }
+    internal_power () {
+      related_pg_pin : "VCC";
+      when : "!CSB WEB";
+      rise_power(POWER_3x1) {
+        values("4.4556,4.4556,4.4556"); /* pW/HZ */
+      }
+      fall_power(POWER_3x1) {
+        values("0,0,0"); /* pW/HZ */
+      }      
+    }
+    internal_power () {
+      related_pg_pin : "VCC";
+      when : "!CSB !WEB";
+      rise_power(POWER_3x1) {
+        values("5.1252,5.1252,5.1252"); /* pW/HZ */
+      }
+      fall_power(POWER_3x1) {
+        values("0,0,0"); /* pW/HZ */
+      }      
+    }
+  } 
+}
+}

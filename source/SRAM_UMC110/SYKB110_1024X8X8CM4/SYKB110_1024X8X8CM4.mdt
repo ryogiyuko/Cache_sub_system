@@ -1,0 +1,65 @@
+# ///////////////////////////////////////////////////////////////////////////////////
+# // ________________________________________________________________________________________________
+# // 
+# // 
+# //             Synchronous One-Port Register File Compiler
+# // 
+# //                 UMC 0.11um LL AE Logic Process
+# // 
+# // ________________________________________________________________________________________________
+# // 
+# //               
+# //         Copyright (C) 2024 Faraday Technology Corporation. All Rights Reserved.       
+# //                
+# //         This source code is an unpublished work belongs to Faraday Technology Corporation       
+# //         It is considered a trade secret and is not to be divulged or       
+# //         used by parties who have not received written authorization from       
+# //         Faraday Technology Corporation       
+# //                
+# //         Faraday's home page can be found at: http://www.faraday-tech.com/       
+# //                
+# // ________________________________________________________________________________________________
+# // 
+# //        IP Name            :  FSR0K_B_SY                
+# //        IP Version         :  1.4.0                     
+# //        IP Release Status  :  Active                    
+# //        Word               :  1024                      
+# //        Bit                :  8                         
+# //        Byte               :  8                         
+# //        Mux                :  4                         
+# //        Output Loading     :  0.01                      
+# //        Clock Input Slew   :  0.016                     
+# //        Data Input Slew    :  0.016                     
+# //        Ring Type          :  Ringless Model            
+# //        Ring Width         :  0                         
+# //        Bus Format         :  0                         
+# //        Memaker Path       :  /home/mem/Desktop/memlib  
+# //        GUI Version        :  m20230904                 
+# //        Date               :  2024/10/18 14:57:33       
+# // ________________________________________________________________________________________________
+# // 
+# ///////////////////////////////////////////////////////////////////////////////////
+tfgDefineMem -module "SYKB110_1024X8X8CM4" -array_name "Memory_byte0"
+tfgDefineMem -module "SYKB110_1024X8X8CM4" -array_name "Memory_byte1"
+tfgDefineMem -module "SYKB110_1024X8X8CM4" -array_name "Memory_byte2"
+tfgDefineMem -module "SYKB110_1024X8X8CM4" -array_name "Memory_byte3"
+tfgDefineMem -module "SYKB110_1024X8X8CM4" -array_name "Memory_byte4"
+tfgDefineMem -module "SYKB110_1024X8X8CM4" -array_name "Memory_byte5"
+tfgDefineMem -module "SYKB110_1024X8X8CM4" -array_name "Memory_byte6"
+tfgDefineMem -module "SYKB110_1024X8X8CM4" -array_name "Memory_byte7"
+tfgDefineMemWrite -module "SYKB110_1024X8X8CM4" -array_name "Memory_byte0" -clk "@(posedge CK)" -cond "~CSB && ~WEB0" -addr "`<->A" -data "{DI7, DI6, DI5, DI4, DI3, DI2, DI1, DI0}"
+tfgDefineMemWrite -module "SYKB110_1024X8X8CM4" -array_name "Memory_byte1" -clk "@(posedge CK)" -cond "~CSB && ~WEB1" -addr "`<->A" -data "{DI15, DI14, DI13, DI12, DI11, DI10, DI9, DI8}"
+tfgDefineMemWrite -module "SYKB110_1024X8X8CM4" -array_name "Memory_byte2" -clk "@(posedge CK)" -cond "~CSB && ~WEB2" -addr "`<->A" -data "{DI23, DI22, DI21, DI20, DI19, DI18, DI17, DI16}"
+tfgDefineMemWrite -module "SYKB110_1024X8X8CM4" -array_name "Memory_byte3" -clk "@(posedge CK)" -cond "~CSB && ~WEB3" -addr "`<->A" -data "{DI31, DI30, DI29, DI28, DI27, DI26, DI25, DI24}"
+tfgDefineMemWrite -module "SYKB110_1024X8X8CM4" -array_name "Memory_byte4" -clk "@(posedge CK)" -cond "~CSB && ~WEB4" -addr "`<->A" -data "{DI39, DI38, DI37, DI36, DI35, DI34, DI33, DI32}"
+tfgDefineMemWrite -module "SYKB110_1024X8X8CM4" -array_name "Memory_byte5" -clk "@(posedge CK)" -cond "~CSB && ~WEB5" -addr "`<->A" -data "{DI47, DI46, DI45, DI44, DI43, DI42, DI41, DI40}"
+tfgDefineMemWrite -module "SYKB110_1024X8X8CM4" -array_name "Memory_byte6" -clk "@(posedge CK)" -cond "~CSB && ~WEB6" -addr "`<->A" -data "{DI55, DI54, DI53, DI52, DI51, DI50, DI49, DI48}"
+tfgDefineMemWrite -module "SYKB110_1024X8X8CM4" -array_name "Memory_byte7" -clk "@(posedge CK)" -cond "~CSB && ~WEB7" -addr "`<->A" -data "{DI63, DI62, DI61, DI60, DI59, DI58, DI57, DI56}"
+tfgDefineMemRead -module "SYKB110_1024X8X8CM4" -array_name "Memory_byte0" -clk "@(posedge CK)" -cond "~CSB && WEB0" -addr "`<->A" -out "{DO7, DO6, DO5, DO4, DO3, DO2, DO1, DO0}"
+tfgDefineMemRead -module "SYKB110_1024X8X8CM4" -array_name "Memory_byte1" -clk "@(posedge CK)" -cond "~CSB && WEB1" -addr "`<->A" -out "{DO15, DO14, DO13, DO12, DO11, DO10, DO9, DO8}"
+tfgDefineMemRead -module "SYKB110_1024X8X8CM4" -array_name "Memory_byte2" -clk "@(posedge CK)" -cond "~CSB && WEB2" -addr "`<->A" -out "{DO23, DO22, DO21, DO20, DO19, DO18, DO17, DO16}"
+tfgDefineMemRead -module "SYKB110_1024X8X8CM4" -array_name "Memory_byte3" -clk "@(posedge CK)" -cond "~CSB && WEB3" -addr "`<->A" -out "{DO31, DO30, DO29, DO28, DO27, DO26, DO25, DO24}"
+tfgDefineMemRead -module "SYKB110_1024X8X8CM4" -array_name "Memory_byte4" -clk "@(posedge CK)" -cond "~CSB && WEB4" -addr "`<->A" -out "{DO39, DO38, DO37, DO36, DO35, DO34, DO33, DO32}"
+tfgDefineMemRead -module "SYKB110_1024X8X8CM4" -array_name "Memory_byte5" -clk "@(posedge CK)" -cond "~CSB && WEB5" -addr "`<->A" -out "{DO47, DO46, DO45, DO44, DO43, DO42, DO41, DO40}"
+tfgDefineMemRead -module "SYKB110_1024X8X8CM4" -array_name "Memory_byte6" -clk "@(posedge CK)" -cond "~CSB && WEB6" -addr "`<->A" -out "{DO55, DO54, DO53, DO52, DO51, DO50, DO49, DO48}"
+tfgDefineMemRead -module "SYKB110_1024X8X8CM4" -array_name "Memory_byte7" -clk "@(posedge CK)" -cond "~CSB && WEB7" -addr "`<->A" -out "{DO63, DO62, DO61, DO60, DO59, DO58, DO57, DO56}"

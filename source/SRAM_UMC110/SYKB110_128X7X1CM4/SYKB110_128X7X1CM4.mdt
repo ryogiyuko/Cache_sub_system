@@ -1,0 +1,44 @@
+# ///////////////////////////////////////////////////////////////////////////////////
+# // ________________________________________________________________________________________________
+# // 
+# // 
+# //             Synchronous One-Port Register File Compiler
+# // 
+# //                 UMC 0.11um LL AE Logic Process
+# // 
+# // ________________________________________________________________________________________________
+# // 
+# //               
+# //         Copyright (C) 2024 Faraday Technology Corporation. All Rights Reserved.       
+# //                
+# //         This source code is an unpublished work belongs to Faraday Technology Corporation       
+# //         It is considered a trade secret and is not to be divulged or       
+# //         used by parties who have not received written authorization from       
+# //         Faraday Technology Corporation       
+# //                
+# //         Faraday's home page can be found at: http://www.faraday-tech.com/       
+# //                
+# // ________________________________________________________________________________________________
+# // 
+# //        IP Name            :  FSR0K_B_SY                
+# //        IP Version         :  1.4.0                     
+# //        IP Release Status  :  Active                    
+# //        Word               :  128                       
+# //        Bit                :  7                         
+# //        Byte               :  1                         
+# //        Mux                :  4                         
+# //        Output Loading     :  0.01                      
+# //        Clock Input Slew   :  0.016                     
+# //        Data Input Slew    :  0.016                     
+# //        Ring Type          :  Ringless Model            
+# //        Ring Width         :  0                         
+# //        Bus Format         :  0                         
+# //        Memaker Path       :  /home/mem/Desktop/memlib  
+# //        GUI Version        :  m20230904                 
+# //        Date               :  2024/09/06 21:04:57       
+# // ________________________________________________________________________________________________
+# // 
+# ///////////////////////////////////////////////////////////////////////////////////
+tfgDefineMem -module "SYKB110_128X7X1CM4" -array_name "Memory" -banks * -addr_range 127 0
+tfgDefineMemWrite -module "SYKB110_128X7X1CM4" -array_name "Memory" -clk "@(posedge CK)" -cond "~CSB && ~WEB" -addr "`<->A" -data "`<->DI"
+tfgDefineMemRead -module "SYKB110_128X7X1CM4" -array_name "Memory" -clk "@(posedge CK)" -cond "~CSB && WEB" -addr "`<->A" -out "`<->DO"

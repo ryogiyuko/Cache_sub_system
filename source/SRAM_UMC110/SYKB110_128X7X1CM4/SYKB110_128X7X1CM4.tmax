@@ -1,0 +1,88 @@
+///////////////////////////////////////////////////////////////////////////////////
+// ________________________________________________________________________________________________
+// 
+// 
+//             Synchronous One-Port Register File Compiler
+// 
+//                 UMC 0.11um LL AE Logic Process
+// 
+// ________________________________________________________________________________________________
+// 
+//               
+//         Copyright (C) 2024 Faraday Technology Corporation. All Rights Reserved.       
+//                
+//         This source code is an unpublished work belongs to Faraday Technology Corporation       
+//         It is considered a trade secret and is not to be divulged or       
+//         used by parties who have not received written authorization from       
+//         Faraday Technology Corporation       
+//                
+//         Faraday's home page can be found at: http://www.faraday-tech.com/       
+//                
+// ________________________________________________________________________________________________
+// 
+//        IP Name            :  FSR0K_B_SY                
+//        IP Version         :  1.4.0                     
+//        IP Release Status  :  Active                    
+//        Word               :  128                       
+//        Bit                :  7                         
+//        Byte               :  1                         
+//        Mux                :  4                         
+//        Output Loading     :  0.01                      
+//        Clock Input Slew   :  0.016                     
+//        Data Input Slew    :  0.016                     
+//        Ring Type          :  Ringless Model            
+//        Ring Width         :  0                         
+//        Bus Format         :  0                         
+//        Memaker Path       :  /home/mem/Desktop/memlib  
+//        GUI Version        :  m20230904                 
+//        Date               :  2024/09/06 21:04:57       
+// ________________________________________________________________________________________________
+// 
+///////////////////////////////////////////////////////////////////////////////////
+
+module SYKB110_128X7X1CM4 ( 
+                     A6,A5,A4,A3,A2,A1,A0, 
+                     DO0, DO1, DO2, DO3, DO4, DO5, DO6,
+                     DI0, DI1, DI2, DI3, DI4, DI5, DI6,
+                     DVS0, DVS1, DVS2, DVS3, DVSE,
+                     WEB,CK,CSB);
+                           
+   parameter  AddressSize     = 7;
+   parameter  Bits            = 7;
+   parameter  Words           = 128;
+   parameter  Bytes           = 1;
+   parameter  AddressRepSize  = 4;
+   parameter  DVSize          = 4; 
+ 
+   input  CK, CSB;
+   input  WEB;
+   input  A6,A5,A4,A3,A2,A1,A0;
+   input  DVS0,DVS1,DVS2,DVS3,DVSE;
+   input  DI0,DI1,DI2,DI3,DI4,DI5,DI6; 
+   output DO0,DO1,DO2,DO3,DO4,DO5,DO6;
+
+   reg [Bits-1:0] mem [0:Words-1] ; 
+   reg [Bits-1:0] DO  ;     
+  
+   wire [AddressSize-1:0] A = { A6,A5,A4,A3,A2,A1,A0 }; 
+   wire [Bits-1:0] DI = { DI6,DI5,DI4,DI3,DI2,DI1,DI0 }; 
+   wire DO6 = DO[6] ;     
+   wire DO5 = DO[5] ;     
+   wire DO4 = DO[4] ;     
+   wire DO3 = DO[3] ;     
+   wire DO2 = DO[2] ;     
+   wire DO1 = DO[1] ;     
+   wire DO0 = DO[0] ;     
+
+   wire write_en;
+
+   and u1  (write_en, !WEB, !CSB); 
+
+   always @ (posedge CK) 
+         if (write_en) mem[A] = DI;    
+
+   always @ (posedge CK) 
+         if (!CSB) DO  = mem[A];    
+
+                             
+endmodule

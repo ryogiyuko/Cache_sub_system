@@ -26,7 +26,7 @@ module cArbMerge8_8b_cache #(
 	assign w_drive = { i_drive7,i_drive6,i_drive5,i_drive4,i_drive3,i_drive2,i_drive1,i_drive0 };
 	assign  { o_free7,o_free6,o_free5,o_free4,o_free3,o_free2,o_free1,o_free0 } = w_free;
 
-  localparam DELAY_w_driveNext = 9;//为了匹配仲裁器组合电路的时间+MUX时间
+  localparam DELAY_w_driveNext = 11;//为了匹配仲裁器组合电路的时间+MUX时间
   localparam DELAY_w_sendDrive1 = 8;//此参数是为了配合MUX的延时
   localparam DELAY_w_reset =3;//此参数是为了避免因ifreeNext脉宽过宽带来的竞争冒险,注意:DELAY_w_reset必须<DELAY_w_sendDrive1
 

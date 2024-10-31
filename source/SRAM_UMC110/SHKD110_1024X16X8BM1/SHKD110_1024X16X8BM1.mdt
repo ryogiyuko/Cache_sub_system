@@ -1,0 +1,65 @@
+# ///////////////////////////////////////////////////////////////////////////////////
+# // ________________________________________________________________________________________________
+# // 
+# // 
+# //             Synchronous High-Density Single-Port SRAM Compiler
+# // 
+# //                 UMC 0.11um LL AE Logic Process
+# // 
+# // ________________________________________________________________________________________________
+# // 
+# //               
+# //         Copyright (C) 2024 Faraday Technology Corporation. All Rights Reserved.       
+# //                
+# //         This source code is an unpublished work belongs to Faraday Technology Corporation       
+# //         It is considered a trade secret and is not to be divulged or       
+# //         used by parties who have not received written authorization from       
+# //         Faraday Technology Corporation       
+# //                
+# //         Faraday's home page can be found at: http://www.faraday-tech.com/       
+# //                
+# // ________________________________________________________________________________________________
+# // 
+# //        IP Name            :  FSR0K_D_SH                
+# //        IP Version         :  1.3.0                     
+# //        IP Release Status  :  Active                    
+# //        Word               :  1024                      
+# //        Bit                :  16                        
+# //        Byte               :  8                         
+# //        Mux                :  1                         
+# //        Output Loading     :  0.01                      
+# //        Clock Input Slew   :  0.016                     
+# //        Data Input Slew    :  0.016                     
+# //        Ring Type          :  Ring Shape Model          
+# //        Ring Width         :  2                         
+# //        Bus Format         :  0                         
+# //        Memaker Path       :  /home/mem/Desktop/memlib  
+# //        GUI Version        :  m20230904                 
+# //        Date               :  2024/10/31 12:57:39       
+# // ________________________________________________________________________________________________
+# // 
+# ///////////////////////////////////////////////////////////////////////////////////
+tfgDefineMem -module "SHKD110_1024X16X8BM1" -array_name "Memory_byte0"
+tfgDefineMem -module "SHKD110_1024X16X8BM1" -array_name "Memory_byte1"
+tfgDefineMem -module "SHKD110_1024X16X8BM1" -array_name "Memory_byte2"
+tfgDefineMem -module "SHKD110_1024X16X8BM1" -array_name "Memory_byte3"
+tfgDefineMem -module "SHKD110_1024X16X8BM1" -array_name "Memory_byte4"
+tfgDefineMem -module "SHKD110_1024X16X8BM1" -array_name "Memory_byte5"
+tfgDefineMem -module "SHKD110_1024X16X8BM1" -array_name "Memory_byte6"
+tfgDefineMem -module "SHKD110_1024X16X8BM1" -array_name "Memory_byte7"
+tfgDefineMemWrite -module "SHKD110_1024X16X8BM1" -array_name "Memory_byte0" -clk "@(posedge CK)" -cond "CS && ~WEB0" -addr "`<->A" -data "{DI15, DI14, DI13, DI12, DI11, DI10, DI9, DI8, DI7, DI6, DI5, DI4, DI3, DI2, DI1, DI0}"
+tfgDefineMemWrite -module "SHKD110_1024X16X8BM1" -array_name "Memory_byte1" -clk "@(posedge CK)" -cond "CS && ~WEB1" -addr "`<->A" -data "{DI31, DI30, DI29, DI28, DI27, DI26, DI25, DI24, DI23, DI22, DI21, DI20, DI19, DI18, DI17, DI16}"
+tfgDefineMemWrite -module "SHKD110_1024X16X8BM1" -array_name "Memory_byte2" -clk "@(posedge CK)" -cond "CS && ~WEB2" -addr "`<->A" -data "{DI47, DI46, DI45, DI44, DI43, DI42, DI41, DI40, DI39, DI38, DI37, DI36, DI35, DI34, DI33, DI32}"
+tfgDefineMemWrite -module "SHKD110_1024X16X8BM1" -array_name "Memory_byte3" -clk "@(posedge CK)" -cond "CS && ~WEB3" -addr "`<->A" -data "{DI63, DI62, DI61, DI60, DI59, DI58, DI57, DI56, DI55, DI54, DI53, DI52, DI51, DI50, DI49, DI48}"
+tfgDefineMemWrite -module "SHKD110_1024X16X8BM1" -array_name "Memory_byte4" -clk "@(posedge CK)" -cond "CS && ~WEB4" -addr "`<->A" -data "{DI79, DI78, DI77, DI76, DI75, DI74, DI73, DI72, DI71, DI70, DI69, DI68, DI67, DI66, DI65, DI64}"
+tfgDefineMemWrite -module "SHKD110_1024X16X8BM1" -array_name "Memory_byte5" -clk "@(posedge CK)" -cond "CS && ~WEB5" -addr "`<->A" -data "{DI95, DI94, DI93, DI92, DI91, DI90, DI89, DI88, DI87, DI86, DI85, DI84, DI83, DI82, DI81, DI80}"
+tfgDefineMemWrite -module "SHKD110_1024X16X8BM1" -array_name "Memory_byte6" -clk "@(posedge CK)" -cond "CS && ~WEB6" -addr "`<->A" -data "{DI111, DI110, DI109, DI108, DI107, DI106, DI105, DI104, DI103, DI102, DI101, DI100, DI99, DI98, DI97, DI96}"
+tfgDefineMemWrite -module "SHKD110_1024X16X8BM1" -array_name "Memory_byte7" -clk "@(posedge CK)" -cond "CS && ~WEB7" -addr "`<->A" -data "{DI127, DI126, DI125, DI124, DI123, DI122, DI121, DI120, DI119, DI118, DI117, DI116, DI115, DI114, DI113, DI112}"
+tfgDefineMemRead -module "SHKD110_1024X16X8BM1" -array_name "Memory_byte0" -clk "@(posedge CK)" -cond "CS && WEB0" -addr "`<->A" -noe "OE" -out "{DO15, DO14, DO13, DO12, DO11, DO10, DO9, DO8, DO7, DO6, DO5, DO4, DO3, DO2, DO1, DO0}"
+tfgDefineMemRead -module "SHKD110_1024X16X8BM1" -array_name "Memory_byte1" -clk "@(posedge CK)" -cond "CS && WEB1" -addr "`<->A" -noe "OE" -out "{DO31, DO30, DO29, DO28, DO27, DO26, DO25, DO24, DO23, DO22, DO21, DO20, DO19, DO18, DO17, DO16}"
+tfgDefineMemRead -module "SHKD110_1024X16X8BM1" -array_name "Memory_byte2" -clk "@(posedge CK)" -cond "CS && WEB2" -addr "`<->A" -noe "OE" -out "{DO47, DO46, DO45, DO44, DO43, DO42, DO41, DO40, DO39, DO38, DO37, DO36, DO35, DO34, DO33, DO32}"
+tfgDefineMemRead -module "SHKD110_1024X16X8BM1" -array_name "Memory_byte3" -clk "@(posedge CK)" -cond "CS && WEB3" -addr "`<->A" -noe "OE" -out "{DO63, DO62, DO61, DO60, DO59, DO58, DO57, DO56, DO55, DO54, DO53, DO52, DO51, DO50, DO49, DO48}"
+tfgDefineMemRead -module "SHKD110_1024X16X8BM1" -array_name "Memory_byte4" -clk "@(posedge CK)" -cond "CS && WEB4" -addr "`<->A" -noe "OE" -out "{DO79, DO78, DO77, DO76, DO75, DO74, DO73, DO72, DO71, DO70, DO69, DO68, DO67, DO66, DO65, DO64}"
+tfgDefineMemRead -module "SHKD110_1024X16X8BM1" -array_name "Memory_byte5" -clk "@(posedge CK)" -cond "CS && WEB5" -addr "`<->A" -noe "OE" -out "{DO95, DO94, DO93, DO92, DO91, DO90, DO89, DO88, DO87, DO86, DO85, DO84, DO83, DO82, DO81, DO80}"
+tfgDefineMemRead -module "SHKD110_1024X16X8BM1" -array_name "Memory_byte6" -clk "@(posedge CK)" -cond "CS && WEB6" -addr "`<->A" -noe "OE" -out "{DO111, DO110, DO109, DO108, DO107, DO106, DO105, DO104, DO103, DO102, DO101, DO100, DO99, DO98, DO97, DO96}"
+tfgDefineMemRead -module "SHKD110_1024X16X8BM1" -array_name "Memory_byte7" -clk "@(posedge CK)" -cond "CS && WEB7" -addr "`<->A" -noe "OE" -out "{DO127, DO126, DO125, DO124, DO123, DO122, DO121, DO120, DO119, DO118, DO117, DO116, DO115, DO114, DO113, DO112}"

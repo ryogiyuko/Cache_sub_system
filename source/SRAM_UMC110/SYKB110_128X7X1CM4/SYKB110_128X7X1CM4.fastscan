@@ -1,0 +1,76 @@
+///////////////////////////////////////////////////////////////////////////////////
+// ________________________________________________________________________________________________
+// 
+// 
+//             Synchronous One-Port Register File Compiler
+// 
+//                 UMC 0.11um LL AE Logic Process
+// 
+// ________________________________________________________________________________________________
+// 
+//               
+//         Copyright (C) 2024 Faraday Technology Corporation. All Rights Reserved.       
+//                
+//         This source code is an unpublished work belongs to Faraday Technology Corporation       
+//         It is considered a trade secret and is not to be divulged or       
+//         used by parties who have not received written authorization from       
+//         Faraday Technology Corporation       
+//                
+//         Faraday's home page can be found at: http://www.faraday-tech.com/       
+//                
+// ________________________________________________________________________________________________
+// 
+//        IP Name            :  FSR0K_B_SY                
+//        IP Version         :  1.4.0                     
+//        IP Release Status  :  Active                    
+//        Word               :  128                       
+//        Bit                :  7                         
+//        Byte               :  1                         
+//        Mux                :  4                         
+//        Output Loading     :  0.01                      
+//        Clock Input Slew   :  0.016                     
+//        Data Input Slew    :  0.016                     
+//        Ring Type          :  Ringless Model            
+//        Ring Width         :  0                         
+//        Bus Format         :  0                         
+//        Memaker Path       :  /home/mem/Desktop/memlib  
+//        GUI Version        :  m20230904                 
+//        Date               :  2024/09/06 21:04:57       
+// ________________________________________________________________________________________________
+// 
+///////////////////////////////////////////////////////////////////////////////////
+
+model SYKB110_128X7X1CM4 (
+    A0, A1, A2, A3, A4, A5, A6,
+    DI0, DI1, DI2, DI3, DI4, DI5, DI6,
+    DO0, DO1, DO2, DO3, DO4, DO5, DO6,
+    WEB,
+    DVS0, DVS1, DVS2, DVS3, DVSE,
+    CK, CSB) (
+
+    input (WEB, CK, CSB) ()
+    input (A0, A1, A2, A3, A4, A5, A6) ()
+    input (DI0, DI1, DI2, DI3, DI4, DI5, DI6) ()
+    input (DVS0, DVS1, DVS2, DVS3) ()
+    input (DVSE) ()
+    intern(WE)(primitive = _inv (WEB, WE);)
+    intern(WECS)(primitive = _and (WE,CS,WECS);)
+    intern(CS)(primitive = _inv (CSB, CS);)
+    intern(WEN)(primitive = _and (WE,CS,WEN);)
+    intern(REN)(primitive = _and (WEB,CS,REN);)
+    intern(OE) (primitive = _tie1 (OE);)
+
+
+    output (DO0, DO1, DO2, DO3, DO4, DO5, DO6) (
+        data_size = 7;
+        address_size = 7;
+        min_address = 0;
+        max_address = 127;
+        edge_trigger = WR;
+        read_write_conflict = XX;
+        primitive = _cram(, ,
+            _write{H,H,H} (CK, WECS, A0, A1, A2, A3, A4, A5, A6, DI0, DI1, DI2, DI3, DI4, DI5, DI6),
+            _read{1,H,H,H} (OE, CK, REN, A0, A1, A2, A3, A4, A5, A6, DO0, DO1, DO2, DO3, DO4, DO5, DO6)
+        );
+    )
+)

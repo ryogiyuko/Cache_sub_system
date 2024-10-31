@@ -1,0 +1,96 @@
+///////////////////////////////////////////////////////////////////////////////////
+// ________________________________________________________________________________________________
+// 
+// 
+//             Synchronous One-Port Register File Compiler
+// 
+//                 UMC 0.11um LL AE Logic Process
+// 
+// ________________________________________________________________________________________________
+// 
+//               
+//         Copyright (C) 2024 Faraday Technology Corporation. All Rights Reserved.       
+//                
+//         This source code is an unpublished work belongs to Faraday Technology Corporation       
+//         It is considered a trade secret and is not to be divulged or       
+//         used by parties who have not received written authorization from       
+//         Faraday Technology Corporation       
+//                
+//         Faraday's home page can be found at: http://www.faraday-tech.com/       
+//                
+// ________________________________________________________________________________________________
+// 
+//        IP Name            :  FSR0K_B_SY                
+//        IP Version         :  1.4.0                     
+//        IP Release Status  :  Active                    
+//        Word               :  128                       
+//        Bit                :  11                        
+//        Byte               :  4                         
+//        Mux                :  2                         
+//        Output Loading     :  0.01                      
+//        Clock Input Slew   :  0.016                     
+//        Data Input Slew    :  0.016                     
+//        Ring Type          :  Ringless Model            
+//        Ring Width         :  0                         
+//        Bus Format         :  0                         
+//        Memaker Path       :  /home/mem/Desktop/memlib  
+//        GUI Version        :  m20230904                 
+//        Date               :  2024/09/07 15:32:15       
+// ________________________________________________________________________________________________
+// 
+///////////////////////////////////////////////////////////////////////////////////
+
+model SYKB110_128X11X4CM2 (
+    A0, A1, A2, A3, A4, A5, A6,
+    DI0, DI1, DI2, DI3, DI4, DI5, DI6, DI7, DI8, DI9, DI10, DI11, DI12, DI13, DI14, DI15, DI16, DI17, DI18, DI19, DI20, DI21, DI22, DI23, DI24, DI25, DI26, DI27, DI28, DI29, DI30, DI31, DI32, DI33, DI34, DI35, DI36, DI37, DI38, DI39, DI40, DI41, DI42, DI43,
+    DO0, DO1, DO2, DO3, DO4, DO5, DO6, DO7, DO8, DO9, DO10, DO11, DO12, DO13, DO14, DO15, DO16, DO17, DO18, DO19, DO20, DO21, DO22, DO23, DO24, DO25, DO26, DO27, DO28, DO29, DO30, DO31, DO32, DO33, DO34, DO35, DO36, DO37, DO38, DO39, DO40, DO41, DO42, DO43,
+    WEB0, WEB1, WEB2, WEB3,
+    DVS0, DVS1, DVS2, DVS3, DVSE,
+    CK, CSB) (
+
+    input (WEB0, WEB1, WEB2, WEB3, CK, CSB) ()
+    input (A0, A1, A2, A3, A4, A5, A6) ()
+    input (DI0, DI1, DI2, DI3, DI4, DI5, DI6, DI7, DI8, DI9, DI10, DI11, DI12, DI13, DI14, DI15, DI16, DI17, DI18, DI19, DI20, DI21, DI22, DI23, DI24, DI25, DI26, DI27, DI28, DI29, DI30, DI31, DI32, DI33, DI34, DI35, DI36, DI37, DI38, DI39, DI40, DI41, DI42, DI43) ()
+    input (DVS0, DVS1, DVS2, DVS3) ()
+    input (DVSE) ()
+    intern(WE0)(primitive = _inv (WEB0, WE0);)
+    intern(WE0CS)(primitive = _and (WE0,CS,WE0CS);)
+    intern(WE1)(primitive = _inv (WEB1, WE1);)
+    intern(WE1CS)(primitive = _and (WE1,CS,WE1CS);)
+    intern(WE2)(primitive = _inv (WEB2, WE2);)
+    intern(WE2CS)(primitive = _and (WE2,CS,WE2CS);)
+    intern(WE3)(primitive = _inv (WEB3, WE3);)
+    intern(WE3CS)(primitive = _and (WE3,CS,WE3CS);)
+    intern(WE)(primitive = _and (WE0, WE1, WE2, WE3, WE);)
+    intern(WEB)(primitive = _inv (WE, WEB);)
+    intern(CS)(primitive = _inv (CSB, CS);)
+    intern(WEN)(primitive = _and (WE,CS,WEN);)
+    intern(REN)(primitive = _and (WEB,CS,REN);)
+    intern(OE) (primitive = _tie1 (OE);)
+
+
+    output (DO0, DO1, DO2, DO3, DO4, DO5, DO6, DO7, DO8, DO9, DO10, DO11, DO12, DO13, DO14, DO15, DO16, DO17, DO18, DO19, DO20, DO21, DO22, DO23, DO24, DO25, DO26, DO27, DO28, DO29, DO30, DO31, DO32, DO33, DO34, DO35, DO36, DO37, DO38, DO39, DO40, DO41, DO42, DO43) (
+        data_size = 11;
+        address_size = 7;
+        min_address = 0;
+        max_address = 127;
+        edge_trigger = WR;
+        read_write_conflict = XX;
+        primitive = _cram(, ,
+            _write{H,H,H} (CK, WE0CS, A0, A1, A2, A3, A4, A5, A6, DI0, DI1, DI2, DI3, DI4, DI5, DI6, DI7, DI8, DI9, DI10),
+            _read{1,H,H,H} (OE, CK, REN, A0, A1, A2, A3, A4, A5, A6, DO0, DO1, DO2, DO3, DO4, DO5, DO6, DO7, DO8, DO9, DO10)
+        );
+        primitive = _cram(, ,
+            _write{H,H,H} (CK, WE1CS, A0, A1, A2, A3, A4, A5, A6, DI11, DI12, DI13, DI14, DI15, DI16, DI17, DI18, DI19, DI20, DI21),
+            _read{1,H,H,H} (OE, CK, REN, A0, A1, A2, A3, A4, A5, A6, DO11, DO12, DO13, DO14, DO15, DO16, DO17, DO18, DO19, DO20, DO21)
+        );
+        primitive = _cram(, ,
+            _write{H,H,H} (CK, WE2CS, A0, A1, A2, A3, A4, A5, A6, DI22, DI23, DI24, DI25, DI26, DI27, DI28, DI29, DI30, DI31, DI32),
+            _read{1,H,H,H} (OE, CK, REN, A0, A1, A2, A3, A4, A5, A6, DO22, DO23, DO24, DO25, DO26, DO27, DO28, DO29, DO30, DO31, DO32)
+        );
+        primitive = _cram(, ,
+            _write{H,H,H} (CK, WE3CS, A0, A1, A2, A3, A4, A5, A6, DI33, DI34, DI35, DI36, DI37, DI38, DI39, DI40, DI41, DI42, DI43),
+            _read{1,H,H,H} (OE, CK, REN, A0, A1, A2, A3, A4, A5, A6, DO33, DO34, DO35, DO36, DO37, DO38, DO39, DO40, DO41, DO42, DO43)
+        );
+    )
+)

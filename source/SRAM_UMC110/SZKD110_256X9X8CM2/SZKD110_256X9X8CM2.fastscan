@@ -1,0 +1,120 @@
+///////////////////////////////////////////////////////////////////////////////////
+// ________________________________________________________________________________________________
+// 
+// 
+//             Synchronous Two-Port Register File Compiler
+// 
+//                 UMC 0.11um LL AE Logic Process
+// 
+// ________________________________________________________________________________________________
+// 
+//               
+//         Copyright (C) 2024 Faraday Technology Corporation. All Rights Reserved.       
+//                
+//         This source code is an unpublished work belongs to Faraday Technology Corporation       
+//         It is considered a trade secret and is not to be divulged or       
+//         used by parties who have not received written authorization from       
+//         Faraday Technology Corporation       
+//                
+//         Faraday's home page can be found at: http://www.faraday-tech.com/       
+//                
+// ________________________________________________________________________________________________
+// 
+//        IP Name            :  FSR0K_D_SZ                
+//        IP Version         :  1.7.0                     
+//        IP Release Status  :  Active                    
+//        Word               :  256                       
+//        Bit                :  9                         
+//        Byte               :  8                         
+//        Mux                :  2                         
+//        Output Loading     :  0.01                      
+//        Clock Input Slew   :  0.016                     
+//        Data Input Slew    :  0.016                     
+//        Ring Type          :  Ringless Model            
+//        Ring Width         :  0                         
+//        Bus Format         :  0                         
+//        Memaker Path       :  /home/mem/Desktop/memlib  
+//        GUI Version        :  m20230904                 
+//        Date               :  2024/09/10 14:56:29       
+// ________________________________________________________________________________________________
+// 
+///////////////////////////////////////////////////////////////////////////////////
+
+model SZKD110_256X9X8CM2 (
+    A0, A1, A2, A3, A4, A5, A6, A7,
+    B0, B1, B2, B3, B4, B5, B6, B7,
+    DI0, DI1, DI2, DI3, DI4, DI5, DI6, DI7, DI8, DI9, DI10, DI11, DI12, DI13, DI14, DI15, DI16, DI17, DI18, DI19, DI20, DI21, DI22, DI23, DI24, DI25, DI26, DI27, DI28, DI29, DI30, DI31, DI32, DI33, DI34, DI35, DI36, DI37, DI38, DI39, DI40, DI41, DI42, DI43, DI44, DI45, DI46, DI47, DI48, DI49, DI50, DI51, DI52, DI53, DI54, DI55, DI56, DI57, DI58, DI59, DI60, DI61, DI62, DI63, DI64, DI65, DI66, DI67, DI68, DI69, DI70, DI71,
+    DO0, DO1, DO2, DO3, DO4, DO5, DO6, DO7, DO8, DO9, DO10, DO11, DO12, DO13, DO14, DO15, DO16, DO17, DO18, DO19, DO20, DO21, DO22, DO23, DO24, DO25, DO26, DO27, DO28, DO29, DO30, DO31, DO32, DO33, DO34, DO35, DO36, DO37, DO38, DO39, DO40, DO41, DO42, DO43, DO44, DO45, DO46, DO47, DO48, DO49, DO50, DO51, DO52, DO53, DO54, DO55, DO56, DO57, DO58, DO59, DO60, DO61, DO62, DO63, DO64, DO65, DO66, DO67, DO68, DO69, DO70, DO71,
+    WEB0, WEB1, WEB2, WEB3, WEB4, WEB5, WEB6, WEB7,
+    CKA, CKB, CSAN, CSBN) (
+
+    input (WEB0, WEB1, WEB2, WEB3, WEB4, WEB5, WEB6, WEB7, CKA, CKB, CSAN, CSBN) ()
+    input (A0, A1, A2, A3, A4, A5, A6, A7) ()
+    input (B0, B1, B2, B3, B4, B5, B6, B7) ()
+    input (DI0, DI1, DI2, DI3, DI4, DI5, DI6, DI7, DI8, DI9, DI10, DI11, DI12, DI13, DI14, DI15, DI16, DI17, DI18, DI19, DI20, DI21, DI22, DI23, DI24, DI25, DI26, DI27, DI28, DI29, DI30, DI31, DI32, DI33, DI34, DI35, DI36, DI37, DI38, DI39, DI40, DI41, DI42, DI43, DI44, DI45, DI46, DI47, DI48, DI49, DI50, DI51, DI52, DI53, DI54, DI55, DI56, DI57, DI58, DI59, DI60, DI61, DI62, DI63, DI64, DI65, DI66, DI67, DI68, DI69, DI70, DI71) ()
+
+    intern(WE0)(primitive = _inv (WEB0, WE0);)
+    intern(WE0CS)(primitive = _and (WE0,CSB,WE0CS);)
+    intern(WE1)(primitive = _inv (WEB1, WE1);)
+    intern(WE1CS)(primitive = _and (WE1,CSB,WE1CS);)
+    intern(WE2)(primitive = _inv (WEB2, WE2);)
+    intern(WE2CS)(primitive = _and (WE2,CSB,WE2CS);)
+    intern(WE3)(primitive = _inv (WEB3, WE3);)
+    intern(WE3CS)(primitive = _and (WE3,CSB,WE3CS);)
+    intern(WE4)(primitive = _inv (WEB4, WE4);)
+    intern(WE4CS)(primitive = _and (WE4,CSB,WE4CS);)
+    intern(WE5)(primitive = _inv (WEB5, WE5);)
+    intern(WE5CS)(primitive = _and (WE5,CSB,WE5CS);)
+    intern(WE6)(primitive = _inv (WEB6, WE6);)
+    intern(WE6CS)(primitive = _and (WE6,CSB,WE6CS);)
+    intern(WE7)(primitive = _inv (WEB7, WE7);)
+    intern(WE7CS)(primitive = _and (WE7,CSB,WE7CS);)
+    intern(WE)(primitive = _and (WE0, WE1, WE2, WE3, WE4, WE5, WE6, WE7, WE);)
+    intern(WEB)(primitive = _inv (WE, WEB);)
+    intern(CSA)(primitive = _inv (CSAN, CSA);)
+    intern(CSB)(primitive = _inv (CSBN, CSB);)
+    intern(WEN)(primitive = _and (WE,CSB,WEN);)
+    intern(REN)(primitive = _and (WEB,CSA,REN);)
+    intern(OE)(primitive = _tie1 (OE);)
+
+    output (DO0, DO1, DO2, DO3, DO4, DO5, DO6, DO7, DO8, DO9, DO10, DO11, DO12, DO13, DO14, DO15, DO16, DO17, DO18, DO19, DO20, DO21, DO22, DO23, DO24, DO25, DO26, DO27, DO28, DO29, DO30, DO31, DO32, DO33, DO34, DO35, DO36, DO37, DO38, DO39, DO40, DO41, DO42, DO43, DO44, DO45, DO46, DO47, DO48, DO49, DO50, DO51, DO52, DO53, DO54, DO55, DO56, DO57, DO58, DO59, DO60, DO61, DO62, DO63, DO64, DO65, DO66, DO67, DO68, DO69, DO70, DO71) (
+        data_size = 9;
+        address_size = 8;
+        min_address = 0;
+        max_address = 255;
+        edge_trigger = WR;
+        read_write_conflict = XX;
+        primitive = _cram(, ,
+            _write{H,H,H} (CKB, WE0CS, B0, B1, B2, B3, B4, B5, B6, B7, DI0, DI1, DI2, DI3, DI4, DI5, DI6, DI7, DI8),
+            _read{1,H,H,H} (OE, CKA, REN, A0, A1, A2, A3, A4, A5, A6, A7, DO0, DO1, DO2, DO3, DO4, DO5, DO6, DO7, DO8)
+        );
+        primitive = _cram(, ,
+            _write{H,H,H} (CKB, WE1CS, B0, B1, B2, B3, B4, B5, B6, B7, DI9, DI10, DI11, DI12, DI13, DI14, DI15, DI16, DI17),
+            _read{1,H,H,H} (OE, CKA, REN, A0, A1, A2, A3, A4, A5, A6, A7, DO9, DO10, DO11, DO12, DO13, DO14, DO15, DO16, DO17)
+        );
+        primitive = _cram(, ,
+            _write{H,H,H} (CKB, WE2CS, B0, B1, B2, B3, B4, B5, B6, B7, DI18, DI19, DI20, DI21, DI22, DI23, DI24, DI25, DI26),
+            _read{1,H,H,H} (OE, CKA, REN, A0, A1, A2, A3, A4, A5, A6, A7, DO18, DO19, DO20, DO21, DO22, DO23, DO24, DO25, DO26)
+        );
+        primitive = _cram(, ,
+            _write{H,H,H} (CKB, WE3CS, B0, B1, B2, B3, B4, B5, B6, B7, DI27, DI28, DI29, DI30, DI31, DI32, DI33, DI34, DI35),
+            _read{1,H,H,H} (OE, CKA, REN, A0, A1, A2, A3, A4, A5, A6, A7, DO27, DO28, DO29, DO30, DO31, DO32, DO33, DO34, DO35)
+        );
+        primitive = _cram(, ,
+            _write{H,H,H} (CKB, WE4CS, B0, B1, B2, B3, B4, B5, B6, B7, DI36, DI37, DI38, DI39, DI40, DI41, DI42, DI43, DI44),
+            _read{1,H,H,H} (OE, CKA, REN, A0, A1, A2, A3, A4, A5, A6, A7, DO36, DO37, DO38, DO39, DO40, DO41, DO42, DO43, DO44)
+        );
+        primitive = _cram(, ,
+            _write{H,H,H} (CKB, WE5CS, B0, B1, B2, B3, B4, B5, B6, B7, DI45, DI46, DI47, DI48, DI49, DI50, DI51, DI52, DI53),
+            _read{1,H,H,H} (OE, CKA, REN, A0, A1, A2, A3, A4, A5, A6, A7, DO45, DO46, DO47, DO48, DO49, DO50, DO51, DO52, DO53)
+        );
+        primitive = _cram(, ,
+            _write{H,H,H} (CKB, WE6CS, B0, B1, B2, B3, B4, B5, B6, B7, DI54, DI55, DI56, DI57, DI58, DI59, DI60, DI61, DI62),
+            _read{1,H,H,H} (OE, CKA, REN, A0, A1, A2, A3, A4, A5, A6, A7, DO54, DO55, DO56, DO57, DO58, DO59, DO60, DO61, DO62)
+        );
+        primitive = _cram(, ,
+            _write{H,H,H} (CKB, WE7CS, B0, B1, B2, B3, B4, B5, B6, B7, DI63, DI64, DI65, DI66, DI67, DI68, DI69, DI70, DI71),
+            _read{1,H,H,H} (OE, CKA, REN, A0, A1, A2, A3, A4, A5, A6, A7, DO63, DO64, DO65, DO66, DO67, DO68, DO69, DO70, DO71)
+        );
+    )
+)

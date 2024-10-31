@@ -1,0 +1,120 @@
+///////////////////////////////////////////////////////////////////////////////////
+// ________________________________________________________________________________________________
+// 
+// 
+//             Synchronous Two-Port Register File Compiler
+// 
+//                 UMC 0.11um LL AE Logic Process
+// 
+// ________________________________________________________________________________________________
+// 
+//               
+//         Copyright (C) 2024 Faraday Technology Corporation. All Rights Reserved.       
+//                
+//         This source code is an unpublished work belongs to Faraday Technology Corporation       
+//         It is considered a trade secret and is not to be divulged or       
+//         used by parties who have not received written authorization from       
+//         Faraday Technology Corporation       
+//                
+//         Faraday's home page can be found at: http://www.faraday-tech.com/       
+//                
+// ________________________________________________________________________________________________
+// 
+//        IP Name            :  FSR0K_D_SZ                
+//        IP Version         :  1.7.0                     
+//        IP Release Status  :  Active                    
+//        Word               :  256                       
+//        Bit                :  9                         
+//        Byte               :  8                         
+//        Mux                :  2                         
+//        Output Loading     :  0.01                      
+//        Clock Input Slew   :  0.016                     
+//        Data Input Slew    :  0.016                     
+//        Ring Type          :  Ringless Model            
+//        Ring Width         :  0                         
+//        Bus Format         :  0                         
+//        Memaker Path       :  /home/mem/Desktop/memlib  
+//        GUI Version        :  m20230904                 
+//        Date               :  2024/09/10 14:55:55       
+// ________________________________________________________________________________________________
+// 
+///////////////////////////////////////////////////////////////////////////////////
+
+model SZKD110_256X9X8CM2 (
+    A7, A6, A5, A4, A3, A2, A1, A0,
+    B7, B6, B5, B4, B3, B2, B1, B0,
+    DI71, DI70, DI69, DI68, DI67, DI66, DI65, DI64, DI63, DI62, DI61, DI60, DI59, DI58, DI57, DI56, DI55, DI54, DI53, DI52, DI51, DI50, DI49, DI48, DI47, DI46, DI45, DI44, DI43, DI42, DI41, DI40, DI39, DI38, DI37, DI36, DI35, DI34, DI33, DI32, DI31, DI30, DI29, DI28, DI27, DI26, DI25, DI24, DI23, DI22, DI21, DI20, DI19, DI18, DI17, DI16, DI15, DI14, DI13, DI12, DI11, DI10, DI9, DI8, DI7, DI6, DI5, DI4, DI3, DI2, DI1, DI0,
+    DO71, DO70, DO69, DO68, DO67, DO66, DO65, DO64, DO63, DO62, DO61, DO60, DO59, DO58, DO57, DO56, DO55, DO54, DO53, DO52, DO51, DO50, DO49, DO48, DO47, DO46, DO45, DO44, DO43, DO42, DO41, DO40, DO39, DO38, DO37, DO36, DO35, DO34, DO33, DO32, DO31, DO30, DO29, DO28, DO27, DO26, DO25, DO24, DO23, DO22, DO21, DO20, DO19, DO18, DO17, DO16, DO15, DO14, DO13, DO12, DO11, DO10, DO9, DO8, DO7, DO6, DO5, DO4, DO3, DO2, DO1, DO0,
+    WEB0, WEB1, WEB2, WEB3, WEB4, WEB5, WEB6, WEB7,    
+    CKA, CKB, CSAN, CSBN) (
+
+    bist_definition (
+        data_out      DO (DO71, DO70, DO69, DO68, DO67, DO66, DO65, DO64, DO63, DO62, DO61, DO60, DO59, DO58, DO57, DO56, DO55, DO54, DO53, DO52, DO51, DO50, DO49, DO48, DO47, DO46, DO45, DO44, DO43, DO42, DO41, DO40, DO39, DO38, DO37, DO36, DO35, DO34, DO33, DO32, DO31, DO30, DO29, DO28, DO27, DO26, DO25, DO24, DO23, DO22, DO21, DO20, DO19, DO18, DO17, DO16, DO15, DO14, DO13, DO12, DO11, DO10, DO9, DO8, DO7, DO6, DO5, DO4, DO3, DO2, DO1, DO0);
+        data_in       DI (DI71, DI70, DI69, DI68, DI67, DI66, DI65, DI64, DI63, DI62, DI61, DI60, DI59, DI58, DI57, DI56, DI55, DI54, DI53, DI52, DI51, DI50, DI49, DI48, DI47, DI46, DI45, DI44, DI43, DI42, DI41, DI40, DI39, DI38, DI37, DI36, DI35, DI34, DI33, DI32, DI31, DI30, DI29, DI28, DI27, DI26, DI25, DI24, DI23, DI22, DI21, DI20, DI19, DI18, DI17, DI16, DI15, DI14, DI13, DI12, DI11, DI10, DI9, DI8, DI7, DI6, DI5, DI4, DI3, DI2, DI1, DI0);
+        address       A (A7, A6, A5, A4, A3, A2, A1, A0);
+        address       B (B7, B6, B5, B4, B3, B2, B1, B0);
+        write_enable  WEB0 low;
+        write_enable  WEB1 low;
+        write_enable  WEB2 low;
+        write_enable  WEB3 low;
+        write_enable  WEB4 low;
+        write_enable  WEB5 low;
+        write_enable  WEB6 low;
+        write_enable  WEB7 low;
+        chip_enable   CSAN low;
+        chip_enable   CSBN low;
+
+        clock         CKA high;
+        clock         CKB high;
+        tech          = FSR0K_w;
+        vendor        = "Faraday Technology Corporation";
+        version       = "FSR0K_D_SZ (ver 1.7.0)";
+        min_address   = 0;
+        max_address   = 255;
+        data_size     = 72;
+        top_column    = 2;
+        top_word      = 1;
+
+        descrambling_definition (
+            address (
+                DSC_A0 = A0;
+                DSC_A1 = A1;
+                DSC_A2 = A2;
+                DSC_A3 = A3;
+                DSC_A4 = A4;
+                DSC_A5 = A5;
+                DSC_A6 = A6;
+                DSC_A7 = A7;
+            )    
+        )
+
+        read_port(
+            read_cycle(
+                assert CSAN;
+                change A;
+                wait;
+                assert CSAN;
+                assert CKA;
+                wait;
+                assert CSAN;
+                expect DO move;
+            )
+        )
+        write_port(
+            write_cycle(
+               assert CSBN;
+               change B;
+               change DI;
+               assert WEB0;
+               assert WEB1;
+               assert WEB2;
+               assert WEB3;
+               assert WEB4;
+               assert WEB5;
+               assert WEB6;
+               assert WEB7;
+               wait;
+            )
+        )
+    )
+)

@@ -1,0 +1,194 @@
+///////////////////////////////////////////////////////////////////////////////////
+// ________________________________________________________________________________________________
+// 
+// 
+//             Synchronous One-Port Register File Compiler
+// 
+//                 UMC 0.11um LL AE Logic Process
+// 
+// ________________________________________________________________________________________________
+// 
+//               
+//         Copyright (C) 2024 Faraday Technology Corporation. All Rights Reserved.       
+//                
+//         This source code is an unpublished work belongs to Faraday Technology Corporation       
+//         It is considered a trade secret and is not to be divulged or       
+//         used by parties who have not received written authorization from       
+//         Faraday Technology Corporation       
+//                
+//         Faraday's home page can be found at: http://www.faraday-tech.com/       
+//                
+// ________________________________________________________________________________________________
+// 
+//        IP Name            :  FSR0K_B_SY                
+//        IP Version         :  1.4.0                     
+//        IP Release Status  :  Active                    
+//        Word               :  32                        
+//        Bit                :  11                        
+//        Byte               :  8                         
+//        Mux                :  2                         
+//        Output Loading     :  0.01                      
+//        Clock Input Slew   :  0.016                     
+//        Data Input Slew    :  0.016                     
+//        Ring Type          :  Ringless Model            
+//        Ring Width         :  0                         
+//        Bus Format         :  0                         
+//        Memaker Path       :  /home/mem/Desktop/memlib  
+//        GUI Version        :  m20230904                 
+//        Date               :  2024/09/06 20:29:02       
+// ________________________________________________________________________________________________
+// 
+///////////////////////////////////////////////////////////////////////////////////
+MemoryTemplate (SYKB110_32X11X8CM2) {
+
+// Suggested Algorithms : SMarchCHKB and LVMarchCMinus;
+    Algorithm               : SMarchCHKB;
+    BitGrouping             : 1;    
+    CellName                : SYKB110_32X11X8CM2;
+    LogicalPorts            : 1RW;
+    MemoryType              : SRAM;
+    MinHold                 : 1;
+    NumberOfBits            : 88;
+    NumberOfWords           : 32;
+    OperationSet            : Sync;
+    TransparentMode         : SyncMux;
+    MilliWattsPerMegaHertz  : 0.0389;
+
+    Port (A%d[4:0]) {
+          Function      : address;
+          Direction     : input;
+          LogicalPort   : A;
+    }
+
+    Port (CK) {
+          Function      : clock;
+          Direction     : input;
+          LogicalPort   : A;
+	  Polarity      : ActiveHigh;
+    }
+    
+    Port (CSB) {
+          Function      : select;
+          Direction     : input;
+          Polarity      : ActiveLow;
+          LogicalPort   : A;
+    }  
+
+    Port (DI%d[87:0]) {
+          Function      : data;
+          Direction     : input;
+          LogicalPort   : A;
+    }    
+
+
+    Port (DO%d[87:0]) {
+          Function      : data;
+          Direction     : output;
+          LogicalPort   : A;
+    }
+
+    Port (WEB7) {
+          Function      : WriteEnable;
+          Direction     : input;
+          Polarity      : ActiveLow;
+          LogicalPort   : A;	  
+	  BitsPerWriteEnable : 11;  
+	  WriteEnableMap : DI87, DI86, DI85, DI84, DI83, DI82, DI81, DI80, DI79, DI78, DI77 ;
+    }
+    Port (WEB6) {
+          Function      : WriteEnable;
+          Direction     : input;
+          Polarity      : ActiveLow;
+          LogicalPort   : A;	  
+	  BitsPerWriteEnable : 11;  
+	  WriteEnableMap : DI76, DI75, DI74, DI73, DI72, DI71, DI70, DI69, DI68, DI67, DI66 ;
+    }
+    Port (WEB5) {
+          Function      : WriteEnable;
+          Direction     : input;
+          Polarity      : ActiveLow;
+          LogicalPort   : A;	  
+	  BitsPerWriteEnable : 11;  
+	  WriteEnableMap : DI65, DI64, DI63, DI62, DI61, DI60, DI59, DI58, DI57, DI56, DI55 ;
+    }
+    Port (WEB4) {
+          Function      : WriteEnable;
+          Direction     : input;
+          Polarity      : ActiveLow;
+          LogicalPort   : A;	  
+	  BitsPerWriteEnable : 11;  
+	  WriteEnableMap : DI54, DI53, DI52, DI51, DI50, DI49, DI48, DI47, DI46, DI45, DI44 ;
+    }
+    Port (WEB3) {
+          Function      : WriteEnable;
+          Direction     : input;
+          Polarity      : ActiveLow;
+          LogicalPort   : A;	  
+	  BitsPerWriteEnable : 11;  
+	  WriteEnableMap : DI43, DI42, DI41, DI40, DI39, DI38, DI37, DI36, DI35, DI34, DI33 ;
+    }
+    Port (WEB2) {
+          Function      : WriteEnable;
+          Direction     : input;
+          Polarity      : ActiveLow;
+          LogicalPort   : A;	  
+	  BitsPerWriteEnable : 11;  
+	  WriteEnableMap : DI32, DI31, DI30, DI29, DI28, DI27, DI26, DI25, DI24, DI23, DI22 ;
+    }
+    Port (WEB1) {
+          Function      : WriteEnable;
+          Direction     : input;
+          Polarity      : ActiveLow;
+          LogicalPort   : A;	  
+	  BitsPerWriteEnable : 11;  
+	  WriteEnableMap : DI21, DI20, DI19, DI18, DI17, DI16, DI15, DI14, DI13, DI12, DI11 ;
+    }
+    Port (WEB0) {
+          Function      : WriteEnable;
+          Direction     : input;
+          Polarity      : ActiveLow;
+          LogicalPort   : A;	  
+	  BitsPerWriteEnable : 11;  
+	  WriteEnableMap : DI10, DI9, DI8, DI7, DI6, DI5, DI4, DI3, DI2, DI1, DI0 ;
+    }
+
+
+    Port (DVS%d[3:0]) {
+          Function      : none;
+          Direction     : input;
+          Polarity      : ActiveHigh;
+          SafeValue     : 0;	
+    }  
+
+    Port (DVSE) {
+          Function      : none;
+          Direction     : input;
+          Polarity      : ActiveHigh;
+          SafeValue     : 0;
+    }
+
+
+    AddressCounter {
+       Function (Address) {
+          LogicalAddressMap {
+             ColumnAddress[0:0] : Address[0:0];
+             RowAddress[3:0] : Address[4:1];
+          }
+       }
+       Function (ColumnAddress) {
+          CountRange [0:1];
+       }
+       Function (RowAddress) {
+          CountRange [0:15];
+       }
+    }
+
+    PhysicalAddressMap {
+                ColumnAddress[0] : c[0];
+                RowAddress[0] : r[0];
+                RowAddress[1] : r[1];
+                RowAddress[2] : r[2];
+                RowAddress[3] : r[3];
+    }
+
+}

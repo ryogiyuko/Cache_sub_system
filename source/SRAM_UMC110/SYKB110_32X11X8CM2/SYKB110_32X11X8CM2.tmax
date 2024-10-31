@@ -1,0 +1,234 @@
+///////////////////////////////////////////////////////////////////////////////////
+// ________________________________________________________________________________________________
+// 
+// 
+//             Synchronous One-Port Register File Compiler
+// 
+//                 UMC 0.11um LL AE Logic Process
+// 
+// ________________________________________________________________________________________________
+// 
+//               
+//         Copyright (C) 2024 Faraday Technology Corporation. All Rights Reserved.       
+//                
+//         This source code is an unpublished work belongs to Faraday Technology Corporation       
+//         It is considered a trade secret and is not to be divulged or       
+//         used by parties who have not received written authorization from       
+//         Faraday Technology Corporation       
+//                
+//         Faraday's home page can be found at: http://www.faraday-tech.com/       
+//                
+// ________________________________________________________________________________________________
+// 
+//        IP Name            :  FSR0K_B_SY                
+//        IP Version         :  1.4.0                     
+//        IP Release Status  :  Active                    
+//        Word               :  32                        
+//        Bit                :  11                        
+//        Byte               :  8                         
+//        Mux                :  2                         
+//        Output Loading     :  0.01                      
+//        Clock Input Slew   :  0.016                     
+//        Data Input Slew    :  0.016                     
+//        Ring Type          :  Ringless Model            
+//        Ring Width         :  0                         
+//        Bus Format         :  0                         
+//        Memaker Path       :  /home/mem/Desktop/memlib  
+//        GUI Version        :  m20230904                 
+//        Date               :  2024/09/06 20:29:02       
+// ________________________________________________________________________________________________
+// 
+///////////////////////////////////////////////////////////////////////////////////
+
+module SYKB110_32X11X8CM2 ( 
+                     A4,A3,A2,A1,A0, 
+                     DO0, DO1, DO2, DO3, DO4, DO5, DO6, DO7, DO8, DO9, DO10, DO11, DO12, DO13, DO14, DO15, DO16, DO17, DO18, DO19, DO20, DO21, DO22, DO23, DO24, DO25, DO26, DO27, DO28, DO29, DO30, DO31, DO32, DO33, DO34, DO35, DO36, DO37, DO38, DO39, DO40, DO41, DO42, DO43, DO44, DO45, DO46, DO47, DO48, DO49, DO50, DO51, DO52, DO53, DO54, DO55, DO56, DO57, DO58, DO59, DO60, DO61, DO62, DO63, DO64, DO65, DO66, DO67, DO68, DO69, DO70, DO71, DO72, DO73, DO74, DO75, DO76, DO77, DO78, DO79, DO80, DO81, DO82, DO83, DO84, DO85, DO86, DO87,
+                     DI0, DI1, DI2, DI3, DI4, DI5, DI6, DI7, DI8, DI9, DI10, DI11, DI12, DI13, DI14, DI15, DI16, DI17, DI18, DI19, DI20, DI21, DI22, DI23, DI24, DI25, DI26, DI27, DI28, DI29, DI30, DI31, DI32, DI33, DI34, DI35, DI36, DI37, DI38, DI39, DI40, DI41, DI42, DI43, DI44, DI45, DI46, DI47, DI48, DI49, DI50, DI51, DI52, DI53, DI54, DI55, DI56, DI57, DI58, DI59, DI60, DI61, DI62, DI63, DI64, DI65, DI66, DI67, DI68, DI69, DI70, DI71, DI72, DI73, DI74, DI75, DI76, DI77, DI78, DI79, DI80, DI81, DI82, DI83, DI84, DI85, DI86, DI87,
+                     DVS0, DVS1, DVS2, DVS3, DVSE,
+                     WEB7,WEB6,WEB5,WEB4,WEB3,WEB2,WEB1,WEB0,CK,CSB);
+                           
+   parameter  AddressSize     = 5;
+   parameter  Bits            = 11;
+   parameter  Words           = 32;
+   parameter  Bytes           = 8;
+   parameter  AddressRepSize  = 3;
+   parameter  DVSize          = 4; 
+ 
+   input  CK, CSB;
+   input  WEB7,WEB6,WEB5,WEB4,WEB3,WEB2,WEB1,WEB0;
+   input  A4,A3,A2,A1,A0;
+   input  DVS0,DVS1,DVS2,DVS3,DVSE;
+   input  DI0,DI1,DI2,DI3,DI4,DI5,DI6,DI7,DI8,DI9,DI10,DI11,DI12,DI13,DI14,DI15,DI16,DI17,DI18,DI19,DI20,DI21,DI22,DI23,DI24,DI25,DI26,DI27,DI28,DI29,DI30,DI31,DI32,DI33,DI34,DI35,DI36,DI37,DI38,DI39,DI40,DI41,DI42,DI43,DI44,DI45,DI46,DI47,DI48,DI49,DI50,DI51,DI52,DI53,DI54,DI55,DI56,DI57,DI58,DI59,DI60,DI61,DI62,DI63,DI64,DI65,DI66,DI67,DI68,DI69,DI70,DI71,DI72,DI73,DI74,DI75,DI76,DI77,DI78,DI79,DI80,DI81,DI82,DI83,DI84,DI85,DI86,DI87; 
+   output DO0,DO1,DO2,DO3,DO4,DO5,DO6,DO7,DO8,DO9,DO10,DO11,DO12,DO13,DO14,DO15,DO16,DO17,DO18,DO19,DO20,DO21,DO22,DO23,DO24,DO25,DO26,DO27,DO28,DO29,DO30,DO31,DO32,DO33,DO34,DO35,DO36,DO37,DO38,DO39,DO40,DO41,DO42,DO43,DO44,DO45,DO46,DO47,DO48,DO49,DO50,DO51,DO52,DO53,DO54,DO55,DO56,DO57,DO58,DO59,DO60,DO61,DO62,DO63,DO64,DO65,DO66,DO67,DO68,DO69,DO70,DO71,DO72,DO73,DO74,DO75,DO76,DO77,DO78,DO79,DO80,DO81,DO82,DO83,DO84,DO85,DO86,DO87;
+
+   reg [Bits-1:0] mem_0 [0:Words-1] ; 
+   reg [Bits-1:0] mem_1 [0:Words-1] ; 
+   reg [Bits-1:0] mem_2 [0:Words-1] ; 
+   reg [Bits-1:0] mem_3 [0:Words-1] ; 
+   reg [Bits-1:0] mem_4 [0:Words-1] ; 
+   reg [Bits-1:0] mem_5 [0:Words-1] ; 
+   reg [Bits-1:0] mem_6 [0:Words-1] ; 
+   reg [Bits-1:0] mem_7 [0:Words-1] ; 
+   reg [Bits-1:0] DO_0 ;   
+   reg [Bits-1:0] DO_1 ;   
+   reg [Bits-1:0] DO_2 ;   
+   reg [Bits-1:0] DO_3 ;   
+   reg [Bits-1:0] DO_4 ;   
+   reg [Bits-1:0] DO_5 ;   
+   reg [Bits-1:0] DO_6 ;   
+   reg [Bits-1:0] DO_7 ;   
+  
+   wire [AddressSize-1:0] A = { A4,A3,A2,A1,A0 }; 
+   wire [Bits-1:0] DI_0 = { DI10,DI9,DI8,DI7,DI6,DI5,DI4,DI3,DI2,DI1,DI0 };         
+   wire [Bits-1:0] DI_1 = { DI21,DI20,DI19,DI18,DI17,DI16,DI15,DI14,DI13,DI12,DI11 };         
+   wire [Bits-1:0] DI_2 = { DI32,DI31,DI30,DI29,DI28,DI27,DI26,DI25,DI24,DI23,DI22 };         
+   wire [Bits-1:0] DI_3 = { DI43,DI42,DI41,DI40,DI39,DI38,DI37,DI36,DI35,DI34,DI33 };         
+   wire [Bits-1:0] DI_4 = { DI54,DI53,DI52,DI51,DI50,DI49,DI48,DI47,DI46,DI45,DI44 };         
+   wire [Bits-1:0] DI_5 = { DI65,DI64,DI63,DI62,DI61,DI60,DI59,DI58,DI57,DI56,DI55 };         
+   wire [Bits-1:0] DI_6 = { DI76,DI75,DI74,DI73,DI72,DI71,DI70,DI69,DI68,DI67,DI66 };         
+   wire [Bits-1:0] DI_7 = { DI87,DI86,DI85,DI84,DI83,DI82,DI81,DI80,DI79,DI78,DI77 };         
+   wire [Bytes-1:0] WEB = { WEB7,WEB6,WEB5,WEB4,WEB3,WEB2,WEB1,WEB0 }; 
+   wire [Bytes*Bits-1:0] DO = { DO_7,DO_6,DO_5,DO_4,DO_3,DO_2,DO_1,DO_0 };     
+   wire DO87 = DO[87] ;     
+   wire DO86 = DO[86] ;     
+   wire DO85 = DO[85] ;     
+   wire DO84 = DO[84] ;     
+   wire DO83 = DO[83] ;     
+   wire DO82 = DO[82] ;     
+   wire DO81 = DO[81] ;     
+   wire DO80 = DO[80] ;     
+   wire DO79 = DO[79] ;     
+   wire DO78 = DO[78] ;     
+   wire DO77 = DO[77] ;     
+   wire DO76 = DO[76] ;     
+   wire DO75 = DO[75] ;     
+   wire DO74 = DO[74] ;     
+   wire DO73 = DO[73] ;     
+   wire DO72 = DO[72] ;     
+   wire DO71 = DO[71] ;     
+   wire DO70 = DO[70] ;     
+   wire DO69 = DO[69] ;     
+   wire DO68 = DO[68] ;     
+   wire DO67 = DO[67] ;     
+   wire DO66 = DO[66] ;     
+   wire DO65 = DO[65] ;     
+   wire DO64 = DO[64] ;     
+   wire DO63 = DO[63] ;     
+   wire DO62 = DO[62] ;     
+   wire DO61 = DO[61] ;     
+   wire DO60 = DO[60] ;     
+   wire DO59 = DO[59] ;     
+   wire DO58 = DO[58] ;     
+   wire DO57 = DO[57] ;     
+   wire DO56 = DO[56] ;     
+   wire DO55 = DO[55] ;     
+   wire DO54 = DO[54] ;     
+   wire DO53 = DO[53] ;     
+   wire DO52 = DO[52] ;     
+   wire DO51 = DO[51] ;     
+   wire DO50 = DO[50] ;     
+   wire DO49 = DO[49] ;     
+   wire DO48 = DO[48] ;     
+   wire DO47 = DO[47] ;     
+   wire DO46 = DO[46] ;     
+   wire DO45 = DO[45] ;     
+   wire DO44 = DO[44] ;     
+   wire DO43 = DO[43] ;     
+   wire DO42 = DO[42] ;     
+   wire DO41 = DO[41] ;     
+   wire DO40 = DO[40] ;     
+   wire DO39 = DO[39] ;     
+   wire DO38 = DO[38] ;     
+   wire DO37 = DO[37] ;     
+   wire DO36 = DO[36] ;     
+   wire DO35 = DO[35] ;     
+   wire DO34 = DO[34] ;     
+   wire DO33 = DO[33] ;     
+   wire DO32 = DO[32] ;     
+   wire DO31 = DO[31] ;     
+   wire DO30 = DO[30] ;     
+   wire DO29 = DO[29] ;     
+   wire DO28 = DO[28] ;     
+   wire DO27 = DO[27] ;     
+   wire DO26 = DO[26] ;     
+   wire DO25 = DO[25] ;     
+   wire DO24 = DO[24] ;     
+   wire DO23 = DO[23] ;     
+   wire DO22 = DO[22] ;     
+   wire DO21 = DO[21] ;     
+   wire DO20 = DO[20] ;     
+   wire DO19 = DO[19] ;     
+   wire DO18 = DO[18] ;     
+   wire DO17 = DO[17] ;     
+   wire DO16 = DO[16] ;     
+   wire DO15 = DO[15] ;     
+   wire DO14 = DO[14] ;     
+   wire DO13 = DO[13] ;     
+   wire DO12 = DO[12] ;     
+   wire DO11 = DO[11] ;     
+   wire DO10 = DO[10] ;     
+   wire DO9 = DO[9] ;     
+   wire DO8 = DO[8] ;     
+   wire DO7 = DO[7] ;     
+   wire DO6 = DO[6] ;     
+   wire DO5 = DO[5] ;     
+   wire DO4 = DO[4] ;     
+   wire DO3 = DO[3] ;     
+   wire DO2 = DO[2] ;     
+   wire DO1 = DO[1] ;     
+   wire DO0 = DO[0] ;     
+
+   wire write_en0;
+   wire write_en1;
+   wire write_en2;
+   wire write_en3;
+   wire write_en4;
+   wire write_en5;
+   wire write_en6;
+   wire write_en7;
+
+   and u10 (write_en0, !WEB[0], !CSB); 
+   and u11 (write_en1, !WEB[1], !CSB); 
+   and u12 (write_en2, !WEB[2], !CSB); 
+   and u13 (write_en3, !WEB[3], !CSB); 
+   and u14 (write_en4, !WEB[4], !CSB); 
+   and u15 (write_en5, !WEB[5], !CSB); 
+   and u16 (write_en6, !WEB[6], !CSB); 
+   and u17 (write_en7, !WEB[7], !CSB); 
+
+   always @ (posedge CK) 
+      if (write_en0) mem_0[A] = DI_0;      
+   always @ (posedge CK) 
+      if (write_en1) mem_1[A] = DI_1;      
+   always @ (posedge CK) 
+      if (write_en2) mem_2[A] = DI_2;      
+   always @ (posedge CK) 
+      if (write_en3) mem_3[A] = DI_3;      
+   always @ (posedge CK) 
+      if (write_en4) mem_4[A] = DI_4;      
+   always @ (posedge CK) 
+      if (write_en5) mem_5[A] = DI_5;      
+   always @ (posedge CK) 
+      if (write_en6) mem_6[A] = DI_6;      
+   always @ (posedge CK) 
+      if (write_en7) mem_7[A] = DI_7;      
+
+   always @ (posedge CK)
+      if (!CSB) DO_0 = mem_0[A];      
+   always @ (posedge CK)
+      if (!CSB) DO_1 = mem_1[A];      
+   always @ (posedge CK)
+      if (!CSB) DO_2 = mem_2[A];      
+   always @ (posedge CK)
+      if (!CSB) DO_3 = mem_3[A];      
+   always @ (posedge CK)
+      if (!CSB) DO_4 = mem_4[A];      
+   always @ (posedge CK)
+      if (!CSB) DO_5 = mem_5[A];      
+   always @ (posedge CK)
+      if (!CSB) DO_6 = mem_6[A];      
+   always @ (posedge CK)
+      if (!CSB) DO_7 = mem_7[A];      
+
+                             
+endmodule
