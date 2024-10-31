@@ -54,7 +54,7 @@ module cArbMerge2_5b_cache #(
   generate
     for (i = 0; i < 2; i = i + 1) begin : pmt_fifo
       assign w_pmtIfreeNext_2[i]=w_sendFire_1 & w_grant_2[i];
-      cPmtFifo1 PmtFifo (
+      cPmtFifo1_retire PmtFifo (
           .i_drive(w_drive[i]),
           .i_freeNext(w_pmtIfreeNext_2[i]),
           .o_free(w_free[i]),
