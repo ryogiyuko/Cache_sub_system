@@ -27,14 +27,14 @@ module CacheTop(
     input i_lsu_drive0_cache, i_lsu_drive1_cache, i_lsu_drive2_cache, i_lsu_drive3_cache,
     output o_lsu_free0_cache, o_lsu_free1_cache, o_lsu_free2_cache, o_lsu_free3_cache,
     input i_freeNext0_lsu, i_freeNext1_lsu, i_freeNext2_lsu, i_freeNext3_lsu,
-    output o_driveNext0_lsu, o_driveNext1_lsu, o_driveNext2_lsu, o_driveNext3_lsu,  //store ï¿½ï¿½É£ï¿½ï¿½ï¿½LSUï¿½Åºï¿½
+    output o_driveNext0_lsu, o_driveNext1_lsu, o_driveNext2_lsu, o_driveNext3_lsu,  //store ??????LSU???
 
     input [33:0] i_lsu_PA0_34, i_lsu_PA1_34, i_lsu_PA2_34,  i_lsu_PA3_34,
     input [31:0] i_lsu_storeData0_32, i_lsu_storeData1_32, i_lsu_storeData2_32, i_lsu_storeData3_32,
 
     input [4:0] i_lsu_rd0_5, i_lsu_rd1_5, i_lsu_rd2_5,  i_lsu_rd3_5, 
     input [5:0] i_lsu_index0_6, i_lsu_index1_6, i_lsu_index2_6, i_lsu_index3_6,
-    input [9:0] i_lsu_flag0_10, i_lsu_flag1_10, i_lsu_flag2_10, i_lsu_flag3_10,  //[9] load_or_store [8] flag(ï¿½ï¿½Î»ï¿½ï¿½Çµï¿½ï¿½ï¿½) [7] ï¿½Ú¼ï¿½ï¿½ï¿½ [6:5] type [4:0] ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½Î»
+    input [9:0] i_lsu_flag0_10, i_lsu_flag1_10, i_lsu_flag2_10, i_lsu_flag3_10,  //[9] load_or_store [8] flag(??¦Ë??????) [7] ????? [6:5] type [4:0] ???????¦Ë
     input i_lsu_bypass0, i_lsu_bypass1, i_lsu_bypass2, i_lsu_bypass3,
 
     output [4:0] o_lsu_rd0_5, o_lsu_rd1_5, o_lsu_rd2_5,  o_lsu_rd3_5,
@@ -60,7 +60,7 @@ module CacheTop(
 
     //retire
     input  i_freeNext_retire_load,
-    output o_driveNext_retire_load,//lsu ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½loadï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½store
+    output o_driveNext_retire_load,//lsu ½öÓĞÒ»¸ö×öload£¬ÆäËûÈı¸ö×östore
 
     output [37:0] o_loadData0_to_retire_38, //i_lsu_index_6 , load_data_32
 
@@ -290,7 +290,7 @@ module CacheTop(
         //wire w_splitter6_drive_arbWrite, w_splitter6_free_arbWrite;
         //wire w_splitter7_drive_arbWrite, w_splitter7_free_arbWrite;
         //o_write_driveNext_DDR, w_DDR_free_cache
-        wire [7:0] w_arbWrite_selBank_8;// ï¿½?ï¿½?ï¿½? arbWrite çš„è¾“ï¿½?
+        wire [7:0] w_arbWrite_selBank_8;// ?????? arbWrite µÄÊä??
     
     //arbRead
         //wire w_mutex0_drive_arbRead, w_mutex0_free_arbRead;
@@ -302,7 +302,7 @@ module CacheTop(
         //wire w_mutex6_drive_arbRead, w_mutex6_free_arbRead;
         //wire w_mutex7_drive_arbRead, w_mutex7_free_arbRead;
         //o_read_driveNext_DDR, w_DDR_free_cache
-        wire [7:0] w_arbRead_selBank_8;// ï¿½?ï¿½?ï¿½? arbRead çš„è¾“ï¿½?
+        wire [7:0] w_arbRead_selBank_8;// ?????? arbRead µÄÊä??
     
     //SelectorRead
         //i_DDR_drive_cache, w_DDR_free_cache 
@@ -448,7 +448,7 @@ module CacheTop(
     Dcache u_Dcache_bank0(
         .rstn                      (rstn                      ),
         .i_lsu_drive              (i_lsu_drive0_cache              ),.i_freeNext_lsu           (i_freeNext0_lsu           ),
-        .o_lsu_free               (               ),.o_driveNext_lsu          (w_driveNext0_lsu          ),//storeÊ±ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½retireï¿½Â¼ï¿½
+        .o_lsu_free               (               ),.o_driveNext_lsu          (w_driveNext0_lsu          ),//store????????retire???
         
         .i_lsu_PA_34              (i_lsu_PA0_34              ),
         .i_lsu_storeData_32       (i_lsu_storeData0_32       ),
@@ -575,7 +575,7 @@ module CacheTop(
     Dcache u_Dcache_bank1(
         .rstn                      (rstn                      ),
         .i_lsu_drive              (i_lsu_drive1_cache              ),.i_freeNext_lsu           (i_freeNext1_lsu           ),
-        .o_lsu_free               (               ),.o_driveNext_lsu          (w_driveNext1_lsu          ),//storeæˆåŠŸæ—¶ç»™
+        .o_lsu_free               (               ),.o_driveNext_lsu          (w_driveNext1_lsu          ),//store³É¹¦Ê±¸ø
         
         .i_lsu_PA_34              (i_lsu_PA1_34              ),
         .i_lsu_storeData_32       (i_lsu_storeData1_32       ),
@@ -701,7 +701,7 @@ module CacheTop(
     Dcache u_Dcache_bank2(
         .rstn                      (rstn                      ),
         .i_lsu_drive              (i_lsu_drive2_cache              ),.i_freeNext_lsu           (i_freeNext2_lsu           ),
-        .o_lsu_free               (               ),.o_driveNext_lsu          (w_driveNext2_lsu          ),//storeæˆåŠŸæ—¶ç»™
+        .o_lsu_free               (               ),.o_driveNext_lsu          (w_driveNext2_lsu          ),//store³É¹¦Ê±¸ø
         
         .i_lsu_PA_34              (i_lsu_PA2_34              ),
         .i_lsu_storeData_32       (i_lsu_storeData2_32       ),
@@ -827,7 +827,7 @@ module CacheTop(
     Dcache u_Dcache_bank3(
         .rstn                      (rstn                      ),
         .i_lsu_drive              (i_lsu_drive3_cache              ),.i_freeNext_lsu           (i_freeNext3_lsu           ),
-        .o_lsu_free               (               ),.o_driveNext_lsu          (w_driveNext3_lsu          ),//storeæˆåŠŸæ—¶ç»™
+        .o_lsu_free               (               ),.o_driveNext_lsu          (w_driveNext3_lsu          ),//store³É¹¦Ê±¸ø
         
         .i_lsu_PA_34              (i_lsu_PA3_34              ),
         .i_lsu_storeData_32       (i_lsu_storeData3_32       ),
@@ -1568,7 +1568,7 @@ module CacheTop(
         .i_data0     (8'b00000001 ),.i_data1 (8'b00000010     ),.i_data2     (8'b00000100     ),.i_data3     (8'b00001000     ),
         .i_data4     (8'b00010000 ),.i_data5 (8'b00100000     ),.i_data6     (8'b01000000     ),.i_data7     (8'b10000000     ),
 
-        .i_freeNext  (w_DDR_free_cache  ), //ä¿æŒo_read_addr_to_DDR_34,ä¿è¯DDRè¯»å‡ºæ•°æ®,ç›´åˆ°selectorReadå†™å®ŒL2
+        .i_freeNext  (w_DDR_free_cache  ), //±£³Öo_read_addr_to_DDR_34,±£Ö¤DDR¶Á³öÊı¾İ,Ö±µ½selectorReadĞ´ÍêL2
         
         .rstn         (rstn         ),
         .o_free0     (    ),.o_free1     (     ),.o_free2     (     ),.o_free3     (     ),
@@ -1578,7 +1578,7 @@ module CacheTop(
         .o_data      (w_arbRead_selBank_8      )
     );
 
-    assign w_mutex0_free_arbRead = i_DDR_drive_cache & w_arbRead_selBank_8[0];//å…ˆäºarbé‡Šæ”¾ï¼Œä¿è¯L2èƒ½è¢«å›å¡«
+    assign w_mutex0_free_arbRead = i_DDR_drive_cache & w_arbRead_selBank_8[0];//ÏÈÓÚarbÊÍ·Å£¬±£Ö¤L2ÄÜ±»»ØÌî
     assign w_mutex1_free_arbRead = i_DDR_drive_cache & w_arbRead_selBank_8[1];
     assign w_mutex2_free_arbRead = i_DDR_drive_cache & w_arbRead_selBank_8[2];
     assign w_mutex3_free_arbRead = i_DDR_drive_cache & w_arbRead_selBank_8[3];
