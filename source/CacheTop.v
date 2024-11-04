@@ -59,10 +59,15 @@ module CacheTop(
     output [255:0] o_instr0_to_ifu_256, o_instr1_to_ifu_256, o_instr2_to_ifu_256, o_instr3_to_ifu_256,
 
     //retire
-    input  i_freeNext_retire_load,
-    output o_driveNext_retire_load,//lsu 仅有一个做load，其他三个做store
+    // input  i_freeNext_retire_load,
+    // output o_driveNext_retire_load,//lsu 仅有一个做load，其他三个做store
 
-    output [37:0] o_loadData0_to_retire_38, //i_lsu_index_6 , load_data_32
+    // output [37:0] o_loadData0_to_retire_38, //i_lsu_index_6 , load_data_32
+    
+    input i_freeNext0_lsu_load, i_freeNext1_lsu_load, i_freeNext2_lsu_load, i_freeNext3_lsu_load,
+    output o_driveNext0_lsu_load, o_driveNext1_lsu_load, o_driveNext2_lsu_load, o_driveNext3_lsu_load,
+    output [37:0] o_loadData0_to_lsu_38, o_loadData1_to_lsu_38, o_loadData2_to_lsu_38, o_loadData3_to_lsu_38,//i_lsu_index_6 , load_data_32, load个数不限制
+
 
     //DDR
     input  i_DDR_drive_cache, i_read_freeNext_DDR,  i_write_freeNext_DDR,
@@ -79,34 +84,56 @@ module CacheTop(
     wire w_driveNext0_retire_load, w_driveNext1_retire_load, w_driveNext2_retire_load, w_driveNext3_retire_load;
     wire [37:0] w_loadData0_to_retire_38, w_loadData1_to_retire_38, w_loadData2_to_retire_38, w_loadData3_to_retire_38 ;//i_lsu_index_6 , load_data_32
 
-    wire mutex_to_retire_delay;
-
-     cMutexMerge4_38b_cache mutex_to_retire(
-        .i_drive0    (  w_driveNext0_retire_load  ),
-        .i_drive1    (  w_driveNext1_retire_load  ),
-        .i_drive2    (  w_driveNext2_retire_load  ),
-        .i_drive3    (  w_driveNext3_retire_load  ),
-        .i_data0     (  w_loadData0_to_retire_38     ),
-        .i_data1     (  w_loadData1_to_retire_38     ),
-        .i_data2     (  w_loadData2_to_retire_38     ),
-        .i_data3     (  w_loadData3_to_retire_38     ),
-
-        .i_freeNext  ( i_freeNext_retire_load  ),
-        .rstn         ( rstn         ),
-
-        .o_free0     (  w_freeNext0_retire_load     ),
-        .o_free1     (  w_freeNext1_retire_load     ),
-        .o_free2     (  w_freeNext2_retire_load     ),
-        .o_free3     (  w_freeNext3_retire_load     ),
-        .o_driveNext (  mutex_to_retire_delay ),
-        .o_data      (  o_loadData0_to_retire_38      )
-    );
-    
-    delay4U out_to_retire_delay(
-        .inR  (mutex_to_retire_delay  ),
+    assign {w_freeNext0_retire_load, w_freeNext1_retire_load, w_freeNext2_retire_load, w_freeNext3_retire_load} = {i_freeNext0_lsu_load, i_freeNext1_lsu_load, i_freeNext2_lsu_load, i_freeNext3_lsu_load};
+    delay4U out_to_lsu_delay0(
+        .inR  (w_driveNext0_retire_load  ),
         .rstn  (rstn  ),
-        .outR (o_driveNext_retire_load )
+        .outR (o_driveNext0_lsu_load )
     );
+    delay4U out_to_lsu_delay1(
+        .inR  (w_driveNext1_retire_load  ),
+        .rstn  (rstn  ),
+        .outR (o_driveNext1_lsu_load )
+    );
+    delay4U out_to_lsu_delay2(
+        .inR  (w_driveNext2_retire_load  ),
+        .rstn  (rstn  ),
+        .outR (o_driveNext2_lsu_load )
+    );
+    delay4U out_to_lsu_delay3(
+        .inR  (w_driveNext3_retire_load  ),
+        .rstn  (rstn  ),
+        .outR (o_driveNext3_lsu_load )
+    );
+    assign {o_loadData0_to_lsu_38, o_loadData1_to_lsu_38, o_loadData2_to_lsu_38, o_loadData3_to_lsu_38} = {w_loadData0_to_retire_38, w_loadData1_to_retire_38, w_loadData2_to_retire_38, w_loadData3_to_retire_38};
+    // wire mutex_to_retire_delay;
+
+    //  cMutexMerge4_38b_cache mutex_to_retire(
+    //     .i_drive0    (  w_driveNext0_retire_load  ),
+    //     .i_drive1    (  w_driveNext1_retire_load  ),
+    //     .i_drive2    (  w_driveNext2_retire_load  ),
+    //     .i_drive3    (  w_driveNext3_retire_load  ),
+    //     .i_data0     (  w_loadData0_to_retire_38     ),
+    //     .i_data1     (  w_loadData1_to_retire_38     ),
+    //     .i_data2     (  w_loadData2_to_retire_38     ),
+    //     .i_data3     (  w_loadData3_to_retire_38     ),
+
+    //     .i_freeNext  ( i_freeNext_retire_load  ),
+    //     .rstn         ( rstn         ),
+
+    //     .o_free0     (  w_freeNext0_retire_load     ),
+    //     .o_free1     (  w_freeNext1_retire_load     ),
+    //     .o_free2     (  w_freeNext2_retire_load     ),
+    //     .o_free3     (  w_freeNext3_retire_load     ),
+    //     .o_driveNext (  mutex_to_retire_delay ),
+    //     .o_data      (  o_loadData0_to_retire_38      )
+    // );
+    
+    // delay4U out_to_retire_delay(
+    //     .inR  (mutex_to_retire_delay  ),
+    //     .rstn  (rstn  ),
+    //     .outR (o_driveNext_retire_load )
+    // );
     
 
 //mutex to ptw

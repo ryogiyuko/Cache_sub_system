@@ -58,10 +58,14 @@ reg [6:0] count = 0;
     reg i_freeNext1_ifu         =0; 
     reg i_freeNext2_ifu         =0; 
     reg i_freeNext3_ifu         =0; 
-    reg [33:0]  i_ifu_PA0_34            =0; 
-    reg [33:0]  i_ifu_PA1_34            =0; 
-    reg [33:0]  i_ifu_PA2_34            =0; 
-    reg [33:0]  i_ifu_PA3_34            =0; 
+    reg [33:0]  i_ifu_PA0_34    =0; 
+    reg [33:0]  i_ifu_PA1_34    =0; 
+    reg [33:0]  i_ifu_PA2_34    =0; 
+    reg [33:0]  i_ifu_PA3_34    =0;
+    reg   i_freeNext0_lsu_load  = 0 ;
+    reg   i_freeNext1_lsu_load  = 0 ;
+    reg   i_freeNext2_lsu_load  = 0 ;
+    reg   i_freeNext3_lsu_load  = 0 ; 
     reg i_freeNext_retire_load  =0; 
     reg i_read_freeNext_DDR     =0; 
     reg i_DDR_drive_cache       =0; 
@@ -111,8 +115,16 @@ reg [6:0] count = 0;
     wire [255:0] o_instr1_to_ifu_256      ;
     wire [255:0] o_instr2_to_ifu_256      ;
     wire [255:0] o_instr3_to_ifu_256      ;
-    wire o_driveNext_retire_load  ;
-    wire [37:0] o_loadData0_to_retire_38 ;
+    wire  o_driveNext0_lsu_load                ;
+    wire  o_driveNext1_lsu_load                ;
+    wire  o_driveNext2_lsu_load                ;
+    wire  o_driveNext3_lsu_load                ;
+    wire  [37:0]  o_loadData0_to_lsu_38        ;
+    wire  [37:0]  o_loadData1_to_lsu_38        ;
+    wire  [37:0]  o_loadData2_to_lsu_38        ;
+    wire  [37:0]  o_loadData3_to_lsu_38        ;
+    // wire o_driveNext_retire_load  ;
+    // wire [37:0] o_loadData0_to_retire_38 ;
     wire o_read_driveNext_DDR     ;
     wire o_DDR_free_cache         ;
     wire o_write_driveNext_DDR    ;
@@ -2371,9 +2383,21 @@ CacheTop u_CacheTop(
     .o_instr1_to_ifu_256      (o_instr1_to_ifu_256      ),
     .o_instr2_to_ifu_256      (o_instr2_to_ifu_256      ),
     .o_instr3_to_ifu_256      (o_instr3_to_ifu_256      ),
-    .i_freeNext_retire_load   (i_freeNext_retire_load   ),
-    .o_driveNext_retire_load  (o_driveNext_retire_load  ),
-    .o_loadData0_to_retire_38 (o_loadData0_to_retire_38 ),
+    .i_freeNext0_lsu_load     ( i_freeNext0_lsu_load             ),
+    .i_freeNext1_lsu_load     ( i_freeNext1_lsu_load             ),
+    .i_freeNext2_lsu_load     ( i_freeNext2_lsu_load             ),
+    .i_freeNext3_lsu_load     ( i_freeNext3_lsu_load             ),
+    .o_driveNext0_lsu_load    ( o_driveNext0_lsu_load            ),
+    .o_driveNext1_lsu_load    ( o_driveNext1_lsu_load            ),
+    .o_driveNext2_lsu_load    ( o_driveNext2_lsu_load            ),
+    .o_driveNext3_lsu_load    ( o_driveNext3_lsu_load            ),
+    .o_loadData0_to_lsu_38    ( o_loadData0_to_lsu_38    [37:0]  ),
+    .o_loadData1_to_lsu_38    ( o_loadData1_to_lsu_38    [37:0]  ),
+    .o_loadData2_to_lsu_38    ( o_loadData2_to_lsu_38    [37:0]  ),
+    .o_loadData3_to_lsu_38    ( o_loadData3_to_lsu_38    [37:0]  ),
+    // .i_freeNext_retire_load   (i_freeNext_retire_load   ),
+    // .o_driveNext_retire_load  (o_driveNext_retire_load  ),
+    // .o_loadData0_to_retire_38 (o_loadData0_to_retire_38 ),
     .i_read_freeNext_DDR      (i_read_freeNext_DDR      ),
     .i_DDR_drive_cache        (i_DDR_drive_cache        ),
     .i_write_freeNext_DDR     (i_write_freeNext_DDR     ),
