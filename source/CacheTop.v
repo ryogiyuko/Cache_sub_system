@@ -23,6 +23,12 @@
 module CacheTop(
     input rstn,
     
+    //init
+    input init_sign,// 1有效，启动初始化
+    input init_clk, init_wea,
+    input [33:0] init_PA_34,
+    input [255:0] init_datain_256,
+
     //lsu
     input i_lsu_drive0_cache, i_lsu_drive1_cache, i_lsu_drive2_cache, i_lsu_drive3_cache,
     output o_lsu_free0_cache, o_lsu_free1_cache, o_lsu_free2_cache, o_lsu_free3_cache,
@@ -31,12 +37,15 @@ module CacheTop(
 
     input [33:0] i_lsu_PA0_34, i_lsu_PA1_34, i_lsu_PA2_34,  i_lsu_PA3_34,
     input [31:0] i_lsu_storeData0_32, i_lsu_storeData1_32, i_lsu_storeData2_32, i_lsu_storeData3_32,
+    input [3:0] i_store0_Type_4, i_store1_Type_4, i_store2_Type_4, i_store3_Type_4, // onehot 4位使能，对应对齐字内的4个字节
 
+    input [1:0] i_store_bypass0_2, i_store_bypass1_2, i_store_bypass2_2, i_store_bypass3_2,
     input [4:0] i_lsu_rd0_5, i_lsu_rd1_5, i_lsu_rd2_5,  i_lsu_rd3_5, 
     input [5:0] i_lsu_index0_6, i_lsu_index1_6, i_lsu_index2_6, i_lsu_index3_6,
     input [9:0] i_lsu_flag0_10, i_lsu_flag1_10, i_lsu_flag2_10, i_lsu_flag3_10,  //[9] load_or_store [8] flag(??λ??????) [7] ????? [6:5] type [4:0] ???????λ
     input i_lsu_bypass0, i_lsu_bypass1, i_lsu_bypass2, i_lsu_bypass3,
 
+    output [1:0] o_store_bypass0_2, o_store_bypass1_2, o_store_bypass2_2, o_store_bypass3_2,
     output [4:0] o_lsu_rd0_5, o_lsu_rd1_5, o_lsu_rd2_5,  o_lsu_rd3_5,
     output [5:0] o_lsu_index0_6, o_lsu_index1_6, o_lsu_index2_6, o_lsu_index3_6,  
     output [9:0] o_lsu_flag0_10, o_lsu_flag1_10, o_lsu_flag2_10, o_lsu_flag3_10, 
@@ -439,6 +448,7 @@ module CacheTop(
         wire [255:0] w_writeBackLine_to_DDR7_32B;
 
 //
+    assign {o_store_bypass0_2, o_store_bypass1_2, o_store_bypass2_2, o_store_bypass3_2 } = {i_store_bypass0_2, i_store_bypass1_2, i_store_bypass2_2, i_store_bypass3_2 } ;
     assign { o_lsu_rd0_5, o_lsu_rd1_5, o_lsu_rd2_5,  o_lsu_rd3_5} = { i_lsu_rd0_5, i_lsu_rd1_5, i_lsu_rd2_5,  i_lsu_rd3_5 } ;
     assign { o_lsu_index0_6, o_lsu_index1_6, o_lsu_index2_6, o_lsu_index3_6 } = { i_lsu_index0_6, i_lsu_index1_6, i_lsu_index2_6, i_lsu_index3_6 };
     assign { o_lsu_flag0_10, o_lsu_flag1_10, o_lsu_flag2_10, o_lsu_flag3_10 } = { i_lsu_flag0_10, i_lsu_flag1_10, i_lsu_flag2_10, i_lsu_flag3_10 };
@@ -477,6 +487,7 @@ module CacheTop(
         .i_lsu_drive              (i_lsu_drive0_cache              ),.i_freeNext_lsu           (i_freeNext0_lsu           ),
         .o_lsu_free               (               ),.o_driveNext_lsu          (w_driveNext0_lsu          ),//store????????retire???
         
+        .i_store_Type_4                 ( i_store0_Type_4                 ),
         .i_lsu_PA_34              (i_lsu_PA0_34              ),
         .i_lsu_storeData_32       (i_lsu_storeData0_32       ),
         .i_lsu_storeIndex_6       (6'b0       ),
@@ -604,6 +615,7 @@ module CacheTop(
         .i_lsu_drive              (i_lsu_drive1_cache              ),.i_freeNext_lsu           (i_freeNext1_lsu           ),
         .o_lsu_free               (               ),.o_driveNext_lsu          (w_driveNext1_lsu          ),//store成功时给
         
+        .i_store_Type_4                 ( i_store1_Type_4                 ),
         .i_lsu_PA_34              (i_lsu_PA1_34              ),
         .i_lsu_storeData_32       (i_lsu_storeData1_32       ),
         .i_lsu_storeIndex_6       (6'b0       ),
@@ -730,6 +742,7 @@ module CacheTop(
         .i_lsu_drive              (i_lsu_drive2_cache              ),.i_freeNext_lsu           (i_freeNext2_lsu           ),
         .o_lsu_free               (               ),.o_driveNext_lsu          (w_driveNext2_lsu          ),//store成功时给
         
+        .i_store_Type_4                 ( i_store2_Type_4                 ),
         .i_lsu_PA_34              (i_lsu_PA2_34              ),
         .i_lsu_storeData_32       (i_lsu_storeData2_32       ),
         .i_lsu_storeIndex_6       (6'b0       ),
@@ -856,6 +869,7 @@ module CacheTop(
         .i_lsu_drive              (i_lsu_drive3_cache              ),.i_freeNext_lsu           (i_freeNext3_lsu           ),
         .o_lsu_free               (               ),.o_driveNext_lsu          (w_driveNext3_lsu          ),//store成功时给
         
+        .i_store_Type_4                 ( i_store3_Type_4                 ),
         .i_lsu_PA_34              (i_lsu_PA3_34              ),
         .i_lsu_storeData_32       (i_lsu_storeData3_32       ),
         .i_lsu_storeIndex_6       (6'b0       ),
@@ -956,6 +970,12 @@ module CacheTop(
     L2Cache u_L2Cache_bank0( //pa[7:5] 000
         .rstn                             (rstn                             ),
         
+        .init_sign                        ( init_sign & (~init_PA_34[7]) & (~init_PA_34[6]) & (~init_PA_34[5])   ),
+        .init_clk                         ( init_clk                                 ),
+        .init_wea                         ( init_wea                                 ),
+        .init_PA_34                       ( init_PA_34                        ),
+        .init_datain_256                  ( init_datain_256                   ),
+
         .i_DCache_miss_drive             ( w_DcacheBank0_miss_selector_drive_L2Bank0 ),.i_DCache_writeBack_drive( w_DcacheBank0_writeBack_selector_drive_L2Bank0  ),.i_freeNext_DCache    ( w_L2Bank0_free_DcacheBank0    ),
         .o_DCache_miss_free              ( w_DcacheBank0_miss_selector_free_L2Bank0  ),.o_DCache_writeBack_free ( w_DcacheBank0_writeBack_selector_free_L2Bank0  ),.o_driveNext_DCache   ( w_L2Bank0_drive_DcacheBank0   ),
         
@@ -1025,6 +1045,12 @@ module CacheTop(
     L2Cache u_L2Cache_bank1( //pa[7:5] 100
         .rstn                             (rstn                             ),
         
+        .init_sign                        ( init_sign & (init_PA_34[7]) & (~init_PA_34[6]) & (~init_PA_34[5])   ),
+        .init_clk                         ( init_clk                                 ),
+        .init_wea                         ( init_wea                                 ),
+        .init_PA_34                       ( init_PA_34                        ),
+        .init_datain_256                  ( init_datain_256                   ),
+
         .i_DCache_miss_drive             ( w_DcacheBank0_miss_selector_drive_L2Bank1 ),.i_DCache_writeBack_drive        ( w_DcacheBank0_writeBack_selector_drive_L2Bank1       ),.i_freeNext_DCache   ( w_L2Bank1_free_DcacheBank0   ),
         .o_DCache_miss_free              ( w_DcacheBank0_miss_selector_free_L2Bank1  ),.o_DCache_writeBack_free         ( w_DcacheBank0_writeBack_selector_free_L2Bank1        ),.o_driveNext_DCache  ( w_L2Bank1_drive_DcacheBank0  ),
         
@@ -1091,9 +1117,15 @@ module CacheTop(
         );
 
 
-    L2Cache u_L2Cache_bank2( //pa[7:5] 000
+    L2Cache u_L2Cache_bank2( //pa[7:5] 001
         .rstn                             (rstn                             ),
         
+        .init_sign                        ( init_sign & (~init_PA_34[7]) & (~init_PA_34[6]) & (init_PA_34[5])   ),
+        .init_clk                         ( init_clk                                 ),
+        .init_wea                         ( init_wea                                 ),
+        .init_PA_34                       ( init_PA_34                        ),
+        .init_datain_256                  ( init_datain_256                   ),
+
         .i_DCache_miss_drive             ( w_DcacheBank1_miss_selector_drive_L2Bank2 ),.i_DCache_writeBack_drive( w_DcacheBank1_writeBack_selector_drive_L2Bank2  ),.i_freeNext_DCache    ( w_L2Bank2_free_DcacheBank1    ),
         .o_DCache_miss_free              ( w_DcacheBank1_miss_selector_free_L2Bank2  ),.o_DCache_writeBack_free ( w_DcacheBank1_writeBack_selector_free_L2Bank2  ),.o_driveNext_DCache   ( w_L2Bank2_drive_DcacheBank1   ),
         
@@ -1160,9 +1192,15 @@ module CacheTop(
         );
 
 
-    L2Cache u_L2Cache_bank3( //pa[7:5] 100
+    L2Cache u_L2Cache_bank3( //pa[7:5] 101
         .rstn                             (rstn                             ),
         
+        .init_sign                        ( init_sign & (init_PA_34[7]) & (~init_PA_34[6]) & (init_PA_34[5])   ),
+        .init_clk                         ( init_clk                                 ),
+        .init_wea                         ( init_wea                                 ),
+        .init_PA_34                       ( init_PA_34                        ),
+        .init_datain_256                  ( init_datain_256                   ),
+
         .i_DCache_miss_drive             ( w_DcacheBank1_miss_selector_drive_L2Bank3 ),.i_DCache_writeBack_drive        ( w_DcacheBank1_writeBack_selector_drive_L2Bank3       ),.i_freeNext_DCache   ( w_L2Bank3_free_DcacheBank1   ),
         .o_DCache_miss_free              ( w_DcacheBank1_miss_selector_free_L2Bank3  ),.o_DCache_writeBack_free         ( w_DcacheBank1_writeBack_selector_free_L2Bank3        ),.o_driveNext_DCache  ( w_L2Bank3_drive_DcacheBank1  ),
         
@@ -1229,9 +1267,15 @@ module CacheTop(
         );
 
 
-    L2Cache u_L2Cache_bank4( //pa[7:5] 000
+    L2Cache u_L2Cache_bank4( //pa[7:5] 010
         .rstn                             (rstn                             ),
         
+        .init_sign                        ( init_sign & (~init_PA_34[7]) & (init_PA_34[6]) & (~init_PA_34[5])   ),
+        .init_clk                         ( init_clk                                 ),
+        .init_wea                         ( init_wea                                 ),
+        .init_PA_34                       ( init_PA_34                        ),
+        .init_datain_256                  ( init_datain_256                   ),
+
         .i_DCache_miss_drive             ( w_DcacheBank2_miss_selector_drive_L2Bank4 ),.i_DCache_writeBack_drive( w_DcacheBank2_writeBack_selector_drive_L2Bank4  ),.i_freeNext_DCache    ( w_L2Bank4_free_DcacheBank2    ),
         .o_DCache_miss_free              ( w_DcacheBank2_miss_selector_free_L2Bank4  ),.o_DCache_writeBack_free ( w_DcacheBank2_writeBack_selector_free_L2Bank4  ),.o_driveNext_DCache   ( w_L2Bank4_drive_DcacheBank2   ),
         
@@ -1298,9 +1342,15 @@ module CacheTop(
         );
 
 
-    L2Cache u_L2Cache_bank5( //pa[7:5] 100
+    L2Cache u_L2Cache_bank5( //pa[7:5] 110
         .rstn                             (rstn                             ),
         
+        .init_sign                        ( init_sign & (~init_PA_34[7]) & (~init_PA_34[6]) & (init_PA_34[5])   ),
+        .init_clk                         ( init_clk                                 ),
+        .init_wea                         ( init_wea                                 ),
+        .init_PA_34                       ( init_PA_34                        ),
+        .init_datain_256                  ( init_datain_256                   ),
+
         .i_DCache_miss_drive             ( w_DcacheBank2_miss_selector_drive_L2Bank5 ),.i_DCache_writeBack_drive        ( w_DcacheBank2_writeBack_selector_drive_L2Bank5       ),.i_freeNext_DCache   ( w_L2Bank5_free_DcacheBank2   ),
         .o_DCache_miss_free              ( w_DcacheBank2_miss_selector_free_L2Bank5  ),.o_DCache_writeBack_free         ( w_DcacheBank2_writeBack_selector_free_L2Bank5        ),.o_driveNext_DCache  ( w_L2Bank5_drive_DcacheBank2  ),
         
@@ -1367,9 +1417,15 @@ module CacheTop(
         );
 
 
-    L2Cache u_L2Cache_bank6( //pa[7:5] 000
+    L2Cache u_L2Cache_bank6( //pa[7:5] 011
         .rstn                             (rstn                             ),
         
+        .init_sign                        ( init_sign & (~init_PA_34[7]) & (init_PA_34[6]) & (init_PA_34[5])   ),
+        .init_clk                         ( init_clk                                 ),
+        .init_wea                         ( init_wea                                 ),
+        .init_PA_34                       ( init_PA_34                        ),
+        .init_datain_256                  ( init_datain_256                   ),
+
         .i_DCache_miss_drive             ( w_DcacheBank3_miss_selector_drive_L2Bank6 ),.i_DCache_writeBack_drive( w_DcacheBank3_writeBack_selector_drive_L2Bank6  ),.i_freeNext_DCache    ( w_L2Bank6_free_DcacheBank3    ),
         .o_DCache_miss_free              ( w_DcacheBank3_miss_selector_free_L2Bank6  ),.o_DCache_writeBack_free ( w_DcacheBank3_writeBack_selector_free_L2Bank6  ),.o_driveNext_DCache   ( w_L2Bank6_drive_DcacheBank3   ),
         
@@ -1435,9 +1491,15 @@ module CacheTop(
             .o_data      (   )
         );
 
-    L2Cache u_L2Cache_bank7( //pa[7:5] 100
+    L2Cache u_L2Cache_bank7( //pa[7:5] 111
         .rstn                             (rstn                             ),
-        
+
+        .init_sign                        ( init_sign & (init_PA_34[7]) & (init_PA_34[6]) & (init_PA_34[5])   ),
+        .init_clk                         ( init_clk                                 ),
+        .init_wea                         ( init_wea                                 ),
+        .init_PA_34                       ( init_PA_34                        ),
+        .init_datain_256                  ( init_datain_256                   ),
+
         .i_DCache_miss_drive             ( w_DcacheBank3_miss_selector_drive_L2Bank7 ),.i_DCache_writeBack_drive        ( w_DcacheBank3_writeBack_selector_drive_L2Bank7       ),.i_freeNext_DCache   ( w_L2Bank7_free_DcacheBank3   ),
         .o_DCache_miss_free              ( w_DcacheBank3_miss_selector_free_L2Bank7  ),.o_DCache_writeBack_free         ( w_DcacheBank3_writeBack_selector_free_L2Bank7        ),.o_driveNext_DCache  ( w_L2Bank7_drive_DcacheBank3  ),
         

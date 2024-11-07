@@ -1,0 +1,168 @@
+///////////////////////////////////////////////////////////////////////////////////
+// ________________________________________________________________________________________________
+// 
+// 
+//             Synchronous One-Port Register File Compiler
+// 
+//                 UMC 0.11um LL AE Logic Process
+// 
+// ________________________________________________________________________________________________
+// 
+//               
+//         Copyright (C) 2024 Faraday Technology Corporation. All Rights Reserved.       
+//                
+//         This source code is an unpublished work belongs to Faraday Technology Corporation       
+//         It is considered a trade secret and is not to be divulged or       
+//         used by parties who have not received written authorization from       
+//         Faraday Technology Corporation       
+//                
+//         Faraday's home page can be found at: http://www.faraday-tech.com/       
+//                
+// ________________________________________________________________________________________________
+// 
+//        IP Name            :  FSR0K_B_SY                
+//        IP Version         :  1.4.0                     
+//        IP Release Status  :  Active                    
+//        Word               :  32                        
+//        Bit                :  8                         
+//        Byte               :  16                        
+//        Mux                :  2                         
+//        Output Loading     :  0.01                      
+//        Clock Input Slew   :  0.016                     
+//        Data Input Slew    :  0.016                     
+//        Ring Type          :  Ringless Model            
+//        Ring Width         :  0                         
+//        Bus Format         :  0                         
+//        Memaker Path       :  /home/mem/Desktop/memlib  
+//        GUI Version        :  m20230904                 
+//        Date               :  2024/11/05 22:37:38       
+// ________________________________________________________________________________________________
+// 
+///////////////////////////////////////////////////////////////////////////////////
+
+model SYKB110_32X8X16CM2 (
+    A0, A1, A2, A3, A4,
+    DI0, DI1, DI2, DI3, DI4, DI5, DI6, DI7, DI8, DI9, DI10, DI11, DI12, DI13, DI14, DI15, DI16, DI17, DI18, DI19, DI20, DI21, DI22, DI23, DI24, DI25, DI26, DI27, DI28, DI29, DI30, DI31, DI32, DI33, DI34, DI35, DI36, DI37, DI38, DI39, DI40, DI41, DI42, DI43, DI44, DI45, DI46, DI47, DI48, DI49, DI50, DI51, DI52, DI53, DI54, DI55, DI56, DI57, DI58, DI59, DI60, DI61, DI62, DI63, DI64, DI65, DI66, DI67, DI68, DI69, DI70, DI71, DI72, DI73, DI74, DI75, DI76, DI77, DI78, DI79, DI80, DI81, DI82, DI83, DI84, DI85, DI86, DI87, DI88, DI89, DI90, DI91, DI92, DI93, DI94, DI95, DI96, DI97, DI98, DI99, DI100, DI101, DI102, DI103, DI104, DI105, DI106, DI107, DI108, DI109, DI110, DI111, DI112, DI113, DI114, DI115, DI116, DI117, DI118, DI119, DI120, DI121, DI122, DI123, DI124, DI125, DI126, DI127,
+    DO0, DO1, DO2, DO3, DO4, DO5, DO6, DO7, DO8, DO9, DO10, DO11, DO12, DO13, DO14, DO15, DO16, DO17, DO18, DO19, DO20, DO21, DO22, DO23, DO24, DO25, DO26, DO27, DO28, DO29, DO30, DO31, DO32, DO33, DO34, DO35, DO36, DO37, DO38, DO39, DO40, DO41, DO42, DO43, DO44, DO45, DO46, DO47, DO48, DO49, DO50, DO51, DO52, DO53, DO54, DO55, DO56, DO57, DO58, DO59, DO60, DO61, DO62, DO63, DO64, DO65, DO66, DO67, DO68, DO69, DO70, DO71, DO72, DO73, DO74, DO75, DO76, DO77, DO78, DO79, DO80, DO81, DO82, DO83, DO84, DO85, DO86, DO87, DO88, DO89, DO90, DO91, DO92, DO93, DO94, DO95, DO96, DO97, DO98, DO99, DO100, DO101, DO102, DO103, DO104, DO105, DO106, DO107, DO108, DO109, DO110, DO111, DO112, DO113, DO114, DO115, DO116, DO117, DO118, DO119, DO120, DO121, DO122, DO123, DO124, DO125, DO126, DO127,
+    WEB0, WEB1, WEB2, WEB3, WEB4, WEB5, WEB6, WEB7, WEB8, WEB9, WEB10, WEB11, WEB12, WEB13, WEB14, WEB15,
+    DVS0, DVS1, DVS2, DVS3, DVSE,
+    CK, CSB) (
+
+    input (WEB0, WEB1, WEB2, WEB3, WEB4, WEB5, WEB6, WEB7, WEB8, WEB9, WEB10, WEB11, WEB12, WEB13, WEB14, WEB15, CK, CSB) ()
+    input (A0, A1, A2, A3, A4) ()
+    input (DI0, DI1, DI2, DI3, DI4, DI5, DI6, DI7, DI8, DI9, DI10, DI11, DI12, DI13, DI14, DI15, DI16, DI17, DI18, DI19, DI20, DI21, DI22, DI23, DI24, DI25, DI26, DI27, DI28, DI29, DI30, DI31, DI32, DI33, DI34, DI35, DI36, DI37, DI38, DI39, DI40, DI41, DI42, DI43, DI44, DI45, DI46, DI47, DI48, DI49, DI50, DI51, DI52, DI53, DI54, DI55, DI56, DI57, DI58, DI59, DI60, DI61, DI62, DI63, DI64, DI65, DI66, DI67, DI68, DI69, DI70, DI71, DI72, DI73, DI74, DI75, DI76, DI77, DI78, DI79, DI80, DI81, DI82, DI83, DI84, DI85, DI86, DI87, DI88, DI89, DI90, DI91, DI92, DI93, DI94, DI95, DI96, DI97, DI98, DI99, DI100, DI101, DI102, DI103, DI104, DI105, DI106, DI107, DI108, DI109, DI110, DI111, DI112, DI113, DI114, DI115, DI116, DI117, DI118, DI119, DI120, DI121, DI122, DI123, DI124, DI125, DI126, DI127) ()
+    input (DVS0, DVS1, DVS2, DVS3) ()
+    input (DVSE) ()
+    intern(WE0)(primitive = _inv (WEB0, WE0);)
+    intern(WE0CS)(primitive = _and (WE0,CS,WE0CS);)
+    intern(WE1)(primitive = _inv (WEB1, WE1);)
+    intern(WE1CS)(primitive = _and (WE1,CS,WE1CS);)
+    intern(WE2)(primitive = _inv (WEB2, WE2);)
+    intern(WE2CS)(primitive = _and (WE2,CS,WE2CS);)
+    intern(WE3)(primitive = _inv (WEB3, WE3);)
+    intern(WE3CS)(primitive = _and (WE3,CS,WE3CS);)
+    intern(WE4)(primitive = _inv (WEB4, WE4);)
+    intern(WE4CS)(primitive = _and (WE4,CS,WE4CS);)
+    intern(WE5)(primitive = _inv (WEB5, WE5);)
+    intern(WE5CS)(primitive = _and (WE5,CS,WE5CS);)
+    intern(WE6)(primitive = _inv (WEB6, WE6);)
+    intern(WE6CS)(primitive = _and (WE6,CS,WE6CS);)
+    intern(WE7)(primitive = _inv (WEB7, WE7);)
+    intern(WE7CS)(primitive = _and (WE7,CS,WE7CS);)
+    intern(WE8)(primitive = _inv (WEB8, WE8);)
+    intern(WE8CS)(primitive = _and (WE8,CS,WE8CS);)
+    intern(WE9)(primitive = _inv (WEB9, WE9);)
+    intern(WE9CS)(primitive = _and (WE9,CS,WE9CS);)
+    intern(WE10)(primitive = _inv (WEB10, WE10);)
+    intern(WE10CS)(primitive = _and (WE10,CS,WE10CS);)
+    intern(WE11)(primitive = _inv (WEB11, WE11);)
+    intern(WE11CS)(primitive = _and (WE11,CS,WE11CS);)
+    intern(WE12)(primitive = _inv (WEB12, WE12);)
+    intern(WE12CS)(primitive = _and (WE12,CS,WE12CS);)
+    intern(WE13)(primitive = _inv (WEB13, WE13);)
+    intern(WE13CS)(primitive = _and (WE13,CS,WE13CS);)
+    intern(WE14)(primitive = _inv (WEB14, WE14);)
+    intern(WE14CS)(primitive = _and (WE14,CS,WE14CS);)
+    intern(WE15)(primitive = _inv (WEB15, WE15);)
+    intern(WE15CS)(primitive = _and (WE15,CS,WE15CS);)
+    intern(WE)(primitive = _and (WE0, WE1, WE2, WE3, WE4, WE5, WE6, WE7, WE8, WE9, WE10, WE11, WE12, WE13, WE14, WE15, WE);)
+    intern(WEB)(primitive = _inv (WE, WEB);)
+    intern(CS)(primitive = _inv (CSB, CS);)
+    intern(WEN)(primitive = _and (WE,CS,WEN);)
+    intern(REN)(primitive = _and (WEB,CS,REN);)
+    intern(OE) (primitive = _tie1 (OE);)
+
+
+    output (DO0, DO1, DO2, DO3, DO4, DO5, DO6, DO7, DO8, DO9, DO10, DO11, DO12, DO13, DO14, DO15, DO16, DO17, DO18, DO19, DO20, DO21, DO22, DO23, DO24, DO25, DO26, DO27, DO28, DO29, DO30, DO31, DO32, DO33, DO34, DO35, DO36, DO37, DO38, DO39, DO40, DO41, DO42, DO43, DO44, DO45, DO46, DO47, DO48, DO49, DO50, DO51, DO52, DO53, DO54, DO55, DO56, DO57, DO58, DO59, DO60, DO61, DO62, DO63, DO64, DO65, DO66, DO67, DO68, DO69, DO70, DO71, DO72, DO73, DO74, DO75, DO76, DO77, DO78, DO79, DO80, DO81, DO82, DO83, DO84, DO85, DO86, DO87, DO88, DO89, DO90, DO91, DO92, DO93, DO94, DO95, DO96, DO97, DO98, DO99, DO100, DO101, DO102, DO103, DO104, DO105, DO106, DO107, DO108, DO109, DO110, DO111, DO112, DO113, DO114, DO115, DO116, DO117, DO118, DO119, DO120, DO121, DO122, DO123, DO124, DO125, DO126, DO127) (
+        data_size = 8;
+        address_size = 5;
+        min_address = 0;
+        max_address = 31;
+        edge_trigger = WR;
+        read_write_conflict = XX;
+        primitive = _cram(, ,
+            _write{H,H,H} (CK, WE0CS, A0, A1, A2, A3, A4, DI0, DI1, DI2, DI3, DI4, DI5, DI6, DI7),
+            _read{1,H,H,H} (OE, CK, REN, A0, A1, A2, A3, A4, DO0, DO1, DO2, DO3, DO4, DO5, DO6, DO7)
+        );
+        primitive = _cram(, ,
+            _write{H,H,H} (CK, WE1CS, A0, A1, A2, A3, A4, DI8, DI9, DI10, DI11, DI12, DI13, DI14, DI15),
+            _read{1,H,H,H} (OE, CK, REN, A0, A1, A2, A3, A4, DO8, DO9, DO10, DO11, DO12, DO13, DO14, DO15)
+        );
+        primitive = _cram(, ,
+            _write{H,H,H} (CK, WE2CS, A0, A1, A2, A3, A4, DI16, DI17, DI18, DI19, DI20, DI21, DI22, DI23),
+            _read{1,H,H,H} (OE, CK, REN, A0, A1, A2, A3, A4, DO16, DO17, DO18, DO19, DO20, DO21, DO22, DO23)
+        );
+        primitive = _cram(, ,
+            _write{H,H,H} (CK, WE3CS, A0, A1, A2, A3, A4, DI24, DI25, DI26, DI27, DI28, DI29, DI30, DI31),
+            _read{1,H,H,H} (OE, CK, REN, A0, A1, A2, A3, A4, DO24, DO25, DO26, DO27, DO28, DO29, DO30, DO31)
+        );
+        primitive = _cram(, ,
+            _write{H,H,H} (CK, WE4CS, A0, A1, A2, A3, A4, DI32, DI33, DI34, DI35, DI36, DI37, DI38, DI39),
+            _read{1,H,H,H} (OE, CK, REN, A0, A1, A2, A3, A4, DO32, DO33, DO34, DO35, DO36, DO37, DO38, DO39)
+        );
+        primitive = _cram(, ,
+            _write{H,H,H} (CK, WE5CS, A0, A1, A2, A3, A4, DI40, DI41, DI42, DI43, DI44, DI45, DI46, DI47),
+            _read{1,H,H,H} (OE, CK, REN, A0, A1, A2, A3, A4, DO40, DO41, DO42, DO43, DO44, DO45, DO46, DO47)
+        );
+        primitive = _cram(, ,
+            _write{H,H,H} (CK, WE6CS, A0, A1, A2, A3, A4, DI48, DI49, DI50, DI51, DI52, DI53, DI54, DI55),
+            _read{1,H,H,H} (OE, CK, REN, A0, A1, A2, A3, A4, DO48, DO49, DO50, DO51, DO52, DO53, DO54, DO55)
+        );
+        primitive = _cram(, ,
+            _write{H,H,H} (CK, WE7CS, A0, A1, A2, A3, A4, DI56, DI57, DI58, DI59, DI60, DI61, DI62, DI63),
+            _read{1,H,H,H} (OE, CK, REN, A0, A1, A2, A3, A4, DO56, DO57, DO58, DO59, DO60, DO61, DO62, DO63)
+        );
+        primitive = _cram(, ,
+            _write{H,H,H} (CK, WE8CS, A0, A1, A2, A3, A4, DI64, DI65, DI66, DI67, DI68, DI69, DI70, DI71),
+            _read{1,H,H,H} (OE, CK, REN, A0, A1, A2, A3, A4, DO64, DO65, DO66, DO67, DO68, DO69, DO70, DO71)
+        );
+        primitive = _cram(, ,
+            _write{H,H,H} (CK, WE9CS, A0, A1, A2, A3, A4, DI72, DI73, DI74, DI75, DI76, DI77, DI78, DI79),
+            _read{1,H,H,H} (OE, CK, REN, A0, A1, A2, A3, A4, DO72, DO73, DO74, DO75, DO76, DO77, DO78, DO79)
+        );
+        primitive = _cram(, ,
+            _write{H,H,H} (CK, WE10CS, A0, A1, A2, A3, A4, DI80, DI81, DI82, DI83, DI84, DI85, DI86, DI87),
+            _read{1,H,H,H} (OE, CK, REN, A0, A1, A2, A3, A4, DO80, DO81, DO82, DO83, DO84, DO85, DO86, DO87)
+        );
+        primitive = _cram(, ,
+            _write{H,H,H} (CK, WE11CS, A0, A1, A2, A3, A4, DI88, DI89, DI90, DI91, DI92, DI93, DI94, DI95),
+            _read{1,H,H,H} (OE, CK, REN, A0, A1, A2, A3, A4, DO88, DO89, DO90, DO91, DO92, DO93, DO94, DO95)
+        );
+        primitive = _cram(, ,
+            _write{H,H,H} (CK, WE12CS, A0, A1, A2, A3, A4, DI96, DI97, DI98, DI99, DI100, DI101, DI102, DI103),
+            _read{1,H,H,H} (OE, CK, REN, A0, A1, A2, A3, A4, DO96, DO97, DO98, DO99, DO100, DO101, DO102, DO103)
+        );
+        primitive = _cram(, ,
+            _write{H,H,H} (CK, WE13CS, A0, A1, A2, A3, A4, DI104, DI105, DI106, DI107, DI108, DI109, DI110, DI111),
+            _read{1,H,H,H} (OE, CK, REN, A0, A1, A2, A3, A4, DO104, DO105, DO106, DO107, DO108, DO109, DO110, DO111)
+        );
+        primitive = _cram(, ,
+            _write{H,H,H} (CK, WE14CS, A0, A1, A2, A3, A4, DI112, DI113, DI114, DI115, DI116, DI117, DI118, DI119),
+            _read{1,H,H,H} (OE, CK, REN, A0, A1, A2, A3, A4, DO112, DO113, DO114, DO115, DO116, DO117, DO118, DO119)
+        );
+        primitive = _cram(, ,
+            _write{H,H,H} (CK, WE15CS, A0, A1, A2, A3, A4, DI120, DI121, DI122, DI123, DI124, DI125, DI126, DI127),
+            _read{1,H,H,H} (OE, CK, REN, A0, A1, A2, A3, A4, DO120, DO121, DO122, DO123, DO124, DO125, DO126, DO127)
+        );
+    )
+)

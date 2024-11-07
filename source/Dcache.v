@@ -27,6 +27,7 @@ module Dcache(
     input i_lsu_drive,  i_freeNext_lsu,
     output o_lsu_free, o_driveNext_lsu,
 
+    input [3:0] i_store_Type_4, // onehot 4位使能，对应对齐字内的4个字节
     input [33:0]    i_lsu_PA_34,
     input [31:0]    i_lsu_storeData_32,
     input [5:0]     i_lsu_storeIndex_6, //��ţ�д��ɺ󷢻�LSU
@@ -273,6 +274,9 @@ module Dcache(
         else w_write_or_refill = 1'b0;
     end
 
+    wire w_write_or_writeBack; //1 write
+    assign w_write_or_writeBack = r_case_number_6[5] | r_case_number_6[4];
+
     assign w_dataSRAM0_write_enable = ((r_case_number_6[5] | r_case_number_6[4]) & ~r_dcache_offset_12[4] ) | r_case_number_6[3] |r_case_number_6[1];
     assign w_dataSRAM1_write_enable =((r_case_number_6[5] |r_case_number_6[4]) & r_dcache_offset_12[4] ) | r_case_number_6[3] |r_case_number_6[1];
     assign w_tagSRAM_write_enable = r_case_number_6[1];
@@ -367,6 +371,8 @@ module Dcache(
     .wea(w_dataSRAM0_write_enable),      // input wire [0 : 0] wea
     .addra(w_Data_SRAM_addr_9),  // input wire [8 : 0] addra  //Dcache_ram_addr_9 = i_lsu_addr_offset_12[11:7]+write_enable ? 3'b0 : sel_way_3+i_lsu_addr_offset_12[3]
     .dina(w_dataSRAM0_datain_64),    // input wire [63 : 0] dina
+    .i_store_Type_4          ( i_store_Type_4              ),
+    .w_write_or_writeBack    ( w_write_or_writeBack             ),
     .douta({w_dataSRAM_out_way7_32B[127:0], w_dataSRAM_out_way6_32B[127:0], w_dataSRAM_out_way5_32B[127:0], w_dataSRAM_out_way4_32B[127:0], w_dataSRAM_out_way3_32B[127:0], w_dataSRAM_out_way2_32B[127:0], w_dataSRAM_out_way1_32B[127:0], w_dataSRAM_out_way0_32B[127:0]})  // output wire [1023 : 0] douta
     );
 
@@ -377,6 +383,8 @@ module Dcache(
     .wea(w_dataSRAM1_write_enable),      // input wire [0 : 0] wea
     .addra(w_Data_SRAM_addr_9),  // input wire [8 : 0] addra
     .dina(w_dataSRAM1_datain_64),    // input wire [63 : 0] dina
+    .i_store_Type_4          ( i_store_Type_4              ),
+    .w_write_or_writeBack    ( w_write_or_writeBack             ),
     .douta({w_dataSRAM_out_way7_32B[255:128], w_dataSRAM_out_way6_32B[255:128], w_dataSRAM_out_way5_32B[255:128], w_dataSRAM_out_way4_32B[255:128], w_dataSRAM_out_way3_32B[255:128], w_dataSRAM_out_way2_32B[255:128], w_dataSRAM_out_way1_32B[255:128], w_dataSRAM_out_way0_32B[255:128]})  // output wire [1023 : 0] douta
     );
 

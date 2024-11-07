@@ -1,0 +1,9 @@
+li	s10,0
+li	s11,0
+auipc	ra,0x8
+addi	ra,ra,-8 
+lw	t5,0(ra)
+lui	t4,0xff0
+addi	t4,t4,255
+li	gp,2
+bne	t5,t4,294 

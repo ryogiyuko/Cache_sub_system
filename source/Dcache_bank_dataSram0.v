@@ -14,6 +14,8 @@ module Dcache_bank_dataSram0(
     input wire clka,ena,wea,
     input wire  [8 : 0] addra, // [3:0] 位用于写，[8:4]决定读
     input wire [63 : 0] dina,
+    input wire [3:0] i_store_Type_4, // onehot 4位使能，对应对齐字内的4个字节
+    input wire w_write_or_writeBack,  //1 write
     output wire [1023 : 0] douta
 );
 
@@ -41,7 +43,7 @@ module Dcache_bank_dataSram0(
 
     assign douta = { RAM7_data_out, RAM6_data_out, RAM5_data_out, RAM4_data_out, RAM3_data_out, RAM2_data_out, RAM1_data_out, RAM0_data_out};
 
-    wire [7:0]  w_WEB0_8, w_WEB1_8, w_WEB2_8, w_WEB3_8, w_WEB4_8, w_WEB5_8, w_WEB6_8, w_WEB7_8;
+    wire [15:0]  w_WEB0, w_WEB1, w_WEB2, w_WEB3, w_WEB4, w_WEB5, w_WEB6, w_WEB7;
 
     always @( *) begin
         case (addra[3:1])
@@ -75,24 +77,51 @@ module Dcache_bank_dataSram0(
         endcase
     end
 
-    assign w_WEB0_8[3:0] = { 4{ wea & w_sel_SRAM_8[0] & {~addra[0]} }};
-    assign w_WEB0_8[7:4] = { 4{ wea & w_sel_SRAM_8[0] & { addra[0]} }};
-    assign w_WEB1_8[3:0] = { 4{ wea & w_sel_SRAM_8[1] & {~addra[0]} }};
-    assign w_WEB1_8[7:4] = { 4{ wea & w_sel_SRAM_8[1] & { addra[0]} }};
-    assign w_WEB2_8[3:0] = { 4{ wea & w_sel_SRAM_8[2] & {~addra[0]} }};
-    assign w_WEB2_8[7:4] = { 4{ wea & w_sel_SRAM_8[2] & { addra[0]} }};
-    assign w_WEB3_8[3:0] = { 4{ wea & w_sel_SRAM_8[3] & {~addra[0]} }};
-    assign w_WEB3_8[7:4] = { 4{ wea & w_sel_SRAM_8[3] & { addra[0]} }};
-    assign w_WEB4_8[3:0] = { 4{ wea & w_sel_SRAM_8[4] & {~addra[0]} }};
-    assign w_WEB4_8[7:4] = { 4{ wea & w_sel_SRAM_8[4] & { addra[0]} }};
-    assign w_WEB5_8[3:0] = { 4{ wea & w_sel_SRAM_8[5] & {~addra[0]} }};
-    assign w_WEB5_8[7:4] = { 4{ wea & w_sel_SRAM_8[5] & { addra[0]} }};
-    assign w_WEB6_8[3:0] = { 4{ wea & w_sel_SRAM_8[6] & {~addra[0]} }};
-    assign w_WEB6_8[7:4] = { 4{ wea & w_sel_SRAM_8[6] & { addra[0]} }};
-    assign w_WEB7_8[3:0] = { 4{ wea & w_sel_SRAM_8[7] & {~addra[0]} }};
-    assign w_WEB7_8[7:4] = { 4{ wea & w_sel_SRAM_8[7] & { addra[0]} }};
+    wire  [3:0] w_store_enable;
+    assign w_store_enable = w_write_or_writeBack ? i_store_Type_4 : 4'b1111;
+    // always @( *) begin
+    //   if ((i_store_Type_2 == 2'b00) && (w_write_or_writeBack == 1)) begin
+    //      case (i_word_addr)
+    //       2'b00:w_store_enable = 4'b0011;
+    //       2'b01:w_store_enable = 4'b0110;
+    //       2'b01:w_store_enable = 4'b1100; 
+    //       default: w_store_enable = 4'b1000;
+    //      endcase
+    //   end
+    //   else if ((i_store_Type_2 == 2'b01) && (w_write_or_writeBack == 1)) begin
+    //     w_store_enable = 4'b1111;
+    //   end
+    //   else if ((i_store_Type_2 == 2'b10) && (w_write_or_writeBack == 1)) begin
+    //     case (i_word_addr)
+    //       2'b00:w_store_enable = 4'b0001;
+    //       2'b01:w_store_enable = 4'b0010;
+    //       2'b01:w_store_enable = 4'b0100; 
+    //       default: w_store_enable = 4'b1000;
+    //      endcase
+    //   end
+    //   else begin
+    //      w_store_enable = 4'b1111;
+    //   end
+    // end
+    
+    assign w_WEB0[7 :0] = { 8{ wea & w_sel_SRAM_8[0] & {~addra[0]} }} & {w_store_enable, w_store_enable}  ;
+    assign w_WEB0[15:8] = { 8{ wea & w_sel_SRAM_8[0] & { addra[0]} }} & {w_store_enable, w_store_enable}  ;
+    assign w_WEB1[7 :0] = { 8{ wea & w_sel_SRAM_8[1] & {~addra[0]} }} & {w_store_enable, w_store_enable}  ;
+    assign w_WEB1[15:8] = { 8{ wea & w_sel_SRAM_8[1] & { addra[0]} }} & {w_store_enable, w_store_enable}  ;
+    assign w_WEB2[7 :0] = { 8{ wea & w_sel_SRAM_8[2] & {~addra[0]} }} & {w_store_enable, w_store_enable}  ;
+    assign w_WEB2[15:8] = { 8{ wea & w_sel_SRAM_8[2] & { addra[0]} }} & {w_store_enable, w_store_enable}  ;
+    assign w_WEB3[7 :0] = { 8{ wea & w_sel_SRAM_8[3] & {~addra[0]} }} & {w_store_enable, w_store_enable}  ;
+    assign w_WEB3[15:8] = { 8{ wea & w_sel_SRAM_8[3] & { addra[0]} }} & {w_store_enable, w_store_enable}  ;
+    assign w_WEB4[7 :0] = { 8{ wea & w_sel_SRAM_8[4] & {~addra[0]} }} & {w_store_enable, w_store_enable}  ;
+    assign w_WEB4[15:8] = { 8{ wea & w_sel_SRAM_8[4] & { addra[0]} }} & {w_store_enable, w_store_enable}  ;
+    assign w_WEB5[7 :0] = { 8{ wea & w_sel_SRAM_8[5] & {~addra[0]} }} & {w_store_enable, w_store_enable}  ;
+    assign w_WEB5[15:8] = { 8{ wea & w_sel_SRAM_8[5] & { addra[0]} }} & {w_store_enable, w_store_enable}  ;
+    assign w_WEB6[7 :0] = { 8{ wea & w_sel_SRAM_8[6] & {~addra[0]} }} & {w_store_enable, w_store_enable}  ;
+    assign w_WEB6[15:8] = { 8{ wea & w_sel_SRAM_8[6] & { addra[0]} }} & {w_store_enable, w_store_enable}  ;
+    assign w_WEB7[7 :0] = { 8{ wea & w_sel_SRAM_8[7] & {~addra[0]} }} & {w_store_enable, w_store_enable}  ;
+    assign w_WEB7[15:8] = { 8{ wea & w_sel_SRAM_8[7] & { addra[0]} }} & {w_store_enable, w_store_enable}  ;
 
-SYKB110_32X16X8CM2 u_Ddata0_SYKB110_32X16X8CM2(
+SYKB110_32X8X16CM2 u_Ddata0_SYKB110_32X8X16CM2(
     .DO0   (RAM0_data_out[0  ] ),    .DO1   (RAM0_data_out[1  ] ),    .DO2   (RAM0_data_out[2  ] ),    .DO3   (RAM0_data_out[3  ] ),
     .DO4   (RAM0_data_out[4  ] ),    .DO5   (RAM0_data_out[5  ] ),    .DO6   (RAM0_data_out[6  ] ),    .DO7   (RAM0_data_out[7  ] ),
     .DO8   (RAM0_data_out[8  ] ),    .DO9   (RAM0_data_out[9  ] ),    .DO10  (RAM0_data_out[10 ] ),    .DO11  (RAM0_data_out[11 ] ),
@@ -161,14 +190,15 @@ SYKB110_32X16X8CM2 u_Ddata0_SYKB110_32X16X8CM2(
 
     .A0   (RAM_addr[0]   ),.A1   (RAM_addr[1]   ),.A2   (RAM_addr[2]   ),.A3   (RAM_addr[3]   ),.A4   (RAM_addr[4]   ),
     .DVSE (1'b0  ),.DVS0 (1'b0  ),.DVS1 (1'b0  ),.DVS2 (1'b0  ),.DVS3 (1'b0  ),
-    .WEB0 (~w_WEB0_8[0] ),.WEB1 (~w_WEB0_8[1] ),.WEB2 (~w_WEB0_8[2] ),.WEB3 (~w_WEB0_8[3] ),
-    .WEB4 (~w_WEB0_8[4] ),.WEB5 (~w_WEB0_8[5] ),.WEB6 (~w_WEB0_8[6] ),.WEB7 (~w_WEB0_8[7] ),
-
+    .WEB0 (~w_WEB0[0] ),.WEB1 (~w_WEB0[1] ),.WEB2 (~w_WEB0[2] ),.WEB3 (~w_WEB0[3] ),
+    .WEB4 (~w_WEB0[4] ),.WEB5 (~w_WEB0[5] ),.WEB6 (~w_WEB0[6] ),.WEB7 (~w_WEB0[7] ),
+    .WEB8 (~w_WEB0[8]  ),.WEB9  (~w_WEB0[9]  ),.WEB10 (~w_WEB0[10]  ),.WEB11 (~w_WEB0[11]  ),
+    .WEB12(~w_WEB0[12]  ),.WEB13 (~w_WEB0[13]  ),.WEB14 (~w_WEB0[14]  ),.WEB15 (~w_WEB0[15]  ),
     .CK    (clka   ),
     .CSB   (1'b0   )
 );
     
-SYKB110_32X16X8CM2 u_Ddata1_SYKB110_32X16X8CM2(
+SYKB110_32X8X16CM2 u_Ddata1_SYKB110_32X8X16CM2(
     .DO0   (RAM1_data_out[0  ] ),    .DO1   (RAM1_data_out[1  ] ),    .DO2   (RAM1_data_out[2  ] ),    .DO3   (RAM1_data_out[3  ] ),
     .DO4   (RAM1_data_out[4  ] ),    .DO5   (RAM1_data_out[5  ] ),    .DO6   (RAM1_data_out[6  ] ),    .DO7   (RAM1_data_out[7  ] ),
     .DO8   (RAM1_data_out[8  ] ),    .DO9   (RAM1_data_out[9  ] ),    .DO10  (RAM1_data_out[10 ] ),    .DO11  (RAM1_data_out[11 ] ),
@@ -237,14 +267,16 @@ SYKB110_32X16X8CM2 u_Ddata1_SYKB110_32X16X8CM2(
 
     .A0   (RAM_addr[0]   ),.A1   (RAM_addr[1]   ),.A2   (RAM_addr[2]   ),.A3   (RAM_addr[3]   ),.A4   (RAM_addr[4]   ),
     .DVSE (1'b0  ),.DVS0 (1'b0  ),.DVS1 (1'b0  ),.DVS2 (1'b0  ),.DVS3 (1'b0  ),
-    .WEB0 (~w_WEB1_8[0] ),.WEB1 (~w_WEB1_8[1] ),.WEB2 (~w_WEB1_8[2] ),.WEB3 (~w_WEB1_8[3] ),
-    .WEB4 (~w_WEB1_8[4] ),.WEB5 (~w_WEB1_8[5] ),.WEB6 (~w_WEB1_8[6] ),.WEB7 (~w_WEB1_8[7] ),
+    .WEB0 (~w_WEB1[0] ),.WEB1 (~w_WEB1[1] ),.WEB2 (~w_WEB1[2] ),.WEB3 (~w_WEB1[3] ),
+    .WEB4 (~w_WEB1[4] ),.WEB5 (~w_WEB1[5] ),.WEB6 (~w_WEB1[6] ),.WEB7 (~w_WEB1[7] ),
+    .WEB8 (~w_WEB1[8]  ),.WEB9  (~w_WEB1[9]  ),.WEB10 (~w_WEB1[10]  ),.WEB11 (~w_WEB1[11]  ),
+    .WEB12(~w_WEB1[12]  ),.WEB13 (~w_WEB1[13]  ),.WEB14 (~w_WEB1[14]  ),.WEB15 (~w_WEB1[15]  ),
 
     .CK    (clka   ),
     .CSB   (1'b0   )
 );
 
-SYKB110_32X16X8CM2 u_Ddata2_SYKB110_32X16X8CM2(
+SYKB110_32X8X16CM2 u_Ddata2_SYKB110_32X8X16CM2(
     .DO0   (RAM2_data_out[0  ] ),    .DO1   (RAM2_data_out[1  ] ),    .DO2   (RAM2_data_out[2  ] ),    .DO3   (RAM2_data_out[3  ] ),
     .DO4   (RAM2_data_out[4  ] ),    .DO5   (RAM2_data_out[5  ] ),    .DO6   (RAM2_data_out[6  ] ),    .DO7   (RAM2_data_out[7  ] ),
     .DO8   (RAM2_data_out[8  ] ),    .DO9   (RAM2_data_out[9  ] ),    .DO10  (RAM2_data_out[10 ] ),    .DO11  (RAM2_data_out[11 ] ),
@@ -313,14 +345,16 @@ SYKB110_32X16X8CM2 u_Ddata2_SYKB110_32X16X8CM2(
 
     .A0   (RAM_addr[0]   ),.A1   (RAM_addr[1]   ),.A2   (RAM_addr[2]   ),.A3   (RAM_addr[3]   ),.A4   (RAM_addr[4]   ),
     .DVSE (1'b0  ),.DVS0 (1'b0  ),.DVS1 (1'b0  ),.DVS2 (1'b0  ),.DVS3 (1'b0  ),
-    .WEB0 (~w_WEB2_8[0] ),.WEB1 (~w_WEB2_8[1] ),.WEB2 (~w_WEB2_8[2] ),.WEB3 (~w_WEB2_8[3] ),
-    .WEB4 (~w_WEB2_8[4] ),.WEB5 (~w_WEB2_8[5] ),.WEB6 (~w_WEB2_8[6] ),.WEB7 (~w_WEB2_8[7] ),
+    .WEB0 (~w_WEB2[0] ),.WEB1 (~w_WEB2[1] ),.WEB2 (~w_WEB2[2] ),.WEB3 (~w_WEB2[3] ),
+    .WEB4 (~w_WEB2[4] ),.WEB5 (~w_WEB2[5] ),.WEB6 (~w_WEB2[6] ),.WEB7 (~w_WEB2[7] ),
+    .WEB8 (~w_WEB2[8]  ),.WEB9  (~w_WEB2[9]  ),.WEB10 (~w_WEB2[10]  ),.WEB11 (~w_WEB2[11]  ),
+    .WEB12(~w_WEB2[12]  ),.WEB13 (~w_WEB2[13]  ),.WEB14 (~w_WEB2[14]  ),.WEB15 (~w_WEB2[15]  ),
 
     .CK    (clka   ),
     .CSB   (1'b0   )
 );
 
-SYKB110_32X16X8CM2 u_Ddata3_SYKB110_32X16X8CM2(
+SYKB110_32X8X16CM2 u_Ddata3_SYKB110_32X8X16CM2(
     .DO0   (RAM3_data_out[0  ] ),    .DO1   (RAM3_data_out[1  ] ),    .DO2   (RAM3_data_out[2  ] ),    .DO3   (RAM3_data_out[3  ] ),
     .DO4   (RAM3_data_out[4  ] ),    .DO5   (RAM3_data_out[5  ] ),    .DO6   (RAM3_data_out[6  ] ),    .DO7   (RAM3_data_out[7  ] ),
     .DO8   (RAM3_data_out[8  ] ),    .DO9   (RAM3_data_out[9  ] ),    .DO10  (RAM3_data_out[10 ] ),    .DO11  (RAM3_data_out[11 ] ),
@@ -389,14 +423,16 @@ SYKB110_32X16X8CM2 u_Ddata3_SYKB110_32X16X8CM2(
 
     .A0   (RAM_addr[0]   ),.A1   (RAM_addr[1]   ),.A2   (RAM_addr[2]   ),.A3   (RAM_addr[3]   ),.A4   (RAM_addr[4]   ),
     .DVSE (1'b0  ),.DVS0 (1'b0  ),.DVS1 (1'b0  ),.DVS2 (1'b0  ),.DVS3 (1'b0  ),
-    .WEB0 (~w_WEB3_8[0] ),.WEB1 (~w_WEB3_8[1] ),.WEB2 (~w_WEB3_8[2] ),.WEB3 (~w_WEB3_8[3] ),
-    .WEB4 (~w_WEB3_8[4] ),.WEB5 (~w_WEB3_8[5] ),.WEB6 (~w_WEB3_8[6] ),.WEB7 (~w_WEB3_8[7] ),
+    .WEB0 (~w_WEB3[0] ),.WEB1 (~w_WEB3[1] ),.WEB2 (~w_WEB3[2] ),.WEB3 (~w_WEB3[3] ),
+    .WEB4 (~w_WEB3[4] ),.WEB5 (~w_WEB3[5] ),.WEB6 (~w_WEB3[6] ),.WEB7 (~w_WEB3[7] ),
+    .WEB8 (~w_WEB3[8]  ),.WEB9  (~w_WEB3[9]  ),.WEB10 (~w_WEB3[10]  ),.WEB11 (~w_WEB3[11]  ),
+    .WEB12(~w_WEB3[12]  ),.WEB13 (~w_WEB3[13]  ),.WEB14 (~w_WEB3[14]  ),.WEB15 (~w_WEB3[15]  ),
 
     .CK    (clka   ),
     .CSB   (1'b0   )
 );
 
-SYKB110_32X16X8CM2 u_Ddata4_SYKB110_32X16X8CM2(
+SYKB110_32X8X16CM2 u_Ddata4_SYKB110_32X8X16CM2(
     .DO0   (RAM4_data_out[0  ] ),    .DO1   (RAM4_data_out[1  ] ),    .DO2   (RAM4_data_out[2  ] ),    .DO3   (RAM4_data_out[3  ] ),
     .DO4   (RAM4_data_out[4  ] ),    .DO5   (RAM4_data_out[5  ] ),    .DO6   (RAM4_data_out[6  ] ),    .DO7   (RAM4_data_out[7  ] ),
     .DO8   (RAM4_data_out[8  ] ),    .DO9   (RAM4_data_out[9  ] ),    .DO10  (RAM4_data_out[10 ] ),    .DO11  (RAM4_data_out[11 ] ),
@@ -465,14 +501,16 @@ SYKB110_32X16X8CM2 u_Ddata4_SYKB110_32X16X8CM2(
 
     .A0   (RAM_addr[0]   ),.A1   (RAM_addr[1]   ),.A2   (RAM_addr[2]   ),.A3   (RAM_addr[3]   ),.A4   (RAM_addr[4]   ),
     .DVSE (1'b0  ),.DVS0 (1'b0  ),.DVS1 (1'b0  ),.DVS2 (1'b0  ),.DVS3 (1'b0  ),
-    .WEB0 (~w_WEB4_8[0] ),.WEB1 (~w_WEB4_8[1] ),.WEB2 (~w_WEB4_8[2] ),.WEB3 (~w_WEB4_8[3] ),
-    .WEB4 (~w_WEB4_8[4] ),.WEB5 (~w_WEB4_8[5] ),.WEB6 (~w_WEB4_8[6] ),.WEB7 (~w_WEB4_8[7] ),
+    .WEB0 (~w_WEB4[0] ),.WEB1 (~w_WEB4[1] ),.WEB2 (~w_WEB4[2] ),.WEB3 (~w_WEB4[3] ),
+    .WEB4 (~w_WEB4[4] ),.WEB5 (~w_WEB4[5] ),.WEB6 (~w_WEB4[6] ),.WEB7 (~w_WEB4[7] ),
+    .WEB8 (~w_WEB4[8]  ),.WEB9  (~w_WEB4[9]  ),.WEB10 (~w_WEB4[10]  ),.WEB11 (~w_WEB4[11]  ),
+    .WEB12(~w_WEB4[12]  ),.WEB13 (~w_WEB4[13]  ),.WEB14 (~w_WEB4[14]  ),.WEB15 (~w_WEB4[15]  ),
 
     .CK    (clka   ),
     .CSB   (1'b0   )
 );
 
-SYKB110_32X16X8CM2 u_Ddata5_SYKB110_32X16X8CM2(
+SYKB110_32X8X16CM2 u_Ddata5_SYKB110_32X8X16CM2(
     .DO0   (RAM5_data_out[0  ] ),    .DO1   (RAM5_data_out[1  ] ),    .DO2   (RAM5_data_out[2  ] ),    .DO3   (RAM5_data_out[3  ] ),
     .DO4   (RAM5_data_out[4  ] ),    .DO5   (RAM5_data_out[5  ] ),    .DO6   (RAM5_data_out[6  ] ),    .DO7   (RAM5_data_out[7  ] ),
     .DO8   (RAM5_data_out[8  ] ),    .DO9   (RAM5_data_out[9  ] ),    .DO10  (RAM5_data_out[10 ] ),    .DO11  (RAM5_data_out[11 ] ),
@@ -541,14 +579,16 @@ SYKB110_32X16X8CM2 u_Ddata5_SYKB110_32X16X8CM2(
 
     .A0   (RAM_addr[0]   ),.A1   (RAM_addr[1]   ),.A2   (RAM_addr[2]   ),.A3   (RAM_addr[3]   ),.A4   (RAM_addr[4]   ),
     .DVSE (1'b0  ),.DVS0 (1'b0  ),.DVS1 (1'b0  ),.DVS2 (1'b0  ),.DVS3 (1'b0  ),
-    .WEB0 (~w_WEB5_8[0] ),.WEB1 (~w_WEB5_8[1] ),.WEB2 (~w_WEB5_8[2] ),.WEB3 (~w_WEB5_8[3] ),
-    .WEB4 (~w_WEB5_8[4] ),.WEB5 (~w_WEB5_8[5] ),.WEB6 (~w_WEB5_8[6] ),.WEB7 (~w_WEB5_8[7] ),
+    .WEB0 (~w_WEB5[0] ),.WEB1 (~w_WEB5[1] ),.WEB2 (~w_WEB5[2] ),.WEB3 (~w_WEB5[3] ),
+    .WEB4 (~w_WEB5[4] ),.WEB5 (~w_WEB5[5] ),.WEB6 (~w_WEB5[6] ),.WEB7 (~w_WEB5[7] ),
+    .WEB8 (~w_WEB5[8]  ),.WEB9  (~w_WEB5[9]  ),.WEB10 (~w_WEB5[10]  ),.WEB11 (~w_WEB5[11]  ),
+    .WEB12(~w_WEB5[12]  ),.WEB13 (~w_WEB5[13]  ),.WEB14 (~w_WEB5[14]  ),.WEB15 (~w_WEB5[15]  ),
 
     .CK    (clka   ),
     .CSB   (1'b0   )
 );
 
-SYKB110_32X16X8CM2 u_Ddata6_SYKB110_32X16X8CM2(
+SYKB110_32X8X16CM2 u_Ddata6_SYKB110_32X8X16CM2(
     .DO0   (RAM6_data_out[0  ] ),    .DO1   (RAM6_data_out[1  ] ),    .DO2   (RAM6_data_out[2  ] ),    .DO3   (RAM6_data_out[3  ] ),
     .DO4   (RAM6_data_out[4  ] ),    .DO5   (RAM6_data_out[5  ] ),    .DO6   (RAM6_data_out[6  ] ),    .DO7   (RAM6_data_out[7  ] ),
     .DO8   (RAM6_data_out[8  ] ),    .DO9   (RAM6_data_out[9  ] ),    .DO10  (RAM6_data_out[10 ] ),    .DO11  (RAM6_data_out[11 ] ),
@@ -617,14 +657,16 @@ SYKB110_32X16X8CM2 u_Ddata6_SYKB110_32X16X8CM2(
 
     .A0   (RAM_addr[0]   ),.A1   (RAM_addr[1]   ),.A2   (RAM_addr[2]   ),.A3   (RAM_addr[3]   ),.A4   (RAM_addr[4]   ),
     .DVSE (1'b0  ),.DVS0 (1'b0  ),.DVS1 (1'b0  ),.DVS2 (1'b0  ),.DVS3 (1'b0  ),
-    .WEB0 (~w_WEB6_8[0] ),.WEB1 (~w_WEB6_8[1] ),.WEB2 (~w_WEB6_8[2] ),.WEB3 (~w_WEB6_8[3] ),
-    .WEB4 (~w_WEB6_8[4] ),.WEB5 (~w_WEB6_8[5] ),.WEB6 (~w_WEB6_8[6] ),.WEB7 (~w_WEB6_8[7] ),
+    .WEB0 (~w_WEB6[0] ),.WEB1 (~w_WEB6[1] ),.WEB2 (~w_WEB6[2] ),.WEB3 (~w_WEB6[3] ),
+    .WEB4 (~w_WEB6[4] ),.WEB5 (~w_WEB6[5] ),.WEB6 (~w_WEB6[6] ),.WEB7 (~w_WEB6[7] ),
+    .WEB8 (~w_WEB6[8]  ),.WEB9  (~w_WEB6[9]  ),.WEB10 (~w_WEB6[10]  ),.WEB11 (~w_WEB6[11]  ),
+    .WEB12(~w_WEB6[12]  ),.WEB13 (~w_WEB6[13]  ),.WEB14 (~w_WEB6[14]  ),.WEB15 (~w_WEB6[15]  ),
 
     .CK    (clka   ),
     .CSB   (1'b0   )
 );
 
-SYKB110_32X16X8CM2 u_Ddata7_SYKB110_32X16X8CM2(
+SYKB110_32X8X16CM2 u_Ddata7_SYKB110_32X8X16CM2(
     .DO0   (RAM7_data_out[0  ] ),    .DO1   (RAM7_data_out[1  ] ),    .DO2   (RAM7_data_out[2  ] ),    .DO3   (RAM7_data_out[3  ] ),
     .DO4   (RAM7_data_out[4  ] ),    .DO5   (RAM7_data_out[5  ] ),    .DO6   (RAM7_data_out[6  ] ),    .DO7   (RAM7_data_out[7  ] ),
     .DO8   (RAM7_data_out[8  ] ),    .DO9   (RAM7_data_out[9  ] ),    .DO10  (RAM7_data_out[10 ] ),    .DO11  (RAM7_data_out[11 ] ),
@@ -693,8 +735,10 @@ SYKB110_32X16X8CM2 u_Ddata7_SYKB110_32X16X8CM2(
 
     .A0   (RAM_addr[0]   ),.A1   (RAM_addr[1]   ),.A2   (RAM_addr[2]   ),.A3   (RAM_addr[3]   ),.A4   (RAM_addr[4]   ),
     .DVSE (1'b0  ),.DVS0 (1'b0  ),.DVS1 (1'b0  ),.DVS2 (1'b0  ),.DVS3 (1'b0  ),
-    .WEB0 (~w_WEB7_8[0] ),.WEB1 (~w_WEB7_8[1] ),.WEB2 (~w_WEB7_8[2] ),.WEB3 (~w_WEB7_8[3] ),
-    .WEB4 (~w_WEB7_8[4] ),.WEB5 (~w_WEB7_8[5] ),.WEB6 (~w_WEB7_8[6] ),.WEB7 (~w_WEB7_8[7] ),
+    .WEB0 (~w_WEB7[0] ),.WEB1 (~w_WEB7[1] ),.WEB2 (~w_WEB7[2] ),.WEB3 (~w_WEB7[3] ),
+    .WEB4 (~w_WEB7[4] ),.WEB5 (~w_WEB7[5] ),.WEB6 (~w_WEB7[6] ),.WEB7 (~w_WEB7[7] ),
+    .WEB8 (~w_WEB7[8]  ),.WEB9  (~w_WEB7[9]  ),.WEB10 (~w_WEB7[10]  ),.WEB11 (~w_WEB7[11]  ),
+    .WEB12(~w_WEB7[12]  ),.WEB13 (~w_WEB7[13]  ),.WEB14 (~w_WEB7[14]  ),.WEB15 (~w_WEB7[15]  ),
 
     .CK    (clka   ),
     .CSB   (1'b0   )
