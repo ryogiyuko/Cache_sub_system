@@ -39,13 +39,15 @@ module CacheTop(
     input [31:0] i_lsu_storeData0_32, i_lsu_storeData1_32, i_lsu_storeData2_32, i_lsu_storeData3_32,
     input [3:0] i_store0_Type_4, i_store1_Type_4, i_store2_Type_4, i_store3_Type_4, // onehot 4位使能，对应对齐字内的4个字节
 
-    input [1:0] i_store_bypass0_2, i_store_bypass1_2, i_store_bypass2_2, i_store_bypass3_2,
+    input i_loadType0, i_loadType1, i_loadType2, i_loadType3, //有无符号
+    input [2:0] i_store_bypass0_3, i_store_bypass1_3, i_store_bypass2_3, i_store_bypass3_3, //标识是否为store需要的load，后两位为索引
     input [4:0] i_lsu_rd0_5, i_lsu_rd1_5, i_lsu_rd2_5,  i_lsu_rd3_5, 
     input [5:0] i_lsu_index0_6, i_lsu_index1_6, i_lsu_index2_6, i_lsu_index3_6,
     input [9:0] i_lsu_flag0_10, i_lsu_flag1_10, i_lsu_flag2_10, i_lsu_flag3_10,  //[9] load_or_store [8] flag(??λ??????) [7] ????? [6:5] type [4:0] ???????λ
     input i_lsu_bypass0, i_lsu_bypass1, i_lsu_bypass2, i_lsu_bypass3,
 
-    output [1:0] o_store_bypass0_2, o_store_bypass1_2, o_store_bypass2_2, o_store_bypass3_2,
+    output o_loadType0, o_loadType1, o_loadType2, o_loadType3, 
+    output [2:0] o_store_bypass0_3, o_store_bypass1_3, o_store_bypass2_3, o_store_bypass3_3,
     output [4:0] o_lsu_rd0_5, o_lsu_rd1_5, o_lsu_rd2_5,  o_lsu_rd3_5,
     output [5:0] o_lsu_index0_6, o_lsu_index1_6, o_lsu_index2_6, o_lsu_index3_6,  
     output [9:0] o_lsu_flag0_10, o_lsu_flag1_10, o_lsu_flag2_10, o_lsu_flag3_10, 
@@ -448,7 +450,8 @@ module CacheTop(
         wire [255:0] w_writeBackLine_to_DDR7_32B;
 
 //
-    assign {o_store_bypass0_2, o_store_bypass1_2, o_store_bypass2_2, o_store_bypass3_2 } = {i_store_bypass0_2, i_store_bypass1_2, i_store_bypass2_2, i_store_bypass3_2 } ;
+    assign {o_loadType0, o_loadType1, o_loadType2, o_loadType3} = {i_loadType0, i_loadType1, i_loadType2, i_loadType3};
+    assign {o_store_bypass0_3, o_store_bypass1_3, o_store_bypass2_3, o_store_bypass3_3 } = {i_store_bypass0_3, i_store_bypass1_3, i_store_bypass2_3, i_store_bypass3_3 } ;
     assign { o_lsu_rd0_5, o_lsu_rd1_5, o_lsu_rd2_5,  o_lsu_rd3_5} = { i_lsu_rd0_5, i_lsu_rd1_5, i_lsu_rd2_5,  i_lsu_rd3_5 } ;
     assign { o_lsu_index0_6, o_lsu_index1_6, o_lsu_index2_6, o_lsu_index3_6 } = { i_lsu_index0_6, i_lsu_index1_6, i_lsu_index2_6, i_lsu_index3_6 };
     assign { o_lsu_flag0_10, o_lsu_flag1_10, o_lsu_flag2_10, o_lsu_flag3_10 } = { i_lsu_flag0_10, i_lsu_flag1_10, i_lsu_flag2_10, i_lsu_flag3_10 };
