@@ -1,9 +1,165 @@
 li	s10,0
-li	s11,0
+li	s11,0           //start
 auipc	ra,0x8
 addi	ra,ra,-8 
 lw	t5,0(ra)
 lui	t4,0xff0
-addi	t4,t4,255
+addi	t4,t4,255 
 li	gp,2
-bne	t5,t4,294 
+bne	t5,t4,294       //test_2
+auipc	ra,0x8
+addi	ra,ra,-36 
+lw	t5,4(ra)
+lui	t4,0xff010
+addi	t4,t4,-256
+li	gp,3
+bne	t5,t4,294       //test_3
+auipc	ra,0x8
+addi	ra,ra,-64 
+lw	t5,8(ra)
+lui	t4,0xff01
+addi	t4,t4,-16 
+li	gp,4
+bne	t5,t4,294       //test_4
+auipc	ra,0x8
+addi	ra,ra,-92 
+lw	t5,12(ra)
+lui	t4,0xf00ff
+addi	t4,t4,15 
+li	gp,5
+bne	t5,t4,294       //test_5
+auipc	ra,0x8
+addi	ra,ra,-108
+lw	t5,-12(ra)
+lui	t4,0xff0
+addi	t4,t4,255 
+li	gp,6
+bne	t5,t4,294       //test_6
+auipc	ra,0x8
+addi	ra,ra,-136
+lw	t5,-8(ra)
+lui	t4,0xff010
+addi	t4,t4,-256
+li	gp,7
+bne	t5,t4,294       //test_7
+auipc	ra,0x8
+addi	ra,ra,-164
+lw	t5,-4(ra)
+lui	t4,0xff01
+addi	t4,t4,-16 
+li	gp,8
+bne	t5,t4,294       //test_8
+auipc	ra,0x8
+addi	ra,ra,-192
+lw	t5,0(ra)
+lui	t4,0xf00ff
+addi	t4,t4,15 
+li	gp,9
+bne	t5,t4,294       //test_9
+auipc	ra,0x8
+addi	ra,ra,-232
+addi	ra,ra,-32
+lw	t0,32(ra)
+lui	t4,0xff0
+addi	t4,t4,255 
+li	gp,10
+bne	t0,t4,294       //test_10
+auipc	ra,0x8
+addi	ra,ra,-264
+addi	ra,ra,-3
+lw	t0,7(ra)
+lui	t4,0xff010
+addi	t4,t4,-256
+li	gp,11
+bne	t0,t4,294       //test_11
+li	gp,12
+li	tp,0
+auipc	ra,0x8
+addi	ra,ra,-300
+lw	t5,4(ra)
+mv	t1,t5
+lui	t4,0xff01
+addi	t4,t4,-16 
+bne	t1,t4,294       //test_12
+addi	tp,tp,1  
+li	t0,2
+bne	tp,t0,130 
+li	gp,13
+li	tp,0
+auipc	ra,0x8
+addi	ra,ra,-344
+lw	t5,4(ra)
+nop
+mv	t1,t5
+lui	t4,0xf00ff
+addi	t4,t4,15 
+bne	t1,t4,294       //test_13
+addi	tp,tp,1  
+li	t0,2
+bne	tp,t0,160 
+li	gp,14
+li	tp,0
+auipc	ra,0x8
+addi	ra,ra,-404
+lw	t5,4(ra)
+nop
+nop
+mv	t1,t5
+lui	t4,0xff010
+addi	t4,t4,-256
+bne	t1,t4,294       //test_14
+addi	tp,tp,1  
+li	t0,2
+bne	tp,t0,194 
+li	gp,15
+li	tp,0
+auipc	ra,0x8
+addi	ra,ra,-456
+lw	t5,4(ra)
+lui	t4,0xff01
+addi	t4,t4,-16 
+bne	t5,t4,294       //test_15
+addi	tp,tp,1  
+li	t0,2
+bne	tp,t0,1cc 
+li	gp,16
+li	tp,0
+auipc	ra,0x8
+addi	ra,ra,-496
+nop
+lw	t5,4(ra)
+lui	t4,0xf00ff
+addi	t4,t4,15 
+bne	t5,t4,294       //test_16
+addi	tp,tp,1  
+li	t0,2
+bne	tp,t0,1f8 
+li	gp,17
+li	tp,0
+auipc	ra,0x8
+addi	ra,ra,-552
+nop
+nop
+lw	t5,4(ra)
+lui	t4,0xff010
+addi	t4,t4,-256
+bne	t5,t4,294       //test_17
+addi	tp,tp,1  
+li	t0,2
+bne	tp,t0,228 
+auipc	t0,0x8
+addi	t0,t0,-596
+lw	sp,0(t0)
+li	sp,2
+li	t4,2
+li	gp,18
+bne	sp,t4,294       //test_18
+auipc	t0,0x8
+addi	t0,t0,-624
+lw	sp,0(t0)
+nop
+li	sp,2
+li	t4,2
+li	gp,19
+bne	sp,t4,294       //test_19
+bne	zero,gp,2a0 
