@@ -80,7 +80,10 @@ lw	t5,4(ra)
 mv	t1,t5
 lui	t4,0xff01
 addi	t4,t4,-16 
-bne	t1,t4,294       //test_12
+bne	t1,t4,294 
+addi	tp,tp,1  
+li	t0,2
+bne	tp,t0,130       //test_12
 addi	tp,tp,1  
 li	t0,2
 bne	tp,t0,130 
