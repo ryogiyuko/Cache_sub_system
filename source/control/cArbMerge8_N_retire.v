@@ -3,7 +3,7 @@
  * @Author: liaozz
  * @Date: 2024-09-10 12:10:41
  * @LastEditors: liaozz
- * @LastEditTime: 2024-09-27 17:12:22
+ * @LastEditTime: 2024-11-14 16:39:24
  * @Design version: 
  */
 module cArbMerge8_N_retire #(
@@ -26,13 +26,11 @@ module cArbMerge8_N_retire #(
     output [DATA_WIDTH-1:0] o_data
 );
 
-  localparam DELAY_w_driveNext = 4;//为了匹配仲裁器组合电路的时间+MUX时间
-  localparam DELAY_w_sendDrive1 = 8;//此参数是为了配合MUX的延时
-  localparam DELAY_w_reset =3;//此参数是为了避免因ifreeNext脉宽过宽带来的竞争冒险,注意:DELAY_w_reset必须<DELAY_w_sendDrive1
+  localparam DELAY_CL = 15;//为了匹配仲裁器组合电路的时间+MUX时间
 
   (* dont_touch="true" *)wire [8-1:0] w_fire_8;
   (* dont_touch="true" *)wire [8-1:0] w_driveNext_8;
-  (* dont_touch="true" *)wire [8-1:0] w_d_driveNext_8;
+  (* dont_touch="true" *)wire [8-1:0] w_d_fire_8;
 
   (* dont_touch="true" *)wire w_sendFire_1;
 
@@ -56,7 +54,9 @@ module cArbMerge8_N_retire #(
   (* dont_touch="true" *)wire w_sendFree;
   (* dont_touch="true" *)wire [8-1:0] w_grant_8;
   (* dont_touch="true" *)wire [8-1:0] w_pmtIfreeNext_8;
-
+  wire w_freeNext;
+  wire [2-1:0] w_ifreeReq_2;
+  
   // save inputs
   genvar i;
   generate
@@ -72,23 +72,17 @@ module cArbMerge8_N_retire #(
           .rstn(rstn)
       );
       assign w_trig_8[i]  = w_fire_8[i] | w_reset_8[i];
-      freeSetDelay #(
-        .DELAY_UNIT_NUM(DELAY_w_reset)
-      ) delayReset (
-          .i_signal(w_grant_8[i] & i_freeNext),
-          .o_signal(w_reset_8[i]),
-          .rstn     (rstn)
-      );
+      assign w_reset_8[i] = w_grant_8[i] & w_freeNext;
       contTap tap (
           .trig(w_trig_8[i]),
           .req (w_req_8[i]),
           .rstn (rstn)
       );
       freeSetDelay #(
-        .DELAY_UNIT_NUM(DELAY_w_driveNext)
+        .DELAY_UNIT_NUM( DELAY_CL )
       ) delayDriveNext (
-          .i_signal(w_driveNext_8[i]),
-          .o_signal(w_d_driveNext_8[i]),
+          .i_signal(w_fire_8[i]),
+          .o_signal(w_d_fire_8[i]),
           .rstn     (rstn)
       );
     end
@@ -173,15 +167,23 @@ module cArbMerge8_N_retire #(
   // grant
   assign w_grant_8 = w_req_8 & (~w_req_8 + 1'b1);
 
-  //sendFifo
+  // Shorten pulse width
+  contTap d_ifreeNext (
+    .trig(i_freeNext),
+    .req (w_ifreeReq_2[0]),
+    .rstn (rstn)
+  );
+  delay2U delayifreeReq(.inR(w_ifreeReq_2[0]),.rstn(rstn), .outR(w_ifreeReq_2[1]));
+  assign w_freeNext = w_ifreeReq_2[0]^w_ifreeReq_2[1];
 
-  assign w_sendDrive0 = (|(w_d_driveNext_8 & w_grant_8));
+  //sendFifo
+  assign w_sendDrive0 = (|(w_d_fire_8 & w_grant_8));
 
   assign pmtFinish = (w_req_8==w_grant_8)?1'b0:1'b1;
   freeSetDelay #(
-    .DELAY_UNIT_NUM(DELAY_w_sendDrive1)
+    .DELAY_UNIT_NUM(DELAY_CL)
   ) delayW_sendFire (
-      .i_signal(i_freeNext & pmtFinish),
+      .i_signal( (|w_reset_8) & pmtFinish),
       .o_signal(w_sendDrive1),
       .rstn     (rstn)
   );
