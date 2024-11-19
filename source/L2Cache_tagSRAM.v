@@ -56,12 +56,12 @@ module L2Cache_tagSRAM(
             3'b110:begin
               w_sel_SRAM_8 = 8'b01000000;
             end
-            3'b111:begin
+            default:begin
               w_sel_SRAM_8 = 8'b10000000;
             end  
-            default:begin
-              w_sel_SRAM_8 = 8'b00000000;
-            end
+            // default:begin
+            //   w_sel_SRAM_8 = 8'b00000000;
+            // end
         endcase
     end
 

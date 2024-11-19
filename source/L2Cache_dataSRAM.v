@@ -77,12 +77,12 @@ module L2Cache_dataSRAM(
             3'b110:begin
               w_sel_SRAM_16 = 16'b0011000000000000;
             end
-            3'b111:begin
+            default:begin
               w_sel_SRAM_16 = 16'b1100000000000000;
             end  
-            default:begin
-              w_sel_SRAM_16 = 16'b0000000000000000;
-            end
+            // default:begin
+            //   w_sel_SRAM_16 = 16'b0000000000000000;
+            // end
         endcase
     end
 

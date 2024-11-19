@@ -727,7 +727,7 @@ module L2Cache(
                     w_2_plruSRAM_in_7[1] = w_plruSRAM_out_7[1];
                     w_2_plruSRAM_in_7[0] = 1'b0;
                     end
-                    3'b111: begin
+                    default: begin
                     w_2_plruSRAM_in_7[6] = 1'b0;
                     w_2_plruSRAM_in_7[5] = w_plruSRAM_out_7[5];
                     w_2_plruSRAM_in_7[4] = w_plruSRAM_out_7[4];
@@ -736,7 +736,7 @@ module L2Cache(
                     w_2_plruSRAM_in_7[1] = w_plruSRAM_out_7[1];
                     w_2_plruSRAM_in_7[0] = 1'b0;
                     end
-                    default: w_2_plruSRAM_in_7 = w_plruSRAM_out_7;
+                    //default: w_2_plruSRAM_in_7 = w_plruSRAM_out_7;
                 endcase
             end
             else if (r_hit & r_need_writeBack) begin
@@ -826,7 +826,7 @@ module L2Cache(
                     w_2_plruSRAM_in_7[1] = w_plruSRAM_out_7[1];
                     w_2_plruSRAM_in_7[0] = 1'b0;
                     end
-                    3'b111: begin
+                    default: begin
                     w_writeBack_tag_19 = w_tagSRAM_out_way7_19; 
                     
                     w_2_plruSRAM_in_7[6] = 1'b0;
@@ -837,10 +837,10 @@ module L2Cache(
                     w_2_plruSRAM_in_7[1] = w_plruSRAM_out_7[1];
                     w_2_plruSRAM_in_7[0] = 1'b0;
                     end
-                    default: begin
-                    w_writeBack_tag_19 = w_writeBack_tag_19;
-                    w_2_plruSRAM_in_7 = w_plruSRAM_out_7;
-                    end
+                    // default: begin
+                    // w_writeBack_tag_19 = w_writeBack_tag_19;
+                    // w_2_plruSRAM_in_7 = w_plruSRAM_out_7;
+                    // end
                 endcase
             end
             else if ((~r_hit) & r_need_writeBack) begin 
@@ -925,7 +925,7 @@ module L2Cache(
                     w_2_plruSRAM_in_7[1] = w_plruSRAM_out_7[1];
                     w_2_plruSRAM_in_7[0] = 1'b0;
                     end
-                    3'b111: begin
+                    default: begin
                     w_writeBack_tag_19 = w_tagSRAM_out_way7_19; 
                     
                     w_2_plruSRAM_in_7[6] = 1'b0;
@@ -936,10 +936,10 @@ module L2Cache(
                     w_2_plruSRAM_in_7[1] = w_plruSRAM_out_7[1];
                     w_2_plruSRAM_in_7[0] = 1'b0;
                     end
-                    default: begin
-                    w_writeBack_tag_19 = w_writeBack_tag_19;
-                    w_2_plruSRAM_in_7 = w_plruSRAM_out_7;
-                    end
+                    // default: begin
+                    // w_writeBack_tag_19 = w_writeBack_tag_19;
+                    // w_2_plruSRAM_in_7 = w_plruSRAM_out_7;
+                    // end
                 endcase
             end
             else begin 
@@ -1320,10 +1320,10 @@ module L2Cache(
                     3'b110: begin 
                         w_result_data_32B = w_dataSRAM_out_way6_32B;
                     end
-                    3'b111: begin 
+                    default: begin 
                         w_result_data_32B = w_dataSRAM_out_way7_32B;
                     end
-                    default: w_result_data_32B = 256'b0;
+                    // default: w_result_data_32B = 256'b0;
                 endcase
             end
             else if (r_need_writeBack) begin 
@@ -1349,10 +1349,10 @@ module L2Cache(
                     3'b110: begin 
                         w_result_data_32B = w_dataSRAM_out_way6_32B;
                     end
-                    3'b111: begin 
+                    default: begin 
                         w_result_data_32B = w_dataSRAM_out_way7_32B;
                     end
-                    default: w_result_data_32B = 256'b0;
+                    // default: w_result_data_32B = 256'b0;
                 endcase
             end
             else begin 
@@ -1384,10 +1384,10 @@ module L2Cache(
                         3'b110: begin 
                             w_result_data_32B = w_dataSRAM_out_way6_32B;
                         end
-                        3'b111: begin 
+                        default: begin 
                             w_result_data_32B = w_dataSRAM_out_way7_32B;
                         end
-                        default: w_result_data_32B = 256'b0;
+                        //default: w_result_data_32B = 256'b0;
                     endcase
                 end
                 else begin 
@@ -1418,10 +1418,10 @@ module L2Cache(
                         3'b110: begin 
                             w_result_data_32B = w_dataSRAM_out_way6_32B;
                         end
-                        3'b111: begin 
+                        default: begin 
                             w_result_data_32B = w_dataSRAM_out_way7_32B;
                         end
-                        default: w_result_data_32B = 256'b0;
+                        //default: w_result_data_32B = 256'b0;
                     endcase
                 end
                 else begin 
@@ -1455,10 +1455,10 @@ module L2Cache(
                     3'b110: begin 
                         w_result_data_32B = w_dataSRAM_out_way6_32B;
                     end
-                    3'b111: begin 
+                    default: begin 
                         w_result_data_32B = w_dataSRAM_out_way7_32B;
                     end
-                    default: w_result_data_32B = 256'b0;
+                    // default: w_result_data_32B = 256'b0;
                 endcase
             end
             else begin 
@@ -1484,10 +1484,10 @@ module L2Cache(
                     3'b110: begin 
                         w_result_data_32B = w_dataSRAM_out_way6_32B;
                     end
-                    3'b111: begin 
+                    default: begin 
                         w_result_data_32B = w_dataSRAM_out_way7_32B;
                     end
-                    default: w_result_data_32B = 256'b0;
+                    //default: w_result_data_32B = 256'b0;
                 endcase
             end
             

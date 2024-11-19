@@ -87,10 +87,10 @@ module L2Cache_tag_compare(
                 3'b110: begin 
                     need_writeBack = L2Cache_dvSRAM_out_way6_2[1];
                 end
-                3'b111: begin 
+                default: begin 
                     need_writeBack = L2Cache_dvSRAM_out_way7_2[1];
                 end
-                default: need_writeBack = 1'b0;
+                //default: need_writeBack = 1'b0;
             endcase
         end
         else begin 
@@ -182,8 +182,8 @@ module L2Cache_tag_compare(
                 7'b?0??0?1: evict_way_3 = 3'b100;
                 7'b?1??0?1: evict_way_3 = 3'b101;
                 7'b0???1?1: evict_way_3 = 3'b110;
-                7'b1???1?1: evict_way_3 = 3'b111;
-                default: evict_way_3 = 3'b0;
+                default: evict_way_3 = 3'b111;
+                //default: evict_way_3 = 3'b0;
             endcase
         // end
         // else begin 
