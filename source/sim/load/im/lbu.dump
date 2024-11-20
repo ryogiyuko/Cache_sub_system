@@ -1,0 +1,149 @@
+li	s10,0
+li	s11,0           //start
+auipc	ra,0x8
+addi	ra,ra,-8 
+lbu	t5,0(ra)
+li	t4,255
+li	gp,2
+bne	t5,t4,254       //test_2
+auipc	ra,0x8
+addi	ra,ra,-32
+lbu	t5,1(ra)
+li	t4,0
+li	gp,3
+bne	t5,t4,254       //test_3
+auipc	ra,0x8
+addi	ra,ra,-32
+lbu	t5,1(ra)
+li	t4,0
+li	gp,3
+bne	t5,t4,254       //test_4
+auipc	ra,0x8
+addi	ra,ra,-56
+lbu	t5,2(ra)
+li	t4,240
+li	gp,4
+bne	t5,t4,254       //test_5
+auipc	ra,0x8
+addi	ra,ra,-80
+lbu	t5,3(ra)
+li	t4,15
+li	gp,5
+bne	t5,t4,254       //test_6
+auipc	ra,0x8
+addi	ra,ra,-125
+lbu	t5,-2(ra)
+li	t4,0
+li	gp,7
+bne	t5,t4,254       //test_7
+auipc	ra,0x8
+addi	ra,ra,-149
+lbu	t5,-1(ra)
+li	t4,240
+li	gp,8
+bne	t5,t4,254       //test_8
+auipc	ra,0x8
+addi	ra,ra,-173
+lbu	t5,0(ra)
+li	t4,15
+li	gp,9
+bne	t5,t4,254       //test_9
+auipc	ra,0x8
+addi	ra,ra,-200
+addi	ra,ra,-32
+lbu	t0,32(ra)
+li	t4,255
+li	gp,10
+bne	t0,t4,254       //test_10
+auipc	ra,0x8
+addi	ra,ra,-228
+addi	ra,ra,-6
+lbu	t0,7(ra)
+li	t4,0
+li	gp,11
+bne	t0,t4,254       //test_11
+li	gp,12
+li	tp,0
+auipc	ra,0x8
+addi	ra,ra,-263
+lbu	t5,1(ra)
+mv	t1,t5
+li	t4,240
+bne	t1,t4,254       //test_12
+addi	tp,tp,1 # 
+li	t0,2
+bne	tp,t0,108 <t
+li	gp,13
+li	tp,0
+auipc	ra,0x8
+addi	ra,ra,-306
+lbu	t5,1(ra)
+nop
+mv	t1,t5
+li	t4,15
+bne	t1,t4,254       //test_13
+addi	tp,tp,1 # 
+li	t0,2
+bne	tp,t0,134 <t
+li	gp,14
+li	tp,0
+auipc	ra,0x8
+addi	ra,ra,-356
+lbu	t5,1(ra)
+nop
+nop
+mv	t1,t5
+li	t4,0
+bne	t1,t4,254       //test_14
+addi	tp,tp,1 # 
+li	t0,2
+bne	tp,t0,164 <t
+li	gp,15
+li	tp,0
+auipc	ra,0x8
+addi	ra,ra,-407
+lbu	t5,1(ra)
+li	t4,240
+bne	t5,t4,254       //test_15
+addi	tp,tp,1 # 
+li	t0,2
+bne	tp,t0,198 <t
+li	gp,16
+li	tp,0
+auipc	ra,0x8
+addi	ra,ra,-446
+nop
+lbu	t5,1(ra)
+li	t4,15
+bne	t5,t4,254       //test_16
+addi	tp,tp,1 # 
+li	t0,2
+bne	tp,t0,1c0 <t
+li	gp,17
+li	tp,0
+auipc	ra,0x8
+addi	ra,ra,-492
+nop
+nop
+lbu	t5,1(ra)
+li	t4,0
+bne	t5,t4,254       //test_17
+addi	tp,tp,1 # 
+li	t0,2
+bne	tp,t0,1ec <t
+auipc	t0,0x8
+addi	t0,t0,-532
+lbu	sp,0(t0)
+li	sp,2
+li	t4,2
+li	gp,18
+bne	sp,t4,254       //test_18
+auipc	t0,0x8
+addi	t0,t0,-560
+lbu	sp,0(t0)
+nop
+li	sp,2
+li	t4,2
+li	gp,19
+bne	sp,t4,254       //test_19
+bne	zero,gp,260 
