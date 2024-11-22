@@ -60,54 +60,54 @@ end
 
 integer i;
 
-// initial
-// begin
-//     for (i = 0;i < 128 ;i=i+1 ) begin
-//         u_Icache.u_Icache_SRAM_bank.u_Icache_data_3_SYKB110_128X16X8CM2.Memory_byte0[i][15:0] = 0;
-//         u_Icache.u_Icache_SRAM_bank.u_Icache_data_3_SYKB110_128X16X8CM2.Memory_byte1[i][15:0] = 0;
-//         u_Icache.u_Icache_SRAM_bank.u_Icache_data_3_SYKB110_128X16X8CM2.Memory_byte2[i][15:0] = 0;
-//         u_Icache.u_Icache_SRAM_bank.u_Icache_data_3_SYKB110_128X16X8CM2.Memory_byte3[i][15:0] = 0;
-//         u_Icache.u_Icache_SRAM_bank.u_Icache_data_3_SYKB110_128X16X8CM2.Memory_byte4[i][15:0] = 0;
-//         u_Icache.u_Icache_SRAM_bank.u_Icache_data_3_SYKB110_128X16X8CM2.Memory_byte5[i][15:0] = 0;
-//         u_Icache.u_Icache_SRAM_bank.u_Icache_data_3_SYKB110_128X16X8CM2.Memory_byte6[i][15:0] = 0;
-//         u_Icache.u_Icache_SRAM_bank.u_Icache_data_3_SYKB110_128X16X8CM2.Memory_byte7[i][15:0] = 0;
+initial
+begin
+    for (i = 0;i < 128 ;i=i+1 ) begin
+        u_Icache.u_Icache_SRAM_bank.u_Icache_data_3_SYKB110_128X16X8CM2.Memory_byte0[i][15:0] = 0;
+        u_Icache.u_Icache_SRAM_bank.u_Icache_data_3_SYKB110_128X16X8CM2.Memory_byte1[i][15:0] = 0;
+        u_Icache.u_Icache_SRAM_bank.u_Icache_data_3_SYKB110_128X16X8CM2.Memory_byte2[i][15:0] = 0;
+        u_Icache.u_Icache_SRAM_bank.u_Icache_data_3_SYKB110_128X16X8CM2.Memory_byte3[i][15:0] = 0;
+        u_Icache.u_Icache_SRAM_bank.u_Icache_data_3_SYKB110_128X16X8CM2.Memory_byte4[i][15:0] = 0;
+        u_Icache.u_Icache_SRAM_bank.u_Icache_data_3_SYKB110_128X16X8CM2.Memory_byte5[i][15:0] = 0;
+        u_Icache.u_Icache_SRAM_bank.u_Icache_data_3_SYKB110_128X16X8CM2.Memory_byte6[i][15:0] = 0;
+        u_Icache.u_Icache_SRAM_bank.u_Icache_data_3_SYKB110_128X16X8CM2.Memory_byte7[i][15:0] = 0;
 
-//         u_Icache.u_Icache_SRAM_bank.u_Icache_data_2_SYKB110_128X16X8CM2.Memory_byte0[i][15:0] = 0;
-//         u_Icache.u_Icache_SRAM_bank.u_Icache_data_2_SYKB110_128X16X8CM2.Memory_byte1[i][15:0] = 0;
-//         u_Icache.u_Icache_SRAM_bank.u_Icache_data_2_SYKB110_128X16X8CM2.Memory_byte2[i][15:0] = 0;
-//         u_Icache.u_Icache_SRAM_bank.u_Icache_data_2_SYKB110_128X16X8CM2.Memory_byte3[i][15:0] = 0;
-//         u_Icache.u_Icache_SRAM_bank.u_Icache_data_2_SYKB110_128X16X8CM2.Memory_byte4[i][15:0] = 0;
-//         u_Icache.u_Icache_SRAM_bank.u_Icache_data_2_SYKB110_128X16X8CM2.Memory_byte5[i][15:0] = 0;
-//         u_Icache.u_Icache_SRAM_bank.u_Icache_data_2_SYKB110_128X16X8CM2.Memory_byte6[i][15:0] = 0;
-//         u_Icache.u_Icache_SRAM_bank.u_Icache_data_2_SYKB110_128X16X8CM2.Memory_byte7[i][15:0] = 0;
+        u_Icache.u_Icache_SRAM_bank.u_Icache_data_2_SYKB110_128X16X8CM2.Memory_byte0[i][15:0] = 0;
+        u_Icache.u_Icache_SRAM_bank.u_Icache_data_2_SYKB110_128X16X8CM2.Memory_byte1[i][15:0] = 0;
+        u_Icache.u_Icache_SRAM_bank.u_Icache_data_2_SYKB110_128X16X8CM2.Memory_byte2[i][15:0] = 0;
+        u_Icache.u_Icache_SRAM_bank.u_Icache_data_2_SYKB110_128X16X8CM2.Memory_byte3[i][15:0] = 0;
+        u_Icache.u_Icache_SRAM_bank.u_Icache_data_2_SYKB110_128X16X8CM2.Memory_byte4[i][15:0] = 0;
+        u_Icache.u_Icache_SRAM_bank.u_Icache_data_2_SYKB110_128X16X8CM2.Memory_byte5[i][15:0] = 0;
+        u_Icache.u_Icache_SRAM_bank.u_Icache_data_2_SYKB110_128X16X8CM2.Memory_byte6[i][15:0] = 0;
+        u_Icache.u_Icache_SRAM_bank.u_Icache_data_2_SYKB110_128X16X8CM2.Memory_byte7[i][15:0] = 0;
 
-//         u_Icache.u_Icache_SRAM_bank.u_Icache_data_1_SYKB110_128X16X8CM2.Memory_byte0[i][15:0] = 0;
-//         u_Icache.u_Icache_SRAM_bank.u_Icache_data_1_SYKB110_128X16X8CM2.Memory_byte1[i][15:0] = 0;
-//         u_Icache.u_Icache_SRAM_bank.u_Icache_data_1_SYKB110_128X16X8CM2.Memory_byte2[i][15:0] = 0;
-//         u_Icache.u_Icache_SRAM_bank.u_Icache_data_1_SYKB110_128X16X8CM2.Memory_byte3[i][15:0] = 0;
-//         u_Icache.u_Icache_SRAM_bank.u_Icache_data_1_SYKB110_128X16X8CM2.Memory_byte4[i][15:0] = 0;
-//         u_Icache.u_Icache_SRAM_bank.u_Icache_data_1_SYKB110_128X16X8CM2.Memory_byte5[i][15:0] = 0;
-//         u_Icache.u_Icache_SRAM_bank.u_Icache_data_1_SYKB110_128X16X8CM2.Memory_byte6[i][15:0] = 0;
-//         u_Icache.u_Icache_SRAM_bank.u_Icache_data_1_SYKB110_128X16X8CM2.Memory_byte7[i][15:0] = 0;
+        u_Icache.u_Icache_SRAM_bank.u_Icache_data_1_SYKB110_128X16X8CM2.Memory_byte0[i][15:0] = 0;
+        u_Icache.u_Icache_SRAM_bank.u_Icache_data_1_SYKB110_128X16X8CM2.Memory_byte1[i][15:0] = 0;
+        u_Icache.u_Icache_SRAM_bank.u_Icache_data_1_SYKB110_128X16X8CM2.Memory_byte2[i][15:0] = 0;
+        u_Icache.u_Icache_SRAM_bank.u_Icache_data_1_SYKB110_128X16X8CM2.Memory_byte3[i][15:0] = 0;
+        u_Icache.u_Icache_SRAM_bank.u_Icache_data_1_SYKB110_128X16X8CM2.Memory_byte4[i][15:0] = 0;
+        u_Icache.u_Icache_SRAM_bank.u_Icache_data_1_SYKB110_128X16X8CM2.Memory_byte5[i][15:0] = 0;
+        u_Icache.u_Icache_SRAM_bank.u_Icache_data_1_SYKB110_128X16X8CM2.Memory_byte6[i][15:0] = 0;
+        u_Icache.u_Icache_SRAM_bank.u_Icache_data_1_SYKB110_128X16X8CM2.Memory_byte7[i][15:0] = 0;
 
-//         u_Icache.u_Icache_SRAM_bank.u_Icache_data_0_SYKB110_128X16X8CM2.Memory_byte0[i][15:0] = 0;
-//         u_Icache.u_Icache_SRAM_bank.u_Icache_data_0_SYKB110_128X16X8CM2.Memory_byte1[i][15:0] = 0;
-//         u_Icache.u_Icache_SRAM_bank.u_Icache_data_0_SYKB110_128X16X8CM2.Memory_byte2[i][15:0] = 0;
-//         u_Icache.u_Icache_SRAM_bank.u_Icache_data_0_SYKB110_128X16X8CM2.Memory_byte3[i][15:0] = 0;
-//         u_Icache.u_Icache_SRAM_bank.u_Icache_data_0_SYKB110_128X16X8CM2.Memory_byte4[i][15:0] = 0;
-//         u_Icache.u_Icache_SRAM_bank.u_Icache_data_0_SYKB110_128X16X8CM2.Memory_byte5[i][15:0] = 0;
-//         u_Icache.u_Icache_SRAM_bank.u_Icache_data_0_SYKB110_128X16X8CM2.Memory_byte6[i][15:0] = 0;
-//         u_Icache.u_Icache_SRAM_bank.u_Icache_data_0_SYKB110_128X16X8CM2.Memory_byte7[i][15:0] = 0;
+        u_Icache.u_Icache_SRAM_bank.u_Icache_data_0_SYKB110_128X16X8CM2.Memory_byte0[i][15:0] = 0;
+        u_Icache.u_Icache_SRAM_bank.u_Icache_data_0_SYKB110_128X16X8CM2.Memory_byte1[i][15:0] = 0;
+        u_Icache.u_Icache_SRAM_bank.u_Icache_data_0_SYKB110_128X16X8CM2.Memory_byte2[i][15:0] = 0;
+        u_Icache.u_Icache_SRAM_bank.u_Icache_data_0_SYKB110_128X16X8CM2.Memory_byte3[i][15:0] = 0;
+        u_Icache.u_Icache_SRAM_bank.u_Icache_data_0_SYKB110_128X16X8CM2.Memory_byte4[i][15:0] = 0;
+        u_Icache.u_Icache_SRAM_bank.u_Icache_data_0_SYKB110_128X16X8CM2.Memory_byte5[i][15:0] = 0;
+        u_Icache.u_Icache_SRAM_bank.u_Icache_data_0_SYKB110_128X16X8CM2.Memory_byte6[i][15:0] = 0;
+        u_Icache.u_Icache_SRAM_bank.u_Icache_data_0_SYKB110_128X16X8CM2.Memory_byte7[i][15:0] = 0;
 
-//         u_Icache.u_Icache_SRAM_bank.u_Icache_tag_SYKB110_128X7X6CM4.Memory_byte0[i][6:0] = 0;
-//         u_Icache.u_Icache_SRAM_bank.u_Icache_tag_SYKB110_128X7X6CM4.Memory_byte1[i][6:0] = 0;
-//         u_Icache.u_Icache_SRAM_bank.u_Icache_tag_SYKB110_128X7X6CM4.Memory_byte2[i][6:0] = 0;
-//         u_Icache.u_Icache_SRAM_bank.u_Icache_tag_SYKB110_128X7X6CM4.Memory_byte3[i][6:0] = 0;
-//         u_Icache.u_Icache_SRAM_bank.u_Icache_tag_SYKB110_128X7X6CM4.Memory_byte4[i][6:0] = 0;
-//         u_Icache.u_Icache_SRAM_bank.u_Icache_tag_SYKB110_128X7X6CM4.Memory_byte5[i][6:0] = 0;
-//     end
+        u_Icache.u_Icache_SRAM_bank.u_Icache_tag_SYKB110_128X7X6CM4.Memory_byte0[i][6:0] = 0;
+        u_Icache.u_Icache_SRAM_bank.u_Icache_tag_SYKB110_128X7X6CM4.Memory_byte1[i][6:0] = 0;
+        u_Icache.u_Icache_SRAM_bank.u_Icache_tag_SYKB110_128X7X6CM4.Memory_byte2[i][6:0] = 0;
+        u_Icache.u_Icache_SRAM_bank.u_Icache_tag_SYKB110_128X7X6CM4.Memory_byte3[i][6:0] = 0;
+        u_Icache.u_Icache_SRAM_bank.u_Icache_tag_SYKB110_128X7X6CM4.Memory_byte4[i][6:0] = 0;
+        u_Icache.u_Icache_SRAM_bank.u_Icache_tag_SYKB110_128X7X6CM4.Memory_byte5[i][6:0] = 0;
+    end
 
-// end
+end
 
 Icache  u_Icache (
     .rstn                        ( rstn                                ),
