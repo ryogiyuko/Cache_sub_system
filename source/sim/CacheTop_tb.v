@@ -2992,643 +2992,643 @@ begin
     #(PERIOD*rst_cycle-5) rstn  =  1;
     #20;#10;
 
-//case0 test data_init
-    count = count +1'b1;
-    init_PA_34 = 34'b0;
-    init_datain_256 = 256'h2c4d24af_dab8a58d_e4723be3_680216da_3e745f72_86c908fa_db1e3009_510b3236;    
-    #PERIOD;
-    init_sign = 1;
-    #PERIOD;
-    init_wea = 1;
-    #PERIOD;
+// //case0 test data_init
+//     count = count +1'b1;
+//     init_PA_34 = 34'b0;
+//     init_datain_256 = 256'h2c4d24af_dab8a58d_e4723be3_680216da_3e745f72_86c908fa_db1e3009_510b3236;    
+//     #PERIOD;
+//     init_sign = 1;
+//     #PERIOD;
+//     init_wea = 1;
+//     #PERIOD;
     
-    init_wea = 0;
-    count = count +1'b1;
-    init_PA_34 = 34'b1010011000011101010110_10101_00_11100;  //298756_a9c
-    init_datain_256 = 256'h84dc4355_5970318c_acab6104_b65fdd37_a9d39843_a13c91e4_7dbe7e2a_f4496680;
-    #PERIOD;
-    init_wea = 1;
-    #PERIOD;
+//     init_wea = 0;
+//     count = count +1'b1;
+//     init_PA_34 = 34'b1010011000011101010110_10101_00_11100;  //298756_a9c
+//     init_datain_256 = 256'h84dc4355_5970318c_acab6104_b65fdd37_a9d39843_a13c91e4_7dbe7e2a_f4496680;
+//     #PERIOD;
+//     init_wea = 1;
+//     #PERIOD;
 
-    init_wea = 0;
-    count = count +1'b1;
-    init_PA_34 = 34'b10000110000111010101_1010101_01_00000; // 34'h218756_abc
-    init_datain_256 = 256'h7e1bcc6e_c0236e43_3d4ac21a_5ed12a33_39177964_d4f17ee7_22060117_d5e43b21;
-    #PERIOD;
-    init_wea = 1;
-    #PERIOD;
+//     init_wea = 0;
+//     count = count +1'b1;
+//     init_PA_34 = 34'b10000110000111010101_1010101_01_00000; // 34'h218756_abc
+//     init_datain_256 = 256'h7e1bcc6e_c0236e43_3d4ac21a_5ed12a33_39177964_d4f17ee7_22060117_d5e43b21;
+//     #PERIOD;
+//     init_wea = 1;
+//     #PERIOD;
 
-    init_wea = 0;
-    count = count +1'b1;
-    init_PA_34 = 34'b10000110000111010101_1010101_10_00000; // 34'h 2 1875 6AC0
-    init_datain_256 = 256'h2c4d24af_dab8a58d_e4723be3_680216da_3e745f72_86c908fa_db1e3009_510b3236;    
-    #PERIOD;
-    init_wea = 1;
-    #PERIOD;
+//     init_wea = 0;
+//     count = count +1'b1;
+//     init_PA_34 = 34'b10000110000111010101_1010101_10_00000; // 34'h 2 1875 6AC0
+//     init_datain_256 = 256'h2c4d24af_dab8a58d_e4723be3_680216da_3e745f72_86c908fa_db1e3009_510b3236;    
+//     #PERIOD;
+//     init_wea = 1;
+//     #PERIOD;
 
-    init_wea = 0;
-    count = count +1'b1;
-    init_PA_34 = 34'b10000110000111000001_1010100_11_00000; // 34'h 2 1870 6A60
-    init_datain_256 = 256'h2b89718a_c3ce4c8c_77ac0274_80ae157e_06d55e58_881486d9_cb6b353c_dea3791c;
-    #PERIOD;
-    init_wea = 1;
-    #PERIOD;
+//     init_wea = 0;
+//     count = count +1'b1;
+//     init_PA_34 = 34'b10000110000111000001_1010100_11_00000; // 34'h 2 1870 6A60
+//     init_datain_256 = 256'h2b89718a_c3ce4c8c_77ac0274_80ae157e_06d55e58_881486d9_cb6b353c_dea3791c;
+//     #PERIOD;
+//     init_wea = 1;
+//     #PERIOD;
 
-    init_sign=0;
+//     init_sign=0;
+//     #run_time;
+//     i_lsu_PA0_34 = 34'b1010011000011101010110_10101_00_11100;  //298756_a9c
+//     i_lsu_PA1_34 = 34'b10000110000111010101_1010101_01_00000; // 34'h218756_abc
+//     i_lsu_PA2_34 = 34'b10000110000111010101_1010101_10_00000; // 34'h 2 1875 6AC0
+//     i_lsu_PA3_34 = 34'b10000110000111000001_1010100_11_00000; // 34'h 2 1870 6A60
+//     i_lsu_flag0_10[9] = 1;
+//     i_lsu_flag1_10[9] = 1;
+//     i_lsu_flag2_10[9] = 1;
+//     i_lsu_flag3_10[9] = 1;
+
+//     #3;
+//     i_lsu_drive0_cache = 1;
+//     i_lsu_drive1_cache = 1;
+//     i_lsu_drive2_cache = 1;
+//     i_lsu_drive3_cache = 1;
+//     #3;
+//     i_lsu_drive0_cache = 0;
+//     i_lsu_drive1_cache = 0;
+//     i_lsu_drive2_cache = 0;
+//     i_lsu_drive3_cache = 0;
+
+//     #run_time;
+
+
+//case1 Dcache、Icache 单独缺失读 + 命中读确认 ， Dcache单独缺失写 + 命中读确认
+    
+    count = count +1'b1;
+
+//Dcache 缺失读
+    i_lsu_rd0_5 = 5'd13;
+    i_lsu_index0_6 = 6'd30;
+    i_lsu_flag0_10 = 10'b1_101010101; //1 load
+    i_lsu_bypass0 = 1'b1;
+    i_lsu_PA0_34 = 34'h298756_a9c;  //1010011000011101010110_10101_00_11100
+    #2.5;i_lsu_drive0_cache = 1'b1;
+    #2.5;i_lsu_drive0_cache = 1'b0;
+
+    #run_time;//L1缺失
+    #run_time;//L2缺失
+
+    //o_read_driveNext_DDR
+    i_DDR_refill_data_256 = 256'h2c4d24af_dab8a58d_e4723be3_680216da_3e745f72_86c908fa_db1e3009_510b3236;
+    #2.5;i_DDR_drive_cache = 1'b1;
+    #2.5;i_DDR_drive_cache = 1'b0;//i_DDR_drive_cache做arbRead的free
+
+    #run_time;//回填L2
+    #run_time;//回填L1
+
+    #2.5;i_freeNext0_lsu_load = 1'b1;
+    #2.5;i_freeNext0_lsu_load = 1'b0;
+
+//Dcache 读命中确认
+    i_lsu_PA0_34 = 34'h298756_a9c;  //1010011000011101010110_10101_00_11100
+    #2.5;i_lsu_drive0_cache = 1'b1;
+    #2.5;i_lsu_drive0_cache = 1'b0;
+
     #run_time;
-    i_lsu_PA0_34 = 34'b1010011000011101010110_10101_00_11100;  //298756_a9c
-    i_lsu_PA1_34 = 34'b10000110000111010101_1010101_01_00000; // 34'h218756_abc
-    i_lsu_PA2_34 = 34'b10000110000111010101_1010101_10_00000; // 34'h 2 1875 6AC0
-    i_lsu_PA3_34 = 34'b10000110000111000001_1010100_11_00000; // 34'h 2 1870 6A60
-    i_lsu_flag0_10[9] = 1;
-    i_lsu_flag1_10[9] = 1;
-    i_lsu_flag2_10[9] = 1;
-    i_lsu_flag3_10[9] = 1;
 
-    #3;
-    i_lsu_drive0_cache = 1;
-    i_lsu_drive1_cache = 1;
-    i_lsu_drive2_cache = 1;
-    i_lsu_drive3_cache = 1;
-    #3;
-    i_lsu_drive0_cache = 0;
-    i_lsu_drive1_cache = 0;
-    i_lsu_drive2_cache = 0;
-    i_lsu_drive3_cache = 0;
+    #2.5;i_freeNext0_lsu_load = 1'b1;
+    #2.5;i_freeNext0_lsu_load = 1'b0;
+
+//Icache 
+    i_ifu_PA1_34 = 34'b10000110000111010101_1010101_01_00000; // 34'h218756_abc
+    #2.5;i_ifu_drive1 = 1'b1;
+    #2.5;i_ifu_drive1 = 1'b0;
+
+    #run_time;//L1缺失
+    #run_time;//L2缺失
+
+    i_DDR_refill_data_256 = 256'h84dc4355_5970318c_acab6104_b65fdd37_a9d39843_a13c91e4_7dbe7e2a_f4496680;
+    #2.5;i_DDR_drive_cache = 1'b1;
+    #2.5;i_DDR_drive_cache = 1'b0;
+    
+    #run_time;//回填L2
+    #run_time;//回填L1
+
+    #2.5;i_freeNext1_ifu = 1'b1;
+    #2.5;i_freeNext1_ifu = 1'b0;
+
+//Icache 读命中确认
+    i_ifu_PA1_34 = 34'b10000110000111010101_1010101_01_00000; // 34'h218756_abc
+
+    #2.5;i_ifu_drive1 = 1'b1;
+    #2.5;i_ifu_drive1 = 1'b0;
 
     #run_time;
 
-
-// //case1 Dcache、Icache 单独缺失读 + 命中读确认 ， Dcache单独缺失写 + 命中读确认
-    
-//     count = count +1'b1;
-
-// //Dcache 缺失读
-//     i_lsu_rd0_5 = 5'd13;
-//     i_lsu_index0_6 = 6'd30;
-//     i_lsu_flag0_10 = 10'b1_101010101; //1 load
-//     i_lsu_bypass0 = 1'b1;
-//     i_lsu_PA0_34 = 34'h298756_a9c;  //1010011000011101010110_10101_00_11100
-//     #2.5;i_lsu_drive0_cache = 1'b1;
-//     #2.5;i_lsu_drive0_cache = 1'b0;
-
-//     #run_time;//L1缺失
-//     #run_time;//L2缺失
-
-//     //o_read_driveNext_DDR
-//     i_DDR_refill_data_256 = 256'h2c4d24af_dab8a58d_e4723be3_680216da_3e745f72_86c908fa_db1e3009_510b3236;
-//     #2.5;i_DDR_drive_cache = 1'b1;
-//     #2.5;i_DDR_drive_cache = 1'b0;//i_DDR_drive_cache做arbRead的free
-
-//     #run_time;//回填L2
-//     #run_time;//回填L1
-
-//     #2.5;i_freeNext_retire_load = 1'b1;
-//     #2.5;i_freeNext_retire_load = 1'b0;
-
-// //Dcache 读命中确认
-//     i_lsu_PA0_34 = 34'h298756_a9c;  //1010011000011101010110_10101_00_11100
-//     #2.5;i_lsu_drive0_cache = 1'b1;
-//     #2.5;i_lsu_drive0_cache = 1'b0;
-
-//     #run_time;
-
-//     #2.5;i_freeNext_retire_load = 1'b1;
-//     #2.5;i_freeNext_retire_load = 1'b0;
-
-// //Icache 
-//     i_ifu_PA1_34 = 34'b10000110000111010101_1010101_01_00000; // 34'h218756_abc
-//     #2.5;i_ifu_drive1 = 1'b1;
-//     #2.5;i_ifu_drive1 = 1'b0;
-
-//     #run_time;//L1缺失
-//     #run_time;//L2缺失
-
-//     i_DDR_refill_data_256 = 256'h84dc4355_5970318c_acab6104_b65fdd37_a9d39843_a13c91e4_7dbe7e2a_f4496680;
-//     #2.5;i_DDR_drive_cache = 1'b1;
-//     #2.5;i_DDR_drive_cache = 1'b0;
-    
-//     #run_time;//回填L2
-//     #run_time;//回填L1
-
-//     #2.5;i_freeNext1_ifu = 1'b1;
-//     #2.5;i_freeNext1_ifu = 1'b0;
-
-// //Icache 读命中确认
-//     i_ifu_PA1_34 = 34'b10000110000111010101_1010101_01_00000; // 34'h218756_abc
-
-//     #2.5;i_ifu_drive1 = 1'b1;
-//     #2.5;i_ifu_drive1 = 1'b0;
-
-//     #run_time;
-
-//     #2.5;i_freeNext1_ifu = 1'b1;
-//     #2.5;i_freeNext1_ifu = 1'b0;
+    #2.5;i_freeNext1_ifu = 1'b1;
+    #2.5;i_freeNext1_ifu = 1'b0;
 
 
-// //case2 Dcache 单独命中写 + 命中读确认
-//     count = count +1'b1;
+//case2 Dcache 单独命中写 + 命中读确认
+    count = count +1'b1;
    
-//     //Dcache 命中写
-//     i_lsu_rd0_5 = 5'd13;
-//     i_lsu_index0_6 = 6'd30;
-//     i_lsu_flag0_10 = 10'b0_101010101; //1 load 0 store
-//     i_lsu_bypass0 = 1'b1;
-//     i_lsu_PA0_34 = 34'h298756_a9c;  //1010011000011101010110_10101_00_11100
-//     #2.5;i_lsu_drive0_cache = 1'b1;
-//     #2.5;i_lsu_drive0_cache = 1'b0;
+    //Dcache 命中写
+    i_lsu_rd0_5 = 5'd13;
+    i_lsu_index0_6 = 6'd30;
+    i_lsu_flag0_10 = 10'b0_101010101; //1 load 0 store
+    i_lsu_bypass0 = 1'b1;
+    i_lsu_PA0_34 = 34'h298756_a9c;  //1010011000011101010110_10101_00_11100
+    #2.5;i_lsu_drive0_cache = 1'b1;
+    #2.5;i_lsu_drive0_cache = 1'b0;
 
-//     #run_time;#run_time;//命中+写
+    #run_time;#run_time;//命中+写
 
-//     #2.5;i_freeNext0_lsu = 1'b1;
-//     #2.5;i_freeNext0_lsu = 1'b0;
+    #2.5;i_freeNext0_lsu = 1'b1;
+    #2.5;i_freeNext0_lsu = 1'b0;
 
-//     //Dcache 读命中确认
-//     i_lsu_flag0_10 = 10'b1_101010101; //1 load 0 store
-//     i_lsu_PA0_34 = 34'h298756_a9c;  //1010011000011101010110_10101_00_11100
-//     #2.5;i_lsu_drive0_cache = 1'b1;
-//     #2.5;i_lsu_drive0_cache = 1'b0;
+    //Dcache 读命中确认
+    i_lsu_flag0_10 = 10'b1_101010101; //1 load 0 store
+    i_lsu_PA0_34 = 34'h298756_a9c;  //1010011000011101010110_10101_00_11100
+    #2.5;i_lsu_drive0_cache = 1'b1;
+    #2.5;i_lsu_drive0_cache = 1'b0;
 
-//     #run_time;
+    #run_time;
 
-//     #2.5;i_freeNext_retire_load = 1'b1;
-//     #2.5;i_freeNext_retire_load = 1'b0;
+    #2.5;i_freeNext0_lsu_load = 1'b1;
+    #2.5;i_freeNext0_lsu_load = 1'b0;
 
-// //case3 Dcache、Icache 单独缺失读 + 命中读确认 ， Dcache单独缺失写 + 命中读确认
+//case3 Dcache、Icache 单独缺失读 + 命中读确认 ， Dcache单独缺失写 + 命中读确认
    
-//     count = count +1'b1;
-//     //Dcache 缺失读
-//     i_lsu_rd1_5 = 5'd13;
-//     i_lsu_index1_6 = 6'd30;
-//     i_lsu_flag1_10 = 10'b1_101010101; //1 load
-//     i_lsu_bypass1 = 1'b1;
-//     i_lsu_PA1_34 = 34'h298756a3c;  //1010011000011101010110_10100_01_11100
-//     #2.5;i_lsu_drive1_cache = 1'b1;
-//     #2.5;i_lsu_drive1_cache = 1'b0;
+    count = count +1'b1;
+    //Dcache 缺失读
+    i_lsu_rd1_5 = 5'd13;
+    i_lsu_index1_6 = 6'd30;
+    i_lsu_flag1_10 = 10'b1_101010101; //1 load
+    i_lsu_bypass1 = 1'b1;
+    i_lsu_PA1_34 = 34'h298756a3c;  //1010011000011101010110_10100_01_11100
+    #2.5;i_lsu_drive1_cache = 1'b1;
+    #2.5;i_lsu_drive1_cache = 1'b0;
 
-//     #run_time;//L1缺失
-//     #run_time;//L2缺失
+    #run_time;//L1缺失
+    #run_time;//L2缺失
 
-//     //o_read_driveNext_DDR
-//     i_DDR_refill_data_256 = 256'h2c4d24af_dab8a58d_e4723be3_680216da_3e745f72_86c908fa_db1e3009_510b3236;
-//     #2.5;i_DDR_drive_cache = 1'b1;
-//     #2.5;i_DDR_drive_cache = 1'b0;//i_DDR_drive_cache做arbRead的free
+    //o_read_driveNext_DDR
+    i_DDR_refill_data_256 = 256'h2c4d24af_dab8a58d_e4723be3_680216da_3e745f72_86c908fa_db1e3009_510b3236;
+    #2.5;i_DDR_drive_cache = 1'b1;
+    #2.5;i_DDR_drive_cache = 1'b0;//i_DDR_drive_cache做arbRead的free
 
-//     #run_time;//回填L2
-//     #run_time;//回填L1
+    #run_time;//回填L2
+    #run_time;//回填L1
 
-//     #2.5;i_freeNext_retire_load = 1'b1;
-//     #2.5;i_freeNext_retire_load = 1'b0;
+    #2.5;i_freeNext1_lsu_load = 1'b1;
+    #2.5;i_freeNext1_lsu_load = 1'b0;
 
-//     //Dcache 读命中确认
-//     i_lsu_PA1_34 = 34'h298756a3c;  //1010011000011101010110_10100_01_11100
-//     #2.5;i_lsu_drive1_cache = 1'b1;
-//     #2.5;i_lsu_drive1_cache = 1'b0;
+    //Dcache 读命中确认
+    i_lsu_PA1_34 = 34'h298756a3c;  //1010011000011101010110_10100_01_11100
+    #2.5;i_lsu_drive1_cache = 1'b1;
+    #2.5;i_lsu_drive1_cache = 1'b0;
 
-//     #run_time;
+    #run_time;
 
-//     #2.5;i_freeNext_retire_load = 1'b1;
-//     #2.5;i_freeNext_retire_load = 1'b0;
+    #2.5;i_freeNext1_lsu_load = 1'b1;
+    #2.5;i_freeNext1_lsu_load = 1'b0;
 
-//     //Icache 
-//     i_ifu_PA2_34 = 34'b10000110000111010101_1010101_10_00000; // 218756ac0    
-//     #2.5;i_ifu_drive2 = 1'b1;
-//     #2.5;i_ifu_drive2 = 1'b0;
+    //Icache 
+    i_ifu_PA2_34 = 34'b10000110000111010101_1010101_10_00000; // 218756ac0    
+    #2.5;i_ifu_drive2 = 1'b1;
+    #2.5;i_ifu_drive2 = 1'b0;
 
-//     #run_time;//L1缺失
-//     #run_time;//L2缺失
+    #run_time;//L1缺失
+    #run_time;//L2缺失
 
-//     i_DDR_refill_data_256 = 256'h7e1bcc6e_c0236e43_3d4ac21a_5ed12a33_39177964_d4f17ee7_22060117_d5e43b21;
-//     #2.5;i_DDR_drive_cache = 1'b1;
-//     #2.5;i_DDR_drive_cache = 1'b0;
+    i_DDR_refill_data_256 = 256'h7e1bcc6e_c0236e43_3d4ac21a_5ed12a33_39177964_d4f17ee7_22060117_d5e43b21;
+    #2.5;i_DDR_drive_cache = 1'b1;
+    #2.5;i_DDR_drive_cache = 1'b0;
     
-//     #run_time;//回填L2
-//     #run_time;//回填L1
+    #run_time;//回填L2
+    #run_time;//回填L1
 
-//     #2.5;i_freeNext2_ifu = 1'b1;
-//     #2.5;i_freeNext2_ifu = 1'b0;
+    #2.5;i_freeNext2_ifu = 1'b1;
+    #2.5;i_freeNext2_ifu = 1'b0;
 
-//     //Icache 读命中确认
-//     i_ifu_PA2_34 = 34'b10000110000111010101_1010101_10_00000; // 218756ac0    
+    //Icache 读命中确认
+    i_ifu_PA2_34 = 34'b10000110000111010101_1010101_10_00000; // 218756ac0    
 
-//     #2.5;i_ifu_drive2 = 1'b1;
-//     #2.5;i_ifu_drive2 = 1'b0;
+    #2.5;i_ifu_drive2 = 1'b1;
+    #2.5;i_ifu_drive2 = 1'b0;
 
-//     #run_time;
+    #run_time;
 
-//     #2.5;i_freeNext2_ifu = 1'b1;
-//     #2.5;i_freeNext2_ifu = 1'b0;
+    #2.5;i_freeNext2_ifu = 1'b1;
+    #2.5;i_freeNext2_ifu = 1'b0;
 
-// //case4 Dcache、Icache 同时缺失，且L2重复
-//     count = count +1'b1;
+//case4 Dcache、Icache 同时缺失，且L2重复
+    count = count +1'b1;
 
-//     i_lsu_rd0_5 = 5'd13;
-//     i_lsu_index0_6 = 6'd30;
-//     i_lsu_flag0_10 = 10'b1_101010101; i_lsu_flag1_10 = 10'b0_101010101; i_lsu_flag2_10 = 10'b0_101010101; i_lsu_flag3_10 = 10'b0_101010101;
-//     i_lsu_bypass0 = 1'b1;
+    i_lsu_rd0_5 = 5'd13;
+    i_lsu_index0_6 = 6'd30;
+    i_lsu_flag0_10 = 10'b1_101010101; i_lsu_flag1_10 = 10'b0_101010101; i_lsu_flag2_10 = 10'b0_101010101; i_lsu_flag3_10 = 10'b0_101010101;
+    i_lsu_bypass0 = 1'b1;
 
-//     i_lsu_PA0_34 = 34'b1010011000011100000110_10101_00_11100;    
-//     i_lsu_PA1_34 = 34'b1010011000011100000110_10101_01_11100;
-//     i_lsu_PA2_34 = 34'b1010011000011100000110_10101_10_11100;
-//     i_lsu_PA3_34 = 34'b1010011000011100000110_10101_11_11100;
-//     i_lsu_storeData0_32 = 32'b0;
-//     i_lsu_storeData1_32 = 32'hd1b62b74;
-//     i_lsu_storeData2_32 = 32'h97e0baa6;
-//     i_lsu_storeData3_32 = 32'h6154b0e1;
+    i_lsu_PA0_34 = 34'b1010011000011100000110_10101_00_11100;    
+    i_lsu_PA1_34 = 34'b1010011000011100000110_10101_01_11100;
+    i_lsu_PA2_34 = 34'b1010011000011100000110_10101_10_11100;
+    i_lsu_PA3_34 = 34'b1010011000011100000110_10101_11_11100;
+    i_lsu_storeData0_32 = 32'b0;
+    i_lsu_storeData1_32 = 32'hd1b62b74;
+    i_lsu_storeData2_32 = 32'h97e0baa6;
+    i_lsu_storeData3_32 = 32'h6154b0e1;
 
-//     i_ifu_PA1_34 = 34'b10000110000111000001_1010100_01_00000; 
-//     i_ifu_PA2_34 = 34'b10000110000111000001_1010100_10_00000; 
-//     i_ifu_PA3_34 = 34'b10000110000111000001_1010100_11_00000; 
+    i_ifu_PA1_34 = 34'b10000110000111000001_1010100_01_00000; 
+    i_ifu_PA2_34 = 34'b10000110000111000001_1010100_10_00000; 
+    i_ifu_PA3_34 = 34'b10000110000111000001_1010100_11_00000; 
 
-//     #2.5;
-//     i_lsu_drive0_cache = 1'b1;i_lsu_drive1_cache = 1'b1;i_lsu_drive2_cache = 1'b1;i_lsu_drive3_cache = 1'b1;
-//     i_ifu_drive1 = 1'b1;i_ifu_drive2 = 1'b1;i_ifu_drive3 = 1'b1;
+    #2.5;
+    i_lsu_drive0_cache = 1'b1;i_lsu_drive1_cache = 1'b1;i_lsu_drive2_cache = 1'b1;i_lsu_drive3_cache = 1'b1;
+    i_ifu_drive1 = 1'b1;i_ifu_drive2 = 1'b1;i_ifu_drive3 = 1'b1;
 
-//     #2.5;
-//     i_lsu_drive0_cache = 1'b0;i_lsu_drive1_cache = 1'b0;i_lsu_drive2_cache = 1'b0;i_lsu_drive3_cache = 1'b0;
-//     i_ifu_drive1 = 1'b0;i_ifu_drive2 = 1'b0;i_ifu_drive3 = 1'b0;
+    #2.5;
+    i_lsu_drive0_cache = 1'b0;i_lsu_drive1_cache = 1'b0;i_lsu_drive2_cache = 1'b0;i_lsu_drive3_cache = 1'b0;
+    i_ifu_drive1 = 1'b0;i_ifu_drive2 = 1'b0;i_ifu_drive3 = 1'b0;
 
-//     #run_time;//L1缺失
-//     #run_time;//L2缺失
+    #run_time;//L1缺失
+    #run_time;//L2缺失
     
-//     //o_read_driveNext_DDR
-//     i_DDR_refill_data_256 = 256'h2c4d24af_dab8a58d_e4723be3_680216da_3e745f72_86c908fa_db1e3009_510b3236;
-//     #2.5;i_DDR_drive_cache = 1'b1;
-//     #2.5;i_DDR_drive_cache = 1'b0;//i_DDR_drive_cache做arbRead的free
+    //o_read_driveNext_DDR
+    i_DDR_refill_data_256 = 256'h2c4d24af_dab8a58d_e4723be3_680216da_3e745f72_86c908fa_db1e3009_510b3236;
+    #2.5;i_DDR_drive_cache = 1'b1;
+    #2.5;i_DDR_drive_cache = 1'b0;//i_DDR_drive_cache做arbRead的free
 
-//     #wait_arb;
-//     i_DDR_refill_data_256 = 256'h84dc4355_5970318c_acab6104_b65fdd37_a9d39843_a13c91e4_7dbe7e2a_f4496680;
-//     #2.5;i_DDR_drive_cache = 1'b1;
-//     #2.5;i_DDR_drive_cache = 1'b0;
+    #wait_arb;
+    i_DDR_refill_data_256 = 256'h84dc4355_5970318c_acab6104_b65fdd37_a9d39843_a13c91e4_7dbe7e2a_f4496680;
+    #2.5;i_DDR_drive_cache = 1'b1;
+    #2.5;i_DDR_drive_cache = 1'b0;
 
-//     #wait_arb;
-//     i_DDR_refill_data_256 = 256'h2b89718a_c3ce4c8c_77ac0274_80ae157e_06d55e58_881486d9_cb6b353c_dea3791c;
-//     #2.5;i_DDR_drive_cache = 1'b1;
-//     #2.5;i_DDR_drive_cache = 1'b0;
+    #wait_arb;
+    i_DDR_refill_data_256 = 256'h2b89718a_c3ce4c8c_77ac0274_80ae157e_06d55e58_881486d9_cb6b353c_dea3791c;
+    #2.5;i_DDR_drive_cache = 1'b1;
+    #2.5;i_DDR_drive_cache = 1'b0;
     
-//     #wait_arb;
-//     i_DDR_refill_data_256 = 256'h7e1bcc6e_c0236e43_3d4ac21a_5ed12a33_39177964_d4f17ee7_22060117_d5e43b21;
-//     #2.5;i_DDR_drive_cache = 1'b1;
-//     #2.5;i_DDR_drive_cache = 1'b0;
+    #wait_arb;
+    i_DDR_refill_data_256 = 256'h7e1bcc6e_c0236e43_3d4ac21a_5ed12a33_39177964_d4f17ee7_22060117_d5e43b21;
+    #2.5;i_DDR_drive_cache = 1'b1;
+    #2.5;i_DDR_drive_cache = 1'b0;
 
-//     #wait_arb;
-//     i_DDR_refill_data_256 = 256'h7c2237a9_359e1ab9_2660b691_513fcccf_f44c4fe2_332c8cb3_b611efeb_637d2056;
-//     #2.5;i_DDR_drive_cache = 1'b1;
-//     #2.5;i_DDR_drive_cache = 1'b0;
+    #wait_arb;
+    i_DDR_refill_data_256 = 256'h7c2237a9_359e1ab9_2660b691_513fcccf_f44c4fe2_332c8cb3_b611efeb_637d2056;
+    #2.5;i_DDR_drive_cache = 1'b1;
+    #2.5;i_DDR_drive_cache = 1'b0;
 
-//     #wait_arb;
-//     i_DDR_refill_data_256 = 256'h3d73262a_2ffc9e9f_d552e991_8e1cdabc_7cc0440d_6ee1310d_16ee0b1f_fa547f2b;
-//     #2.5;i_DDR_drive_cache = 1'b1;
-//     #2.5;i_DDR_drive_cache = 1'b0;
+    #wait_arb;
+    i_DDR_refill_data_256 = 256'h3d73262a_2ffc9e9f_d552e991_8e1cdabc_7cc0440d_6ee1310d_16ee0b1f_fa547f2b;
+    #2.5;i_DDR_drive_cache = 1'b1;
+    #2.5;i_DDR_drive_cache = 1'b0;
     
-//     #wait_arb;
-//     i_DDR_refill_data_256 = 256'ha65b0664_3b22aec7_cda136f7_08c3eb8c_bdc34e00_c3430ffe_adac6a5e_bfd20642;
-//     #2.5;i_DDR_drive_cache = 1'b1;
-//     #2.5;i_DDR_drive_cache = 1'b0;
+    #wait_arb;
+    i_DDR_refill_data_256 = 256'ha65b0664_3b22aec7_cda136f7_08c3eb8c_bdc34e00_c3430ffe_adac6a5e_bfd20642;
+    #2.5;i_DDR_drive_cache = 1'b1;
+    #2.5;i_DDR_drive_cache = 1'b0;
 
-//     #run_time;//回填L2
-//     #run_time;//回填L1
-//     #30;
+    #run_time;//回填L2
+    #run_time;//回填L1
+    #30;
 
-//     //cache to retire,IFU     o_loadData0_to_retire_38 o_instr_to_ifu_256
-//     #2.5;
-//     i_freeNext_retire_load = 1'b1;
-//     i_freeNext1_lsu = 1;
-//     i_freeNext2_lsu = 1;
-//     i_freeNext3_lsu = 1;
-//     i_freeNext1_ifu = 1'b1;
-//     i_freeNext2_ifu = 1'b1;
-//     i_freeNext3_ifu = 1'b1;
+    //cache to retire,IFU     o_loadData0_to_retire_38 o_instr_to_ifu_256
+    #2.5;
+    i_freeNext0_lsu_load = 1'b1;
+    i_freeNext1_lsu = 1;
+    i_freeNext2_lsu = 1;
+    i_freeNext3_lsu = 1;
+    i_freeNext1_ifu = 1'b1;
+    i_freeNext2_ifu = 1'b1;
+    i_freeNext3_ifu = 1'b1;
 
-//     #2.5;
-//     i_freeNext_retire_load = 1'b0;
-//     i_freeNext1_lsu = 0;
-//     i_freeNext2_lsu = 0;
-//     i_freeNext3_lsu = 0;
-//     i_freeNext1_ifu = 1'b0;
-//     i_freeNext2_ifu = 1'b0;
-//     i_freeNext3_ifu = 1'b0;
+    #2.5;
+    i_freeNext0_lsu_load = 1'b0;
+    i_freeNext1_lsu = 0;
+    i_freeNext2_lsu = 0;
+    i_freeNext3_lsu = 0;
+    i_freeNext1_ifu = 1'b0;
+    i_freeNext2_ifu = 1'b0;
+    i_freeNext3_ifu = 1'b0;
 
-// //case5 访问同一Dcache 访问同一L2
-//     count = count + 1'b1;
+//case5 访问同一Dcache 访问同一L2
+    count = count + 1'b1;
 
-//     #10;
+    #10;
 
-//     i_lsu_flag0_10 =  10'b0_111010101;
-//     i_lsu_flag3_10 =  10'b1_101010101;
+    i_lsu_flag0_10 =  10'b0_111010101;
+    i_lsu_flag3_10 =  10'b1_101010101;
 
-//     i_lsu_PA0_34 = 34'b1010011000011100010110_10101_00_11100;
-//     i_lsu_storeData0_32 = 32'h97e0baa6;
-//     i_lsu_PA3_34 = 34'b1010011000011100010110_10101_11_01100;
+    i_lsu_PA0_34 = 34'b1010011000011100010110_10101_00_11100;
+    i_lsu_storeData0_32 = 32'h97e0baa6;
+    i_lsu_PA3_34 = 34'b1010011000011100010110_10101_11_01100;
     
-//     i_ifu_PA0_34 = 34'b10000110000111000011_1010100_00_00000;
-//     i_ifu_PA3_34 = 34'b10000110000111000011_1010100_11_00000;
+    i_ifu_PA0_34 = 34'b10000110000111000011_1010100_00_00000;
+    i_ifu_PA3_34 = 34'b10000110000111000011_1010100_11_00000;
 
-//     #2.5;
-//     i_lsu_drive0_cache = 1;i_ifu_drive0 = 1;
-//     i_lsu_drive3_cache = 1;i_ifu_drive3 = 1;
+    #2.5;
+    i_lsu_drive0_cache = 1;i_ifu_drive0 = 1;
+    i_lsu_drive3_cache = 1;i_ifu_drive3 = 1;
 
-//     #2.5;
-//     i_lsu_drive0_cache = 0;i_ifu_drive0 = 0;
-//     i_lsu_drive3_cache = 0;i_ifu_drive3 = 0;
+    #2.5;
+    i_lsu_drive0_cache = 0;i_ifu_drive0 = 0;
+    i_lsu_drive3_cache = 0;i_ifu_drive3 = 0;
 
-//     #run_time;//L1缺失
-//     #run_time;//L2阻塞并缺失
+    #run_time;//L1缺失
+    #run_time;//L2阻塞并缺失
 
-//     #wait_arb;
-//     i_DDR_refill_data_256 = 256'h7e1bcc6e_c0236e43_3d4ac21a_5ed12a33_39177964_d4f17ee7_22060117_d5e43b21;
-//     #2.5;i_DDR_drive_cache = 1'b1;
-//     #2.5;i_DDR_drive_cache = 1'b0;
+    #wait_arb;
+    i_DDR_refill_data_256 = 256'h7e1bcc6e_c0236e43_3d4ac21a_5ed12a33_39177964_d4f17ee7_22060117_d5e43b21;
+    #2.5;i_DDR_drive_cache = 1'b1;
+    #2.5;i_DDR_drive_cache = 1'b0;
 
-//     #wait_arb;
-//     i_DDR_refill_data_256 = 256'h7c2237a9_359e1ab9_2660b691_513fcccf_f44c4fe2_332c8cb3_b611efeb_637d2056;
-//     #2.5;i_DDR_drive_cache = 1'b1;
-//     #2.5;i_DDR_drive_cache = 1'b0;
+    #wait_arb;
+    i_DDR_refill_data_256 = 256'h7c2237a9_359e1ab9_2660b691_513fcccf_f44c4fe2_332c8cb3_b611efeb_637d2056;
+    #2.5;i_DDR_drive_cache = 1'b1;
+    #2.5;i_DDR_drive_cache = 1'b0;
 
-//     #wait_arb;
-//     i_DDR_refill_data_256 = 256'h3d73262a_2ffc9e9f_d552e991_8e1cdabc_7cc0440d_6ee1310d_16ee0b1f_fa547f2b;
-//     #2.5;i_DDR_drive_cache = 1'b1;
-//     #2.5;i_DDR_drive_cache = 1'b0;
+    #wait_arb;
+    i_DDR_refill_data_256 = 256'h3d73262a_2ffc9e9f_d552e991_8e1cdabc_7cc0440d_6ee1310d_16ee0b1f_fa547f2b;
+    #2.5;i_DDR_drive_cache = 1'b1;
+    #2.5;i_DDR_drive_cache = 1'b0;
     
-//     #wait_arb;
-//     i_DDR_refill_data_256 = 256'ha65b0664_3b22aec7_cda136f7_08c3eb8c_bdc34e00_c3430ffe_adac6a5e_bfd20642;
-//     #2.5;i_DDR_drive_cache = 1'b1;
-//     #2.5;i_DDR_drive_cache = 1'b0;
+    #wait_arb;
+    i_DDR_refill_data_256 = 256'ha65b0664_3b22aec7_cda136f7_08c3eb8c_bdc34e00_c3430ffe_adac6a5e_bfd20642;
+    #2.5;i_DDR_drive_cache = 1'b1;
+    #2.5;i_DDR_drive_cache = 1'b0;
 
-//     #run_time;//回填L2
-//     #run_time;//回填L1
+    #run_time;//回填L2
+    #run_time;//回填L1
 
-//     #2.5;
-//     i_freeNext0_lsu=1;i_freeNext0_ifu=1;
-//     i_freeNext_retire_load=1;i_freeNext3_ifu=1;
+    #2.5;
+    i_freeNext0_lsu=1;i_freeNext0_ifu=1;
+    i_freeNext3_lsu_load=1;i_freeNext3_ifu=1;
 
-//     #2.5;
-//     i_freeNext0_lsu=0;i_freeNext0_ifu=0;
-//     i_freeNext_retire_load=0;i_freeNext3_ifu=0;
+    #2.5;
+    i_freeNext0_lsu=0;i_freeNext0_ifu=0;
+    i_freeNext0_lsu_load=0;i_freeNext3_ifu=0;
 
-//     #run_time
+    #run_time
 
-// //case6 ptw 和 Dcache
-//     count = count + 1'b1;
-//     i_lsu_flag3_10 =  10'b0_111010101;
-//     i_lsu_PA3_34 = 34'b1010011000011100010111_10101_11_11100;
-//     i_lsu_storeData3_32 = 32'h637f1a83;
+//case6 ptw 和 Dcache
+    count = count + 1'b1;
+    i_lsu_flag3_10 =  10'b0_111010101;
+    i_lsu_PA3_34 = 34'b1010011000011100010111_10101_11_11100;
+    i_lsu_storeData3_32 = 32'h637f1a83;
 
-//     i_ptw_ptePA_34 = 34'b1010011000011100010110_10111_11_11100;
+    i_ptw_ptePA_34 = 34'b1010011000011100010110_10111_11_11100;
 
-//     #2.5;
-//     i_lsu_drive3_cache=1;i_ptw3_drive=1;
+    #2.5;
+    i_lsu_drive3_cache=1;i_ptw3_drive=1;
 
-//     #2.5;
-//     i_lsu_drive3_cache=0;i_ptw3_drive=0;
+    #2.5;
+    i_lsu_drive3_cache=0;i_ptw3_drive=0;
 
-//     #run_time;//L1缺失
-//     #run_time;//L2阻塞并缺失
+    #run_time;//L1缺失
+    #run_time;//L2阻塞并缺失
 
-//     #wait_arb;
-//     i_DDR_refill_data_256 = 256'h2c4d24af_dab8a58d_e4723be3_680216da_3e745f72_86c908fa_db1e3009_510b3236;
-//     #2.5;i_DDR_drive_cache = 1'b1;
-//     #2.5;i_DDR_drive_cache = 1'b0;
+    #wait_arb;
+    i_DDR_refill_data_256 = 256'h2c4d24af_dab8a58d_e4723be3_680216da_3e745f72_86c908fa_db1e3009_510b3236;
+    #2.5;i_DDR_drive_cache = 1'b1;
+    #2.5;i_DDR_drive_cache = 1'b0;
     
-//     #run_time;//回填L2
-//     #run_time;//回填L1
+    #run_time;//回填L2
+    #run_time;//回填L1
     
-//     #2.5;i_freeNext3_lsu=1;
-//     #2.5;i_freeNext3_lsu=0;
+    #2.5;i_freeNext3_lsu=1;
+    #2.5;i_freeNext3_lsu=0;
 
-//     #run_time;//L1缺失
-//     #run_time;//L2阻塞并缺失
+    #run_time;//L1缺失
+    #run_time;//L2阻塞并缺失
 
-//     #wait_arb;
-//     i_DDR_refill_data_256 = 256'h84dc4355_5970318c_acab6104_b65fdd37_a9d39843_a13c91e4_7dbe7e2a_f4496680;
-//     #2.5;i_DDR_drive_cache = 1'b1;
-//     #2.5;i_DDR_drive_cache = 1'b0;
+    #wait_arb;
+    i_DDR_refill_data_256 = 256'h84dc4355_5970318c_acab6104_b65fdd37_a9d39843_a13c91e4_7dbe7e2a_f4496680;
+    #2.5;i_DDR_drive_cache = 1'b1;
+    #2.5;i_DDR_drive_cache = 1'b0;
 
-//     #run_time;//回填L2
-//     #run_time;//回填L1
+    #run_time;//回填L2
+    #run_time;//回填L1
 
-//     #2.5;i_freeNext_ptw=1;
-//     #2.5;i_freeNext_ptw=0;
+    #2.5;i_freeNext_ptw=1;
+    #2.5;i_freeNext_ptw=0;
 
-//     #20;
+    #20;
 
-// //case7 writeBack
-//     count = count + 1'b1;
+//case7 writeBack
+    count = count + 1'b1;
 
-//     //0
-//     i_lsu_flag3_10 =  10'b0_111010101;
-//     i_lsu_PA3_34 = 34'b1010011000011100010111_10001_11_11100;
-//     i_lsu_storeData3_32 = 32'h637f1a83;
+    //0
+    i_lsu_flag3_10 =  10'b0_111010101;
+    i_lsu_PA3_34 = 34'b1010011000011100010111_10001_11_11100;
+    i_lsu_storeData3_32 = 32'h637f1a83;
 
-//     #2.5;i_lsu_drive3_cache=1;
-//     #2.5;i_lsu_drive3_cache=0;
+    #2.5;i_lsu_drive3_cache=1;
+    #2.5;i_lsu_drive3_cache=0;
 
-//     #run_time;//L1缺失
-//     #run_time;//L2阻塞并缺失
+    #run_time;//L1缺失
+    #run_time;//L2阻塞并缺失
 
-//     i_DDR_refill_data_256 = 256'h2c4d24af_dab8a58d_e4723be3_680216da_3e745f72_86c908fa_db1e3009_510b3236;
-//     #2.5;i_DDR_drive_cache = 1'b1;
-//     #2.5;i_DDR_drive_cache = 1'b0;
+    i_DDR_refill_data_256 = 256'h2c4d24af_dab8a58d_e4723be3_680216da_3e745f72_86c908fa_db1e3009_510b3236;
+    #2.5;i_DDR_drive_cache = 1'b1;
+    #2.5;i_DDR_drive_cache = 1'b0;
 
-//     #run_time;//回填L2
-//     #run_time;//回填L1
-//     #run_time;//写D
+    #run_time;//回填L2
+    #run_time;//回填L1
+    #run_time;//写D
 
-//     #2.5;i_freeNext3_lsu=1;
-//     #2.5;i_freeNext3_lsu=0;
+    #2.5;i_freeNext3_lsu=1;
+    #2.5;i_freeNext3_lsu=0;
 
-//     //1
-//     count = count + 1'b1;
+    //1
+    count = count + 1'b1;
     
-//     i_lsu_flag3_10 =  10'b0_111010101;
-//     i_lsu_PA3_34 = 34'b1010011000011100110111_10001_11_11100;
-//     i_lsu_storeData3_32 = 32'h637f1a83;
+    i_lsu_flag3_10 =  10'b0_111010101;
+    i_lsu_PA3_34 = 34'b1010011000011100110111_10001_11_11100;
+    i_lsu_storeData3_32 = 32'h637f1a83;
 
-//     #2.5;i_lsu_drive3_cache=1;
-//     #2.5;i_lsu_drive3_cache=0;
+    #2.5;i_lsu_drive3_cache=1;
+    #2.5;i_lsu_drive3_cache=0;
 
-//     #run_time;//L1缺失
-//     #run_time;//L2阻塞并缺失
+    #run_time;//L1缺失
+    #run_time;//L2阻塞并缺失
 
-//     i_DDR_refill_data_256 = 256'h84dc4355_5970318c_acab6104_b65fdd37_a9d39843_a13c91e4_7dbe7e2a_f4496680;
-//     #2.5;i_DDR_drive_cache = 1'b1;
-//     #2.5;i_DDR_drive_cache = 1'b0;
+    i_DDR_refill_data_256 = 256'h84dc4355_5970318c_acab6104_b65fdd37_a9d39843_a13c91e4_7dbe7e2a_f4496680;
+    #2.5;i_DDR_drive_cache = 1'b1;
+    #2.5;i_DDR_drive_cache = 1'b0;
 
-//     #run_time;//回填L2
-//     #run_time;//回填L1
-//     #run_time;//写D
+    #run_time;//回填L2
+    #run_time;//回填L1
+    #run_time;//写D
 
-//     #2.5;i_freeNext3_lsu=1;
-//     #2.5;i_freeNext3_lsu=0;
+    #2.5;i_freeNext3_lsu=1;
+    #2.5;i_freeNext3_lsu=0;
 
-//     //2
-//     count = count + 1'b1;
+    //2
+    count = count + 1'b1;
 
-//     i_lsu_flag3_10 =  10'b0_111010101;
-//     i_lsu_PA3_34 = 34'b1010011000011101010111_10001_11_11100;
-//     i_lsu_storeData3_32 = 32'h637f1a83;
+    i_lsu_flag3_10 =  10'b0_111010101;
+    i_lsu_PA3_34 = 34'b1010011000011101010111_10001_11_11100;
+    i_lsu_storeData3_32 = 32'h637f1a83;
 
-//     #2.5;i_lsu_drive3_cache=1;
-//     #2.5;i_lsu_drive3_cache=0;
+    #2.5;i_lsu_drive3_cache=1;
+    #2.5;i_lsu_drive3_cache=0;
 
-//     #run_time;//L1缺失
-//     #run_time;//L2阻塞并缺失
+    #run_time;//L1缺失
+    #run_time;//L2阻塞并缺失
 
-//     i_DDR_refill_data_256 = 256'h2b89718a_c3ce4c8c_77ac0274_80ae157e_06d55e58_881486d9_cb6b353c_dea3791c;
-//     #2.5;i_DDR_drive_cache = 1'b1;
-//     #2.5;i_DDR_drive_cache = 1'b0;
+    i_DDR_refill_data_256 = 256'h2b89718a_c3ce4c8c_77ac0274_80ae157e_06d55e58_881486d9_cb6b353c_dea3791c;
+    #2.5;i_DDR_drive_cache = 1'b1;
+    #2.5;i_DDR_drive_cache = 1'b0;
 
-//     #run_time;//回填L2
-//     #run_time;//回填L1
-//     #run_time;//写D
+    #run_time;//回填L2
+    #run_time;//回填L1
+    #run_time;//写D
 
-//     #2.5;i_freeNext3_lsu=1;
-//     #2.5;i_freeNext3_lsu=0;
+    #2.5;i_freeNext3_lsu=1;
+    #2.5;i_freeNext3_lsu=0;
 
-//     //3
-//     count = count + 1'b1;
+    //3
+    count = count + 1'b1;
 
-//     i_lsu_flag3_10 =  10'b0_111010101;
-//     i_lsu_PA3_34 = 34'b1010011000011101110111_10001_11_11100;
-//     i_lsu_storeData3_32 = 32'h637f1a83;
+    i_lsu_flag3_10 =  10'b0_111010101;
+    i_lsu_PA3_34 = 34'b1010011000011101110111_10001_11_11100;
+    i_lsu_storeData3_32 = 32'h637f1a83;
 
-//     #2.5;i_lsu_drive3_cache=1;
-//     #2.5;i_lsu_drive3_cache=0;
+    #2.5;i_lsu_drive3_cache=1;
+    #2.5;i_lsu_drive3_cache=0;
 
-//     #run_time;//L1缺失
-//     #run_time;//L2阻塞并缺失
+    #run_time;//L1缺失
+    #run_time;//L2阻塞并缺失
 
-//     i_DDR_refill_data_256 = 256'h7e1bcc6e_c0236e43_3d4ac21a_5ed12a33_39177964_d4f17ee7_22060117_d5e43b21;
-//     #2.5;i_DDR_drive_cache = 1'b1;
-//     #2.5;i_DDR_drive_cache = 1'b0;
+    i_DDR_refill_data_256 = 256'h7e1bcc6e_c0236e43_3d4ac21a_5ed12a33_39177964_d4f17ee7_22060117_d5e43b21;
+    #2.5;i_DDR_drive_cache = 1'b1;
+    #2.5;i_DDR_drive_cache = 1'b0;
 
-//     #run_time;//回填L2
-//     #run_time;//回填L1
-//     #run_time;//写D
+    #run_time;//回填L2
+    #run_time;//回填L1
+    #run_time;//写D
 
-//     #2.5;i_freeNext3_lsu=1;
-//     #2.5;i_freeNext3_lsu=0;
+    #2.5;i_freeNext3_lsu=1;
+    #2.5;i_freeNext3_lsu=0;
 
-//     //4
-//     count = count + 1'b1;
+    //4
+    count = count + 1'b1;
 
-//     i_lsu_flag3_10 =  10'b0_111010101;
-//     i_lsu_PA3_34 = 34'b1010011000011110010111_10001_11_11100;
-//     i_lsu_storeData3_32 = 32'h637f1a83;
+    i_lsu_flag3_10 =  10'b0_111010101;
+    i_lsu_PA3_34 = 34'b1010011000011110010111_10001_11_11100;
+    i_lsu_storeData3_32 = 32'h637f1a83;
 
-//     #2.5;i_lsu_drive3_cache=1;
-//     #2.5;i_lsu_drive3_cache=0;
+    #2.5;i_lsu_drive3_cache=1;
+    #2.5;i_lsu_drive3_cache=0;
 
-//     #run_time;//L1缺失
-//     #run_time;//L2阻塞并缺失
+    #run_time;//L1缺失
+    #run_time;//L2阻塞并缺失
 
-//     i_DDR_refill_data_256 = 256'h7c2237a9_359e1ab9_2660b691_513fcccf_f44c4fe2_332c8cb3_b611efeb_637d2056;
-//     #2.5;i_DDR_drive_cache = 1'b1;
-//     #2.5;i_DDR_drive_cache = 1'b0;
+    i_DDR_refill_data_256 = 256'h7c2237a9_359e1ab9_2660b691_513fcccf_f44c4fe2_332c8cb3_b611efeb_637d2056;
+    #2.5;i_DDR_drive_cache = 1'b1;
+    #2.5;i_DDR_drive_cache = 1'b0;
 
-//     #run_time;//回填L2
-//     #run_time;//回填L1
-//     #run_time;//写D
+    #run_time;//回填L2
+    #run_time;//回填L1
+    #run_time;//写D
 
-//     #2.5;i_freeNext3_lsu=1;
-//     #2.5;i_freeNext3_lsu=0;
+    #2.5;i_freeNext3_lsu=1;
+    #2.5;i_freeNext3_lsu=0;
 
-//     //5
-//     count = count + 1'b1;
+    //5
+    count = count + 1'b1;
 
-//     i_lsu_flag3_10 =  10'b0_111010101;
-//     i_lsu_PA3_34 = 34'b1010011000011110110111_10001_11_11100;
-//     i_lsu_storeData3_32 = 32'h637f1a83;
+    i_lsu_flag3_10 =  10'b0_111010101;
+    i_lsu_PA3_34 = 34'b1010011000011110110111_10001_11_11100;
+    i_lsu_storeData3_32 = 32'h637f1a83;
 
-//     #2.5;i_lsu_drive3_cache=1;
-//     #2.5;i_lsu_drive3_cache=0;
+    #2.5;i_lsu_drive3_cache=1;
+    #2.5;i_lsu_drive3_cache=0;
 
-//     #run_time;//L1缺失
-//     #run_time;//L2阻塞并缺失
+    #run_time;//L1缺失
+    #run_time;//L2阻塞并缺失
 
-//     i_DDR_refill_data_256 = 256'h3d73262a_2ffc9e9f_d552e991_8e1cdabc_7cc0440d_6ee1310d_16ee0b1f_fa547f2b;
-//     #2.5;i_DDR_drive_cache = 1'b1;
-//     #2.5;i_DDR_drive_cache = 1'b0;
+    i_DDR_refill_data_256 = 256'h3d73262a_2ffc9e9f_d552e991_8e1cdabc_7cc0440d_6ee1310d_16ee0b1f_fa547f2b;
+    #2.5;i_DDR_drive_cache = 1'b1;
+    #2.5;i_DDR_drive_cache = 1'b0;
 
-//     #run_time;//回填L2
-//     #run_time;//回填L1
-//     #run_time;//写D
+    #run_time;//回填L2
+    #run_time;//回填L1
+    #run_time;//写D
 
-//     #2.5;i_freeNext3_lsu=1;
-//     #2.5;i_freeNext3_lsu=0;
+    #2.5;i_freeNext3_lsu=1;
+    #2.5;i_freeNext3_lsu=0;
 
-//     //6
-//     count = count + 1'b1;
+    //6
+    count = count + 1'b1;
 
-//     i_lsu_flag3_10 =  10'b0_111010101;
-//     i_lsu_PA3_34 = 34'b1010011000011111010111_10001_11_11100;
-//     i_lsu_storeData3_32 = 32'h637f1a83;
+    i_lsu_flag3_10 =  10'b0_111010101;
+    i_lsu_PA3_34 = 34'b1010011000011111010111_10001_11_11100;
+    i_lsu_storeData3_32 = 32'h637f1a83;
 
-//     #2.5;i_lsu_drive3_cache=1;
-//     #2.5;i_lsu_drive3_cache=0;
+    #2.5;i_lsu_drive3_cache=1;
+    #2.5;i_lsu_drive3_cache=0;
 
-//     #run_time;//L1缺失
-//     #run_time;//L2阻塞并缺失
+    #run_time;//L1缺失
+    #run_time;//L2阻塞并缺失
 
-//     i_DDR_refill_data_256 = 256'ha65b0664_3b22aec7_cda136f7_08c3eb8c_bdc34e00_c3430ffe_adac6a5e_bfd20642;
-//     #2.5;i_DDR_drive_cache = 1'b1;
-//     #2.5;i_DDR_drive_cache = 1'b0;
+    i_DDR_refill_data_256 = 256'ha65b0664_3b22aec7_cda136f7_08c3eb8c_bdc34e00_c3430ffe_adac6a5e_bfd20642;
+    #2.5;i_DDR_drive_cache = 1'b1;
+    #2.5;i_DDR_drive_cache = 1'b0;
 
-//     #run_time;//回填L2
-//     #run_time;//回填L1
-//     #run_time;//写D
+    #run_time;//回填L2
+    #run_time;//回填L1
+    #run_time;//写D
 
-//     #2.5;i_freeNext3_lsu=1;
-//     #2.5;i_freeNext3_lsu=0;
+    #2.5;i_freeNext3_lsu=1;
+    #2.5;i_freeNext3_lsu=0;
 
-//     //7
-//     count = count + 1'b1;
+    //7
+    count = count + 1'b1;
 
-//     i_lsu_flag3_10 =  10'b0_111010101;
-//     i_lsu_PA3_34 = 34'b1010011000011111110111_10001_11_11100;
-//     i_lsu_storeData3_32 = 32'h637f1a83;
+    i_lsu_flag3_10 =  10'b0_111010101;
+    i_lsu_PA3_34 = 34'b1010011000011111110111_10001_11_11100;
+    i_lsu_storeData3_32 = 32'h637f1a83;
 
-//     #2.5;i_lsu_drive3_cache=1;
-//     #2.5;i_lsu_drive3_cache=0;
+    #2.5;i_lsu_drive3_cache=1;
+    #2.5;i_lsu_drive3_cache=0;
 
-//     #run_time;//L1缺失
-//     #run_time;//L2阻塞并缺失
+    #run_time;//L1缺失
+    #run_time;//L2阻塞并缺失
 
-//     i_DDR_refill_data_256 = 256'hd1f9598b_77d84657_ce7377dc_43952290_b4ec9ff1_a4898e0c_0e034858_0b588997;
-//     #2.5;i_DDR_drive_cache = 1'b1;
-//     #2.5;i_DDR_drive_cache = 1'b0;
+    i_DDR_refill_data_256 = 256'hd1f9598b_77d84657_ce7377dc_43952290_b4ec9ff1_a4898e0c_0e034858_0b588997;
+    #2.5;i_DDR_drive_cache = 1'b1;
+    #2.5;i_DDR_drive_cache = 1'b0;
 
-//     #run_time;//回填L2
-//     #run_time;//回填L1
-//     #run_time;//写D
+    #run_time;//回填L2
+    #run_time;//回填L1
+    #run_time;//写D
 
-//     #2.5;i_freeNext3_lsu=1;
-//     #2.5;i_freeNext3_lsu=0;
+    #2.5;i_freeNext3_lsu=1;
+    #2.5;i_freeNext3_lsu=0;
 
-//     //8
-//     count = count + 1'b1;
+    //8
+    count = count + 1'b1;
 
-//     i_lsu_flag3_10 =  10'b0_111010101;
-//     i_lsu_PA3_34 = 34'b1010011000011101010000_10001_11_11100;
-//     i_lsu_storeData3_32 = 32'h637f1a83;
+    i_lsu_flag3_10 =  10'b0_111010101;
+    i_lsu_PA3_34 = 34'b1010011000011101010000_10001_11_11100;
+    i_lsu_storeData3_32 = 32'h637f1a83;
 
-//     #2.5;i_lsu_drive3_cache=1;
-//     #2.5;i_lsu_drive3_cache=0;
+    #2.5;i_lsu_drive3_cache=1;
+    #2.5;i_lsu_drive3_cache=0;
 
-//     #run_time;//L1缺失
-//     #run_time;//L2阻塞并缺失
-//     #run_time;#run_time;
+    #run_time;//L1缺失
+    #run_time;//L2阻塞并缺失
+    #run_time;#run_time;
 
-//     i_DDR_refill_data_256 = 256'hb4ec9ff1_a4898e0c_0e034858_0b588997_a66e095d_5d26e95b_6465cf60_20d00ee4;
-//     #2.5;i_DDR_drive_cache = 1'b1;
-//     #2.5;i_DDR_drive_cache = 1'b0;
+    i_DDR_refill_data_256 = 256'hb4ec9ff1_a4898e0c_0e034858_0b588997_a66e095d_5d26e95b_6465cf60_20d00ee4;
+    #2.5;i_DDR_drive_cache = 1'b1;
+    #2.5;i_DDR_drive_cache = 1'b0;
 
-//     #run_time;//回填L2
-//     #run_time;//回填L1
-//     #run_time;//写D
+    #run_time;//回填L2
+    #run_time;//回填L1
+    #run_time;//写D
 
-//     #2.5;i_freeNext3_lsu=1;
-//     #2.5;i_freeNext3_lsu=0;
+    #2.5;i_freeNext3_lsu=1;
+    #2.5;i_freeNext3_lsu=0;
 
 
     #2000;
