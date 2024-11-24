@@ -13,13 +13,13 @@
 
 //0.375ns
 
-module delay3U(inR, outR, rst);
-input inR, rst;
+module delay3U(inR, outR, rstn);
+input inR, rstn;
 output outR;
 
 wire outR0;
 
 
-delay1U delay1(.inR(inR), .outR(outR0), .rst(rst));
-delay2U delay2(.inR(outR0), .outR(outR), .rst(rst));
+delay1U delay1(.inR(inR), .outR(outR0), .rstn(rstn));
+delay2U delay2(.inR(outR0), .outR(outR), .rstn(rstn));
 endmodule

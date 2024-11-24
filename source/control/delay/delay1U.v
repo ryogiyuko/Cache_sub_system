@@ -13,11 +13,11 @@
 
 //0.375ns
 
-module delay1U(inR, outR, rst);
-input inR, rst;
+module delay1U(inR, outR, rstn);
+input inR, rstn;
 output outR;
 
 wire A,B;
 DEL1M1HM delay1 ( .A(inR), .Z(A) );
-AN2M0HM AND (.A(A), .B(rst), .Z(outR) );
+AN2M0HM AND (.A(A), .B(rstn), .Z(outR) );
 endmodule

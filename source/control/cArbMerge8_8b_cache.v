@@ -72,24 +72,34 @@ module cArbMerge8_8b_cache #(
           .rstn(rstn)
       );
       assign w_trig_8[i]  = w_fire_8[i] | w_reset_8[i];
-      freeSetDelay #(
-        .DELAY_UNIT_NUM(DELAY_w_reset)
-      ) delayReset (
-          .i_signal(w_grant_8[i] & i_freeNext),
-          .o_signal(w_reset_8[i]),
-          .rstn     (rstn)
+      // freeSetDelay #(
+      //   .DELAY_UNIT_NUM(DELAY_w_reset)
+      // ) delayReset (
+      //     .i_signal(w_grant_8[i] & i_freeNext),
+      //     .o_signal(w_reset_8[i]),
+      //     .rstn     (rstn)
+      // );
+      delay3U delayReset(
+          .inR  (w_grant_8[i] & i_freeNext  ),
+          .outR (w_reset_8[i] ),
+          .rstn  (rstn  )
       );
       contTap tap (
           .trig(w_trig_8[i]),
           .req (w_req_8[i]),
           .rstn (rstn)
       );
-      freeSetDelay #(
-        .DELAY_UNIT_NUM(DELAY_w_driveNext)
-      ) delayDriveNext (
-          .i_signal(w_driveNext_8[i]),
-          .o_signal(w_d_driveNext_8[i]),
-          .rstn     (rstn)
+      // freeSetDelay #(
+      //   .DELAY_UNIT_NUM(DELAY_w_driveNext)
+      // ) delayDriveNext (
+      //     .i_signal(w_driveNext_8[i]),
+      //     .o_signal(w_d_driveNext_8[i]),
+      //     .rstn     (rstn)
+      // );
+      delay11U delayDriveNext(
+          .inR  (w_driveNext_8[i]  ),
+          .outR (w_d_driveNext_8[i] ),
+          .rstn  (rstn  )
       );
     end
   endgenerate

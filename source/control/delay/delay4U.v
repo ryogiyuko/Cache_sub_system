@@ -11,14 +11,14 @@
 //-----------------------------------------------
 `timescale 1ns / 1ps
 
-module delay4U(inR, outR, rst);
-input inR, rst;
+module delay4U(inR, outR, rstn);
+input inR, rstn;
 output outR;
 
 wire outR0;
 
 
-delay2U delay1(.inR(inR), .outR(outR0), .rst(rst));
-delay2U delay2(.inR(outR0), .outR(outR), .rst(rst));
+delay2U delay1(.inR(inR), .outR(outR0), .rstn(rstn));
+delay2U delay2(.inR(outR0), .outR(outR), .rstn(rstn));
 endmodule
 
