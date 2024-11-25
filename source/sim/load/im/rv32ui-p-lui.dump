@@ -1,0 +1,98 @@
+
+generated/rv32ui-p-lui:     file format elf32-littleriscv
+
+
+Disassembly of section .text.init:
+
+00001200 <_start>:
+    1200:	00000d13          	li	s10,0
+    1204:	00000d93          	li	s11,0
+
+00001208 <test_2>:
+    1208:	000000b7          	lui	ra,0x0
+    120c:	00000e93          	li	t4,0
+    1210:	00200193          	li	gp,2
+    1214:	05d09a63          	bne	ra,t4,1268 <fail>
+
+00001218 <test_3>:
+    1218:	fffff0b7          	lui	ra,0xfffff
+    121c:	4010d093          	sra	ra,ra,0x1
+    1220:	80000e93          	li	t4,-2048
+    1224:	00300193          	li	gp,3
+    1228:	05d09063          	bne	ra,t4,1268 <fail>
+
+0000122c <test_4>:
+    122c:	7ffff0b7          	lui	ra,0x7ffff
+    1230:	4140d093          	sra	ra,ra,0x14
+    1234:	7ff00e93          	li	t4,2047
+    1238:	00400193          	li	gp,4
+    123c:	03d09663          	bne	ra,t4,1268 <fail>
+
+00001240 <test_5>:
+    1240:	800000b7          	lui	ra,0x80000
+    1244:	4140d093          	sra	ra,ra,0x14
+    1248:	80000e93          	li	t4,-2048
+    124c:	00500193          	li	gp,5
+    1250:	01d09c63          	bne	ra,t4,1268 <fail>
+
+00001254 <test_6>:
+    1254:	80000037          	lui	zero,0x80000
+    1258:	00000e93          	li	t4,0
+    125c:	00600193          	li	gp,6
+    1260:	01d01463          	bne	zero,t4,1268 <fail>
+    1264:	00301863          	bne	zero,gp,1274 <pass>
+
+00001268 <fail>:
+    1268:	00100d13          	li	s10,1
+    126c:	00000d93          	li	s11,0
+
+00001270 <loop_fail>:
+    1270:	0000006f          	j	1270 <loop_fail>
+
+00001274 <pass>:
+    1274:	00100d13          	li	s10,1
+    1278:	00100d93          	li	s11,1
+
+0000127c <loop_pass>:
+    127c:	0000006f          	j	127c <loop_pass>
+    1280:	0000                	.2byte	0x0
+	...
+
+Disassembly of section .tohost:
+
+000012c0 <tohost>:
+	...
+
+00001300 <fromhost>:
+	...
+
+Disassembly of section .riscv.attributes:
+
+00000000 <.riscv.attributes>:
+   0:	4b41                	.2byte	0x4b41
+   2:	0000                	.2byte	0x0
+   4:	7200                	.2byte	0x7200
+   6:	7369                	.2byte	0x7369
+   8:	01007663          	bgeu	zero,a6,14 <_start-0x11ec>
+   c:	0041                	.2byte	0x41
+   e:	0000                	.2byte	0x0
+  10:	7205                	.2byte	0x7205
+  12:	3376                	.2byte	0x3376
+  14:	6932                	.2byte	0x6932
+  16:	7032                	.2byte	0x7032
+  18:	5f31                	.2byte	0x5f31
+  1a:	326d                	.2byte	0x326d
+  1c:	3070                	.2byte	0x3070
+  1e:	615f 7032 5f31      	.byte	0x5f, 0x61, 0x32, 0x70, 0x31, 0x5f
+  24:	3266                	.2byte	0x3266
+  26:	3270                	.2byte	0x3270
+  28:	645f 7032 5f32      	.byte	0x5f, 0x64, 0x32, 0x70, 0x32, 0x5f
+  2e:	697a                	.2byte	0x697a
+  30:	32727363          	bgeu	tp,t2,356 <_start-0xeaa>
+  34:	3070                	.2byte	0x3070
+  36:	7a5f 6669 6e65      	.byte	0x5f, 0x7a, 0x69, 0x66, 0x65, 0x6e
+  3c:	32696563          	bltu	s2,t1,366 <_start-0xe9a>
+  40:	3070                	.2byte	0x3070
+  42:	7a5f 6d6d 6c75      	.byte	0x5f, 0x7a, 0x6d, 0x6d, 0x75, 0x6c
+  48:	7031                	.2byte	0x7031
+  4a:	0030                	.2byte	0x30
