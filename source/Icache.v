@@ -122,33 +122,12 @@ module Icache(
     assign  o_write_enable = r_write_enable;
     assign  o_fifo_buffer_data_out = r_fifo_buffer_data_out;
 
-    wire mutex1_delay_drive0;
-    reg mutex1_data0, mutex1_data1;
-
-    always @(posedge i_Itlb_drive or negedge rstn) begin
-        if (rstn==0) begin
-            mutex1_data0 <= 1'b0;
-            mutex1_data1 <= 1'b1;
-        end
-        else begin
-            mutex1_data0 <= 1'b0;
-            mutex1_data1 <= 1'b1;
-        end
-    end
-
-    delay3U u_delayin_3U(
-        .inR  (i_Itlb_drive  ),
-        .rstn (rstn ),
-        .outR (mutex1_delay_drive0 )
-    );
-
-
      cMutexMerge2_35b_cache mutex1(
-    .i_drive0    (mutex1_delay_drive0    ),
+    .i_drive0    (i_Itlb_drive    ),
     .i_drive1    (i_L2Cache_drive    ),
 
-    .i_data0  ({ i_Itlb_PA_34, mutex1_data0} ),
-    .i_data1  ( { r_fifo2_1_addr_34, mutex1_data1} ), //write_enableλ������ʱΪ1Ϊд
+    .i_data0  ({ i_Itlb_PA_34, 1'b0} ),
+    .i_data1  ( { r_fifo2_1_addr_34, 1'b1} ), //write_enableλ������ʱΪ1Ϊд
 
     .i_freeNext  (w_mutex1_free_cFifo2_1  ),
     .rstn         (rstn         ),

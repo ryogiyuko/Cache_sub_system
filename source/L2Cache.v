@@ -217,38 +217,11 @@ module L2Cache(
 
 // mutex0
 // DCache miss:00001  writeBack:00010
-    wire mutex0_delay_drive0;
-    reg [4:0] mutex0_data0_5, mutex0_data1_5, arb1_data1_5, mutex1_data1_5, mutex1_data2_5;
-
-    always @(posedge i_DCache_miss_drive or negedge rstn) begin
-        if (rstn==0) begin
-            mutex0_data0_5 <= 5'b00001;
-            mutex0_data1_5 <= 5'b00010;
-            arb1_data1_5 <= 5'b00100;
-            mutex1_data1_5 <= 5'b01000;
-            mutex1_data2_5 <= 5'b10000;
-        end
-        else begin
-            mutex0_data0_5 <= 5'b00001;
-            mutex0_data1_5 <= 5'b00010;
-            arb1_data1_5 <= 5'b00100;
-            mutex1_data1_5 <= 5'b01000;
-            mutex1_data2_5 <= 5'b10000;
-        end
-    end
-
-    delay6U u_delayin_6U(
-        .inR  (i_DCache_miss_drive  ),
-        .rstn (rstn ),
-        .outR (mutex0_delay_drive0 )
-    );
-    
-
     (*dont_touch = "true"*)cMutexMerge2_5b_cache mutex0(
-        .i_drive0   (mutex0_delay_drive0),
+        .i_drive0   (i_DCache_miss_drive),
         .i_drive1   (i_DCache_writeBack_drive),
-        .i_data0    (mutex0_data0_5),
-        .i_data1    (mutex0_data1_5),
+        .i_data0    (5'b00001),
+        .i_data1    (5'b00010),
         .i_freeNext (w_mutex0_free_arb1), // w_mutex0_free_cfifo0
 
         .o_free0    (o_DCache_miss_free),
@@ -268,7 +241,7 @@ module L2Cache(
         .i_drive0   (w_mutex0_drive_arb1),
         .i_drive1   (i_ICache_miss_drive),
         .i_data0    (w_mutex0_data_to_arb1_5),
-        .i_data1    (arb1_data1_5),
+        .i_data1    (5'b00100),
 
         .i_freeNext (w_arb1_free_mutex1),
         .rstn        (rstn),
@@ -293,8 +266,8 @@ module L2Cache(
         .i_drive2   (i_DDR_drive),
 
         .i_data0    (w_arb1_data_to_mutex1_5),
-        .i_data1    (mutex1_data1_5),
-        .i_data2    (mutex1_data2_5),
+        .i_data1    (5'b01000),
+        .i_data2    (5'b10000),
 
         .i_freeNext (w_mutex1_free_cfifo1),
         .rstn        (rstn),

@@ -1569,66 +1569,14 @@ module CacheTop(
         );
 
 //L2 to DDR
-    wire arb_write_delay_drive0;
-
-    reg [7:0] arbwrite_data0_8, arbwrite_data1_8, arbwrite_data2_8, arbwrite_data3_8;
-    reg [7:0] arbwrite_data4_8, arbwrite_data5_8, arbwrite_data6_8, arbwrite_data7_8;
-    reg [7:0] arbread_data0_8, arbread_data1_8, arbread_data2_8, arbread_data3_8;
-    reg [7:0] arbread_data4_8, arbread_data5_8, arbread_data6_8, arbread_data7_8;
-
-    always @(posedge w_splitter0_drive_arbWrite or negedge rstn) begin
-        if (rstn==0) begin
-            arbwrite_data0_8 <= 8'b00000001;
-            arbwrite_data1_8 <= 8'b00000010;
-            arbwrite_data2_8 <= 8'b00000100;
-            arbwrite_data3_8 <= 8'b00001000;
-            arbwrite_data4_8 <= 8'b00010000;
-            arbwrite_data5_8 <= 8'b00100000;
-            arbwrite_data6_8 <= 8'b01000000;
-            arbwrite_data7_8 <= 8'b10000000;
-            arbread_data0_8 <= 8'b00000001;
-            arbread_data1_8 <= 8'b00000010;
-            arbread_data2_8 <= 8'b00000100;
-            arbread_data3_8 <= 8'b00001000;
-            arbread_data4_8 <= 8'b00010000;
-            arbread_data5_8 <= 8'b00100000;
-            arbread_data6_8 <= 8'b01000000;
-            arbread_data7_8 <= 8'b10000000;
-        end
-        else begin
-            arbwrite_data0_8 <= 8'b00000001;
-            arbwrite_data1_8 <= 8'b00000010;
-            arbwrite_data2_8 <= 8'b00000100;
-            arbwrite_data3_8 <= 8'b00001000;
-            arbwrite_data4_8 <= 8'b00010000;
-            arbwrite_data5_8 <= 8'b00100000;
-            arbwrite_data6_8 <= 8'b01000000;
-            arbwrite_data7_8 <= 8'b10000000;
-            arbread_data0_8 <= 8'b00000001;
-            arbread_data1_8 <= 8'b00000010;
-            arbread_data2_8 <= 8'b00000100;
-            arbread_data3_8 <= 8'b00001000;
-            arbread_data4_8 <= 8'b00010000;
-            arbread_data5_8 <= 8'b00100000;
-            arbread_data6_8 <= 8'b01000000;
-            arbread_data7_8 <= 8'b10000000;
-        end
-    end
-
-    delay12U u_delay12U(
-        .inR  (w_splitter0_drive_arbWrite  ),
-        .rstn (rstn ),
-        .outR (arb_write_delay_drive0 )
-    );
-    
 
     wire arbwrite_driveNext_delay, arbwrite_freeNext_delay;
     // Arb_write
      cArbMerge8_8b_cache Arb_Write(
-        .i_drive0    (arb_write_delay_drive0    ),.i_drive1    (w_splitter1_drive_arbWrite    ),.i_drive2    (w_splitter2_drive_arbWrite    ),.i_drive3    (w_splitter3_drive_arbWrite    ),
+        .i_drive0    (w_splitter0_drive_arbWrite    ),.i_drive1    (w_splitter1_drive_arbWrite    ),.i_drive2    (w_splitter2_drive_arbWrite    ),.i_drive3    (w_splitter3_drive_arbWrite    ),
         .i_drive4    (w_splitter4_drive_arbWrite    ),.i_drive5    (w_splitter5_drive_arbWrite    ),.i_drive6    (w_splitter6_drive_arbWrite    ),.i_drive7    (w_splitter7_drive_arbWrite    ),
-        .i_data0     (arbwrite_data0_8 ),.i_data1 ( arbwrite_data1_8    ),.i_data2     ( arbwrite_data2_8    ),.i_data3     ( arbwrite_data3_8    ),
-        .i_data4     (arbwrite_data4_8     ),.i_data5     (arbwrite_data5_8     ),.i_data6     (arbwrite_data6_8     ),.i_data7     (arbwrite_data7_8     ),
+        .i_data0     (8'b00000001 ),.i_data1 ( 8'b00000010    ),.i_data2     ( 8'b00000100    ),.i_data3     ( 8'b00001000    ),
+        .i_data4     (8'b00010000     ),.i_data5     (8'b00100000     ),.i_data6     (8'b01000000     ),.i_data7     (8'b10000000     ),
 
         .i_freeNext  (arbwrite_freeNext_delay  ),
 
@@ -1709,8 +1657,8 @@ module CacheTop(
         .i_drive0    (w_mutex0_drive_arbRead    ),.i_drive1    (w_mutex1_drive_arbRead    ),.i_drive2    (w_mutex2_drive_arbRead    ),.i_drive3    (w_mutex3_drive_arbRead    ),
         .i_drive4    (w_mutex4_drive_arbRead    ),.i_drive5    (w_mutex5_drive_arbRead    ),.i_drive6    (w_mutex6_drive_arbRead    ),.i_drive7    (w_mutex7_drive_arbRead    ),
 
-        .i_data0     (arbread_data0_8 ),.i_data1 ( arbread_data1_8    ),.i_data2     ( arbread_data2_8    ),.i_data3     ( arbread_data3_8    ),
-        .i_data4     (arbread_data4_8     ),.i_data5     (arbread_data5_8     ),.i_data6     (arbread_data6_8     ),.i_data7     (arbread_data7_8     ),
+        .i_data0     (8'b00000001 ),.i_data1 (8'b00000010     ),.i_data2     (8'b00000100     ),.i_data3     (8'b00001000     ),
+        .i_data4     (8'b00010000 ),.i_data5 (8'b00100000     ),.i_data6     (8'b01000000     ),.i_data7     (8'b10000000     ),
 
         .i_freeNext  (w_DDR_free_cache  ), //保持o_read_addr_to_DDR_34,保证DDR读出数据,直到selectorRead写完L2
         

@@ -162,41 +162,12 @@ module Dcache(
     assign w_ptw_free = w_driveNext_ptw;
     assign w_arb1_free = w_lsu_free | w_ptw_free;
 
-    wire arb1_delay_drive0;
-    reg [5:0] arb1_data0, arb1_data1, mutex1_data1, mutex1_data3, mutex1_data4, mutex1_data5;
-
-    always @(posedge i_lsu_drive or negedge rstn) begin
-        if (rstn==0) begin
-            arb1_data0 <= 6'b000001;
-            arb1_data1 <= 6'b000100;
-            mutex1_data1 <= 6'b000010;
-            mutex1_data3 <= 6'b001000;
-            mutex1_data4 <= 6'b010000;
-            mutex1_data5 <= 6'b100000;
-        end
-        else begin
-            arb1_data0 <= 6'b000001;
-            arb1_data1 <= 6'b000100;
-            mutex1_data1 <= 6'b000010;
-            mutex1_data3 <= 6'b001000;
-            mutex1_data4 <= 6'b010000;
-            mutex1_data5 <= 6'b100000;
-        end
-    end
-
-    delay6U u_delayin_6U(
-        .inR  (i_lsu_drive  ),
-        .rstn (rstn ),
-        .outR (arb1_delay_drive0 )
-    );
-    
-
 //arb1
     (*dont_touch = "true"*) cArbMerge2_6b_cache u_cArbMerge2_6b(
-        .i_drive0    (arb1_delay_drive0    ),
+        .i_drive0    (i_lsu_drive    ),
         .i_drive1    (i_ptw_drive    ),
-        .i_data0     (arb1_data0      ),
-        .i_data1     (arb1_data1      ),
+        .i_data0     (6'b000001      ),
+        .i_data1     (6'b000100      ),
         .i_freeNext  (w_arb1_free       ),
         .rstn         (rstn         ),
         .o_free0     (o_lsu_free     ),//o_lsu_free
@@ -217,12 +188,12 @@ module Dcache(
         .i_drive4    (w_Selector2_drive_mutex1    ),
         .i_drive5    (w_Selector1_drive_mutex1_write    ),
 
-        .i_data0     (6'b000000    ), 
-        .i_data1     (mutex1_data1     ), //һ�λ���
+        .i_data0     (6'b000001    ), 
+        .i_data1     (6'b000010     ), //һ�λ���
         .i_data2     (w_arb1Data_to_mutex1     ), //��дor��ѯҳ��
-        .i_data3     (mutex1_data3     ), //���λ���
-        .i_data4     (mutex1_data4     ), //���У�д����
-        .i_data5     (mutex1_data5     ), //������ϣ�д����
+        .i_data3     (6'b001000     ), //���λ���
+        .i_data4     (6'b010000     ), //���У�д����
+        .i_data5     (6'b100000     ), //������ϣ�д����
         
         .i_freeNext  (w_mutex1_free_pmtfifo1  ),
         .rstn         (rstn         ),
