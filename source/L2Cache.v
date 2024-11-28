@@ -960,7 +960,7 @@ module L2Cache(
     wire w_2_cfifo1_delayDrive_selector1;
     assign w_1_cfifo1_delayDrive_selector1 = w_cfifo1_drive_selector1;
     
-    (*dont_touch = "true"*)delay8U driveDelay1(
+    (*dont_touch = "true"*)delay16U driveDelay1(
         .inR(w_1_cfifo1_delayDrive_selector1), 
         .outR(w_2_cfifo1_delayDrive_selector1), 
         .rstn(rstn)
