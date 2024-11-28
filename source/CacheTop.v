@@ -96,22 +96,22 @@ module CacheTop(
     wire [37:0] w_loadData0_to_retire_38, w_loadData1_to_retire_38, w_loadData2_to_retire_38, w_loadData3_to_retire_38 ;//i_lsu_index_6 , load_data_32
 
     assign {w_freeNext0_retire_load, w_freeNext1_retire_load, w_freeNext2_retire_load, w_freeNext3_retire_load} = {i_freeNext0_lsu_load, i_freeNext1_lsu_load, i_freeNext2_lsu_load, i_freeNext3_lsu_load};
-    delay4U out_to_lsu_delay0(
+    delay6U out_to_lsu_delay0(
         .inR  (w_driveNext0_retire_load  ),
         .rstn  (rstn  ),
         .outR (o_driveNext0_lsu_load )
     );
-    delay4U out_to_lsu_delay1(
+    delay6U out_to_lsu_delay1(
         .inR  (w_driveNext1_retire_load  ),
         .rstn  (rstn  ),
         .outR (o_driveNext1_lsu_load )
     );
-    delay4U out_to_lsu_delay2(
+    delay6U out_to_lsu_delay2(
         .inR  (w_driveNext2_retire_load  ),
         .rstn  (rstn  ),
         .outR (o_driveNext2_lsu_load )
     );
-    delay4U out_to_lsu_delay3(
+    delay6U out_to_lsu_delay3(
         .inR  (w_driveNext3_retire_load  ),
         .rstn  (rstn  ),
         .outR (o_driveNext3_lsu_load )
@@ -175,7 +175,7 @@ module CacheTop(
         .o_data      (   { 6'b0,o_pte_32 }     )
     );
 
-    delay4U out_to_ptw_delay(
+    delay6U out_to_ptw_delay(
         .inR  (mutex_to_ptw_delay  ),
         .rstn  (rstn  ),
         .outR (o_driveNext_ptw )
@@ -1597,14 +1597,14 @@ module CacheTop(
     assign w_splitter6_free_arbWrite = w_wait6_free1;
     assign w_splitter7_free_arbWrite = w_wait7_free1;
     
-    delay1U arb_write_indelay(
+    delay3U arb_write_indelay(
         .inR  (w_wait0_free1|w_wait1_free1|w_wait2_free1|w_wait3_free1|w_wait4_free1|w_wait5_free1|w_wait6_free1|w_wait7_free1),
         .rstn  (rstn  ),
         .outR (arbwrite_freeNext_delay )
     );
     
 
-    delay6U arb_write_outdelay(
+    delay8U arb_write_outdelay(
         .inR  (arbwrite_driveNext_delay  ),
         .rstn  (rstn  ),
         .outR (o_write_driveNext_DDR )
@@ -1681,7 +1681,7 @@ module CacheTop(
 
     
 
-    delay6U arb_read_outdelay(
+    delay8U arb_read_outdelay(
         .inR  (arbread_driveNext_delay  ),
         .rstn  (rstn  ),
         .outR (o_read_driveNext_DDR )

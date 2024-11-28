@@ -209,7 +209,7 @@ module Icache(
 
 //Selector1
     wire delay_cFifo2_to_selector1;
-    delay3U u_delay3U(
+    delay6U u_delay6U(
         .inR  (w_cFifo2_1_drive_cSelector1  ),
         .rstn  (rstn  ),
         .outR (delay_cFifo2_to_selector1 )
@@ -296,7 +296,7 @@ module Icache(
     //assign w_splitter1_free_fifo_buffer = i_freeNext_L2Cache;//ֱ��L2Cache��spliltter��free
 
     wire fifo2_1_to_selector2_dealyout;
-    delay3U u_fifo2_1_to_selector2_dealy(
+    delay6U u_fifo2_1_to_selector2_dealy(
         .inR  (w_splitter1_drive_Selector2  ),
         .rstn  (rstn  ),
         .outR (fifo2_1_to_selector2_dealyout )
