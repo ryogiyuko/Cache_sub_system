@@ -7,6 +7,9 @@ module L2Cache(
     input [33:0] init_PA_34,
     input [255:0] init_datain_256,
 
+    input init_SRAM_sign, init_SRAM_clk,
+    input [9:0] init_SRAM_addr_10,
+
     // DCache
     input i_DCache_miss_drive, i_DCache_writeBack_drive, i_freeNext_DCache,
     output o_DCache_miss_free, o_DCache_writeBack_free, o_driveNext_DCache,
@@ -254,7 +257,8 @@ module L2Cache(
 
     assign w_mutex0_free_arb1 = o_driveNext_DCache;
     assign o_ICache_miss_free = o_driveNext_ICache;
-    assign w_arb1_free_mutex1 = (o_driveNext_DCache | o_driveNext_ICache);  // ���ɹ���L1Cache�������� ��free arb
+    //assign w_arb1_free_mutex1 = (o_driveNext_DCache | o_driveNext_ICache);  // ���ɹ���L1Cache�������� ��free arb
+    assign w_arb1_free_mutex1 = (i_freeNext_DCache | i_freeNext_ICache); 
     assign o_DDR_free = w_cfifo2_drive_selector2 & ( r_case_number_4[2] | r_case_number_4[3] );
 
 // mutex1
@@ -562,14 +566,23 @@ module L2Cache(
     wire [18:0] w_withInit_tagDina;
     wire [1:0] w_withInit_dvDina; // 高d 低v
 
-    assign w_withInit_tagClk = init_sign ? init_clk : w_cfifo1_fire_2[1];
-    assign w_withInit_dvClk = init_sign ? init_clk : (w_cfifo1_fire_2[1] | w_selector2_fire);
-    assign w_withInit_tagWea = init_sign ? init_wea : w_read_or_write_tagSRAM;
-    assign w_withInit_dvWea = init_sign ? init_wea : w_read_or_write_dvSRAM;
-    assign w_withInit_tagAddr_10 = init_sign ? {init_PA_34[14:8], init_PA_34[17:15]} : w_tagSRAM_addr_10;
-    assign w_withInit_dvAddr_10 = init_sign ? {init_PA_34[14:8], init_PA_34[17:15]} : w_dvSRAM_addr_10;
-    assign w_withInit_tagDina = init_sign ? init_PA_34[33:15] : w_tagSRAM_in_19;
-    assign w_withInit_dvDina = init_sign ? 2'b01 : w_dvSRAM_in_2;
+    assign w_withInit_tagClk = init_SRAM_sign ?  init_SRAM_clk:(init_sign ? init_clk : w_cfifo1_fire_2[1]);
+    assign w_withInit_dvClk = init_SRAM_sign ? init_SRAM_clk:(init_sign ? init_clk : (w_cfifo1_fire_2[1] | w_selector2_fire));
+    assign w_withInit_tagWea = init_SRAM_sign ? 1'b1:(init_sign ? init_wea : w_read_or_write_tagSRAM);
+    assign w_withInit_dvWea = init_SRAM_sign ? 1'b1:(init_sign ? init_wea : w_read_or_write_dvSRAM);
+    assign w_withInit_tagAddr_10 = init_SRAM_sign ? init_SRAM_addr_10:(init_sign ? {init_PA_34[14:8], init_PA_34[17:15]} : w_tagSRAM_addr_10);
+    assign w_withInit_dvAddr_10 = init_SRAM_sign ? init_SRAM_addr_10:(init_sign ? {init_PA_34[14:8], init_PA_34[17:15]} : w_dvSRAM_addr_10);
+    assign w_withInit_tagDina = init_SRAM_sign ? 19'd0:(init_sign ? init_PA_34[33:15] : w_tagSRAM_in_19);
+    assign w_withInit_dvDina = init_SRAM_sign ? 2'd0:(init_sign ? 2'b01 : w_dvSRAM_in_2);
+
+    wire w_withinit_plruClk, w_withinit_plruWea;
+    wire [6:0] w_withinit_plruAddr_7;
+    wire [6:0] w_withinit_plruDina;
+
+    assign w_withinit_plruClk = init_SRAM_sign ? init_SRAM_clk : (w_cfifo1_fire_2[1] | w_selector2_fire);
+    assign w_withinit_plruWea = init_SRAM_sign ? 1'b1 : w_read_or_write_plruSRAM;
+    assign w_withinit_plruAddr_7 = init_SRAM_sign ? init_SRAM_addr_10[6:0] : w_plruSRAM_addr_7;
+    assign w_withinit_plruDina = init_SRAM_sign ?  7'd0:w_plruSRAM_in_7;
 
     // tagSRAM ģ��
     L2Cache_tagSRAM u_L2Cache_tagSRAM (
@@ -596,11 +609,11 @@ module L2Cache(
 
     // plruSRAM ģ��
     L2Cache_plruSRAM u_L2Cache_plruSRAM (
-        .clka   (w_cfifo1_fire_2[1] | w_selector2_fire), 
+        .clka   (w_withinit_plruClk), 
         .ena    (1'b1),      
-        .wea    (w_read_or_write_plruSRAM),     
-        .addra  (w_plruSRAM_addr_7),  
-        .dina   (w_plruSRAM_in_7),   
+        .wea    (w_withinit_plruWea),     
+        .addra  (w_withinit_plruAddr_7),  
+        .dina   (w_withinit_plruDina),   
         .douta  (w_plruSRAM_out_7)
     );
 
@@ -1227,10 +1240,10 @@ module L2Cache(
     wire [9:0] w_withInit_dataAddr_10;
     wire [255:0] w_withInit_dataDina_256;
     
-    assign w_withInit_dataClk = init_sign ? init_clk : w_cfifo2_fire;
-    assign w_withInit_dataWea = init_sign ? init_wea : r_read_or_write_dataSRAM;
-    assign w_withInit_dataAddr_10 = init_sign ? {init_PA_34[14:8], init_PA_34[17:15]} : r_dataSRAM_addr_10;
-    assign w_withInit_dataDina_256 = init_sign ? init_datain_256 : w_dataSRAM_in_32B;
+    assign w_withInit_dataClk = init_SRAM_sign ? init_SRAM_clk:(init_sign ? init_clk : w_cfifo2_fire);
+    assign w_withInit_dataWea = init_SRAM_sign ? 1'b1: (init_sign ? init_wea : r_read_or_write_dataSRAM);
+    assign w_withInit_dataAddr_10 = init_SRAM_sign ? init_SRAM_addr_10:(init_sign ? {init_PA_34[14:8], init_PA_34[17:15]} : r_dataSRAM_addr_10);
+    assign w_withInit_dataDina_256 = init_SRAM_sign ? 256'd0:(init_sign ? init_datain_256 : w_dataSRAM_in_32B);
 
     // fire
     L2Cache_dataSRAM u_L2Cache_dataSRAM (

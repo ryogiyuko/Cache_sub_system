@@ -23,6 +23,10 @@
 module Dcache(
     input rstn,
 
+    //init sram
+    input init_SRAM_sign, init_SRAM_clk,
+    input [9:0] init_SRAM_addr_10,
+
     //LSU
     input i_lsu_drive,  i_freeNext_lsu,
     output o_lsu_free, o_driveNext_lsu,
@@ -362,39 +366,65 @@ module Dcache(
 
     assign w_tagSRAM_datain_22 = r_dcache_PA_34[33:12];
 
+    //init sram
+    wire w_withInit_data0Clk, w_withInit_data1Clk, w_withInit_tagClk;
+    wire w_withInit_data0Wea, w_withInit_data1Wea, w_withInit_tagWea;
+    wire [8:0] w_withInit_dataAddr_9;
+    wire [7:0] w_withInit_tagAddr_8;
+    wire [63:0] w_withInit_data0Dina, w_withInit_data1Dina;
+    wire [21:0] w_withInit_tagDina;
+
+    wire [3:0] w_withInit_storeType;
+    assign w_withInit_storeType = init_SRAM_sign ? 4'b1111 : i_store_Type_4;
+
+    assign w_withInit_data0Clk = init_SRAM_sign ? init_SRAM_clk : w_pmtfifo1_fire_2[1];
+    assign w_withInit_data0Wea = init_SRAM_sign ? 1'b1 : w_dataSRAM0_write_enable;
+    assign w_withInit_dataAddr_9 = init_SRAM_sign ? init_SRAM_addr_10[8:0] : w_Data_SRAM_addr_9;
+    assign w_withInit_data0Dina = init_SRAM_sign ? 64'd0 : w_dataSRAM0_datain_64;
+
+    assign w_withInit_data1Clk = init_SRAM_sign ? init_SRAM_clk : w_pmtfifo1_fire_2[1];
+    assign w_withInit_data1Wea = init_SRAM_sign ? 1'b1 : w_dataSRAM1_write_enable;
+    //assign w_withInit_dataAddr_9 = init_SRAM_sign ? init_SRAM_addr_10[8:0] : w_Data_SRAM_addr_9;
+    assign w_withInit_data1Dina = init_SRAM_sign ? 64'd0 : w_dataSRAM1_datain_64;
+
+    assign w_withInit_tagClk = init_SRAM_sign ? init_SRAM_clk : w_pmtfifo1_fire_2[1];
+    assign w_withInit_tagWea = init_SRAM_sign ? 1'b1 : w_tagSRAM_write_enable;
+    assign w_withInit_tagAddr_8 = init_SRAM_sign ? init_SRAM_addr_10[7:0] : w_tag_D_V_addr_8;
+    assign w_withInit_tagDina = init_SRAM_sign ? 22'd0 : w_tagSRAM_datain_22;
+
     //fire1     
 
     //low 16B
     Dcache_bank_dataSram0 u_Dcache_bank_dataSram0 (
-    .clka(w_pmtfifo1_fire_2[1]),    // input wire clka
-    .ena(1'b1),      // input wire ena
-    .wea(w_dataSRAM0_write_enable),      // input wire [0 : 0] wea
-    .addra(w_Data_SRAM_addr_9),  // input wire [8 : 0] addra  //Dcache_ram_addr_9 = i_lsu_addr_offset_12[11:7]+write_enable ? 3'b0 : sel_way_3+i_lsu_addr_offset_12[3]
-    .dina(w_dataSRAM0_datain_64),    // input wire [63 : 0] dina
-    .i_store_Type_4          ( i_store_Type_4              ),
-    .w_write_or_writeBack    ( w_write_or_writeBack             ),
-    .douta({w_dataSRAM_out_way7_32B[127:0], w_dataSRAM_out_way6_32B[127:0], w_dataSRAM_out_way5_32B[127:0], w_dataSRAM_out_way4_32B[127:0], w_dataSRAM_out_way3_32B[127:0], w_dataSRAM_out_way2_32B[127:0], w_dataSRAM_out_way1_32B[127:0], w_dataSRAM_out_way0_32B[127:0]})  // output wire [1023 : 0] douta
+        .clka(w_withInit_data0Clk),    // input wire clka
+        .ena(1'b1),      // input wire ena
+        .wea(w_withInit_data0Wea),      // input wire [0 : 0] wea
+        .addra(w_withInit_dataAddr_9),  // input wire [8 : 0] addra  //Dcache_ram_addr_9 = i_lsu_addr_offset_12[11:7]+write_enable ? 3'b0 : sel_way_3+i_lsu_addr_offset_12[3]
+        .dina(w_withInit_data0Dina),    // input wire [63 : 0] dina
+        .i_store_Type_4          ( w_withInit_storeType              ),
+        .w_write_or_writeBack    ( w_write_or_writeBack             ),
+        .douta({w_dataSRAM_out_way7_32B[127:0], w_dataSRAM_out_way6_32B[127:0], w_dataSRAM_out_way5_32B[127:0], w_dataSRAM_out_way4_32B[127:0], w_dataSRAM_out_way3_32B[127:0], w_dataSRAM_out_way2_32B[127:0], w_dataSRAM_out_way1_32B[127:0], w_dataSRAM_out_way0_32B[127:0]})  // output wire [1023 : 0] douta
     );
 
     //high 16B
     Dcache_bank_dataSram0 u_Dcache_bank_dataSram1 (
-    .clka(w_pmtfifo1_fire_2[1]),    // input wire clka
-    .ena(1'b1),      // input wire ena
-    .wea(w_dataSRAM1_write_enable),      // input wire [0 : 0] wea
-    .addra(w_Data_SRAM_addr_9),  // input wire [8 : 0] addra
-    .dina(w_dataSRAM1_datain_64),    // input wire [63 : 0] dina
-    .i_store_Type_4          ( i_store_Type_4              ),
-    .w_write_or_writeBack    ( w_write_or_writeBack             ),
-    .douta({w_dataSRAM_out_way7_32B[255:128], w_dataSRAM_out_way6_32B[255:128], w_dataSRAM_out_way5_32B[255:128], w_dataSRAM_out_way4_32B[255:128], w_dataSRAM_out_way3_32B[255:128], w_dataSRAM_out_way2_32B[255:128], w_dataSRAM_out_way1_32B[255:128], w_dataSRAM_out_way0_32B[255:128]})  // output wire [1023 : 0] douta
+        .clka(w_withInit_data1Clk),    // input wire clka
+        .ena(1'b1),      // input wire ena
+        .wea(w_withInit_data1Wea),      // input wire [0 : 0] wea
+        .addra(w_withInit_dataAddr_9),  // input wire [8 : 0] addra
+        .dina(w_withInit_data1Dina),    // input wire [63 : 0] dina
+        .i_store_Type_4          ( w_withInit_storeType              ),
+        .w_write_or_writeBack    ( w_write_or_writeBack             ),
+        .douta({w_dataSRAM_out_way7_32B[255:128], w_dataSRAM_out_way6_32B[255:128], w_dataSRAM_out_way5_32B[255:128], w_dataSRAM_out_way4_32B[255:128], w_dataSRAM_out_way3_32B[255:128], w_dataSRAM_out_way2_32B[255:128], w_dataSRAM_out_way1_32B[255:128], w_dataSRAM_out_way0_32B[255:128]})  // output wire [1023 : 0] douta
     );
 
     Dcache_bank_tagSRAM u_Dcache_bank_tagSRAM (
-  .clka(w_pmtfifo1_fire_2[1]),    // input wire clka
-  .ena(1'b1),      // input wire ena
-  .wea(w_tagSRAM_write_enable),      // input wire [0 : 0] wea
-  .addra(w_tag_D_V_addr_8),  // input wire [7 : 0] addra
-  .dina(w_tagSRAM_datain_22),    // input wire [21 : 0] dina
-  .douta({w_tagSRAM_out_way7_22, w_tagSRAM_out_way6_22, w_tagSRAM_out_way5_22, w_tagSRAM_out_way4_22, w_tagSRAM_out_way3_22, w_tagSRAM_out_way2_22, w_tagSRAM_out_way1_22, w_tagSRAM_out_way0_22})  // output wire [175 : 0] douta
+        .clka(w_withInit_tagClk),    // input wire clka
+        .ena(1'b1),      // input wire ena
+        .wea(w_withInit_tagWea),      // input wire [0 : 0] wea
+        .addra(w_withInit_tagAddr_8),  // input wire [7 : 0] addra
+        .dina(w_withInit_tagDina),    // input wire [21 : 0] dina
+        .douta({w_tagSRAM_out_way7_22, w_tagSRAM_out_way6_22, w_tagSRAM_out_way5_22, w_tagSRAM_out_way4_22, w_tagSRAM_out_way3_22, w_tagSRAM_out_way2_22, w_tagSRAM_out_way1_22, w_tagSRAM_out_way0_22})  // output wire [175 : 0] douta
     );
     
 

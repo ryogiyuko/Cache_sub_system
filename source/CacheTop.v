@@ -90,6 +90,47 @@ module CacheTop(
 
     );
 
+//init_SRAM
+    reg [9:0] init_SRAM_count_10;//计数器
+    reg r_init_already; //1为完成，0为未完成
+    wire  init_SRAM_update_clk; //地址更新
+
+    //给到子模块的信息
+    wire init_SRAM_sign, init_SRAM_clk;
+    reg [9:0] init_SRAM_addr_10;
+    
+    assign init_SRAM_sign = init_sign & (~r_init_already); //初始化SRAM的信号
+    assign init_SRAM_clk = init_sign & init_clk;    //初始化sram的时钟
+    assign init_SRAM_update_clk = ~init_SRAM_clk; 
+
+
+    always @(posedge init_SRAM_clk or negedge rstn) begin
+        if (rstn==0) begin
+            init_SRAM_count_10 <= 10'b0;
+            r_init_already <= 1'b0;
+        end
+        else begin
+            if (init_SRAM_addr_10 == 10'd1023) begin
+                init_SRAM_count_10 <= init_SRAM_addr_10;
+                r_init_already <= 1'b1;
+            end
+            else begin
+                init_SRAM_count_10 <= init_SRAM_addr_10+1'b1;
+                r_init_already <= 1'b0; 
+            end
+        end  
+    end
+
+    always @(posedge init_SRAM_update_clk or negedge rstn) begin
+        if (rstn==0) begin
+            init_SRAM_addr_10 <= 10'b0;
+        end
+        else begin
+            init_SRAM_addr_10 <= init_SRAM_count_10;
+        end  
+    end
+
+
 //mutex to retire
     wire w_freeNext0_retire_load, w_freeNext1_retire_load, w_freeNext2_retire_load, w_freeNext3_retire_load;
     wire w_driveNext0_retire_load, w_driveNext1_retire_load, w_driveNext2_retire_load, w_driveNext3_retire_load;
@@ -463,6 +504,10 @@ module CacheTop(
     Icache u_Icache_bank0(
         .rstn                          (rstn                          ),
 
+        .init_SRAM_sign               (init_SRAM_sign               ),
+        .init_SRAM_clk                (init_SRAM_clk                ),
+        .init_SRAM_addr_10            (init_SRAM_addr_10            ),
+
         .i_Itlb_drive                 ( i_ifu_drive0                ),
         .o_Itlb_free                  ( o_ifu_free0                 ),
         .i_Itlb_PA_34                 (  i_ifu_PA0_34               ),
@@ -487,6 +532,11 @@ module CacheTop(
 
     Dcache u_Dcache_bank0(
         .rstn                      (rstn                      ),
+        
+        .init_SRAM_sign                (init_SRAM_sign                ),
+        .init_SRAM_clk                 (init_SRAM_clk                 ),
+        .init_SRAM_addr_10             (init_SRAM_addr_10             ),
+
         .i_lsu_drive              (i_lsu_drive0_cache              ),.i_freeNext_lsu           (i_freeNext0_lsu           ),
         .o_lsu_free               (               ),.o_driveNext_lsu          (w_driveNext0_lsu          ),//store????????retire???
         
@@ -591,6 +641,10 @@ module CacheTop(
     Icache u_Icache_bank1(
         .rstn                          (rstn                          ),
 
+        .init_SRAM_sign               (init_SRAM_sign               ),
+        .init_SRAM_clk                (init_SRAM_clk                ),
+        .init_SRAM_addr_10            (init_SRAM_addr_10            ),
+
         .i_Itlb_drive                 ( i_ifu_drive1                ),
         .o_Itlb_free                  ( o_ifu_free1                 ),
         .i_Itlb_PA_34                 (  i_ifu_PA1_34               ),
@@ -615,6 +669,11 @@ module CacheTop(
 
     Dcache u_Dcache_bank1(
         .rstn                      (rstn                      ),
+
+        .init_SRAM_sign                (init_SRAM_sign                ),
+        .init_SRAM_clk                 (init_SRAM_clk                 ),
+        .init_SRAM_addr_10             (init_SRAM_addr_10             ),
+
         .i_lsu_drive              (i_lsu_drive1_cache              ),.i_freeNext_lsu           (i_freeNext1_lsu           ),
         .o_lsu_free               (               ),.o_driveNext_lsu          (w_driveNext1_lsu          ),//store成功时给
         
@@ -719,6 +778,10 @@ module CacheTop(
     Icache u_Icache_bank2(
         .rstn                          (rstn                          ),
 
+        .init_SRAM_sign               (init_SRAM_sign               ),
+        .init_SRAM_clk                (init_SRAM_clk                ),
+        .init_SRAM_addr_10            (init_SRAM_addr_10            ),
+        
         .i_Itlb_drive                 ( i_ifu_drive2                ),
         .o_Itlb_free                  ( o_ifu_free2                 ),
         .i_Itlb_PA_34                 (  i_ifu_PA2_34               ),
@@ -742,6 +805,11 @@ module CacheTop(
 
     Dcache u_Dcache_bank2(
         .rstn                      (rstn                      ),
+
+        .init_SRAM_sign                (init_SRAM_sign                ),
+        .init_SRAM_clk                 (init_SRAM_clk                 ),
+        .init_SRAM_addr_10             (init_SRAM_addr_10             ),
+
         .i_lsu_drive              (i_lsu_drive2_cache              ),.i_freeNext_lsu           (i_freeNext2_lsu           ),
         .o_lsu_free               (               ),.o_driveNext_lsu          (w_driveNext2_lsu          ),//store成功时给
         
@@ -846,6 +914,10 @@ module CacheTop(
     Icache u_Icache_bank3(
         .rstn                          (rstn                          ),
 
+        .init_SRAM_sign               (init_SRAM_sign               ),
+        .init_SRAM_clk                (init_SRAM_clk                ),
+        .init_SRAM_addr_10            (init_SRAM_addr_10            ),
+
         .i_Itlb_drive                 ( i_ifu_drive3                ),
         .o_Itlb_free                  ( o_ifu_free3                 ),
         .i_Itlb_PA_34                 (  i_ifu_PA3_34               ),
@@ -869,6 +941,11 @@ module CacheTop(
 
     Dcache u_Dcache_bank3(
         .rstn                      (rstn                      ),
+
+        .init_SRAM_sign                (init_SRAM_sign                ),
+        .init_SRAM_clk                 (init_SRAM_clk                 ),
+        .init_SRAM_addr_10             (init_SRAM_addr_10             ),
+        
         .i_lsu_drive              (i_lsu_drive3_cache              ),.i_freeNext_lsu           (i_freeNext3_lsu           ),
         .o_lsu_free               (               ),.o_driveNext_lsu          (w_driveNext3_lsu          ),//store成功时给
         
@@ -979,6 +1056,10 @@ module CacheTop(
         .init_PA_34                       ( init_PA_34                        ),
         .init_datain_256                  ( init_datain_256                   ),
 
+        .init_SRAM_sign                  (init_SRAM_sign                  ),
+        .init_SRAM_clk                   (init_SRAM_clk                   ),
+        .init_SRAM_addr_10               (init_SRAM_addr_10               ),
+
         .i_DCache_miss_drive             ( w_DcacheBank0_miss_selector_drive_L2Bank0 ),.i_DCache_writeBack_drive( w_DcacheBank0_writeBack_selector_drive_L2Bank0  ),.i_freeNext_DCache    ( w_L2Bank0_free_DcacheBank0    ),
         .o_DCache_miss_free              ( w_DcacheBank0_miss_selector_free_L2Bank0  ),.o_DCache_writeBack_free ( w_DcacheBank0_writeBack_selector_free_L2Bank0  ),.o_driveNext_DCache   ( w_L2Bank0_drive_DcacheBank0   ),
         
@@ -1053,6 +1134,10 @@ module CacheTop(
         .init_wea                         ( init_wea                                 ),
         .init_PA_34                       ( init_PA_34                        ),
         .init_datain_256                  ( init_datain_256                   ),
+
+        .init_SRAM_sign                  (init_SRAM_sign                  ),
+        .init_SRAM_clk                   (init_SRAM_clk                   ),
+        .init_SRAM_addr_10               (init_SRAM_addr_10               ),
 
         .i_DCache_miss_drive             ( w_DcacheBank0_miss_selector_drive_L2Bank1 ),.i_DCache_writeBack_drive        ( w_DcacheBank0_writeBack_selector_drive_L2Bank1       ),.i_freeNext_DCache   ( w_L2Bank1_free_DcacheBank0   ),
         .o_DCache_miss_free              ( w_DcacheBank0_miss_selector_free_L2Bank1  ),.o_DCache_writeBack_free         ( w_DcacheBank0_writeBack_selector_free_L2Bank1        ),.o_driveNext_DCache  ( w_L2Bank1_drive_DcacheBank0  ),
@@ -1129,6 +1214,10 @@ module CacheTop(
         .init_PA_34                       ( init_PA_34                        ),
         .init_datain_256                  ( init_datain_256                   ),
 
+        .init_SRAM_sign                  (init_SRAM_sign                  ),
+        .init_SRAM_clk                   (init_SRAM_clk                   ),
+        .init_SRAM_addr_10               (init_SRAM_addr_10               ),
+
         .i_DCache_miss_drive             ( w_DcacheBank1_miss_selector_drive_L2Bank2 ),.i_DCache_writeBack_drive( w_DcacheBank1_writeBack_selector_drive_L2Bank2  ),.i_freeNext_DCache    ( w_L2Bank2_free_DcacheBank1    ),
         .o_DCache_miss_free              ( w_DcacheBank1_miss_selector_free_L2Bank2  ),.o_DCache_writeBack_free ( w_DcacheBank1_writeBack_selector_free_L2Bank2  ),.o_driveNext_DCache   ( w_L2Bank2_drive_DcacheBank1   ),
         
@@ -1203,6 +1292,10 @@ module CacheTop(
         .init_wea                         ( init_wea                                 ),
         .init_PA_34                       ( init_PA_34                        ),
         .init_datain_256                  ( init_datain_256                   ),
+
+        .init_SRAM_sign                  (init_SRAM_sign                  ),
+        .init_SRAM_clk                   (init_SRAM_clk                   ),
+        .init_SRAM_addr_10               (init_SRAM_addr_10               ),
 
         .i_DCache_miss_drive             ( w_DcacheBank1_miss_selector_drive_L2Bank3 ),.i_DCache_writeBack_drive        ( w_DcacheBank1_writeBack_selector_drive_L2Bank3       ),.i_freeNext_DCache   ( w_L2Bank3_free_DcacheBank1   ),
         .o_DCache_miss_free              ( w_DcacheBank1_miss_selector_free_L2Bank3  ),.o_DCache_writeBack_free         ( w_DcacheBank1_writeBack_selector_free_L2Bank3        ),.o_driveNext_DCache  ( w_L2Bank3_drive_DcacheBank1  ),
@@ -1279,6 +1372,10 @@ module CacheTop(
         .init_PA_34                       ( init_PA_34                        ),
         .init_datain_256                  ( init_datain_256                   ),
 
+        .init_SRAM_sign                  (init_SRAM_sign                  ),
+        .init_SRAM_clk                   (init_SRAM_clk                   ),
+        .init_SRAM_addr_10               (init_SRAM_addr_10               ),
+
         .i_DCache_miss_drive             ( w_DcacheBank2_miss_selector_drive_L2Bank4 ),.i_DCache_writeBack_drive( w_DcacheBank2_writeBack_selector_drive_L2Bank4  ),.i_freeNext_DCache    ( w_L2Bank4_free_DcacheBank2    ),
         .o_DCache_miss_free              ( w_DcacheBank2_miss_selector_free_L2Bank4  ),.o_DCache_writeBack_free ( w_DcacheBank2_writeBack_selector_free_L2Bank4  ),.o_driveNext_DCache   ( w_L2Bank4_drive_DcacheBank2   ),
         
@@ -1353,6 +1450,10 @@ module CacheTop(
         .init_wea                         ( init_wea                                 ),
         .init_PA_34                       ( init_PA_34                        ),
         .init_datain_256                  ( init_datain_256                   ),
+
+        .init_SRAM_sign                  (init_SRAM_sign                  ),
+        .init_SRAM_clk                   (init_SRAM_clk                   ),
+        .init_SRAM_addr_10               (init_SRAM_addr_10               ),
 
         .i_DCache_miss_drive             ( w_DcacheBank2_miss_selector_drive_L2Bank5 ),.i_DCache_writeBack_drive        ( w_DcacheBank2_writeBack_selector_drive_L2Bank5       ),.i_freeNext_DCache   ( w_L2Bank5_free_DcacheBank2   ),
         .o_DCache_miss_free              ( w_DcacheBank2_miss_selector_free_L2Bank5  ),.o_DCache_writeBack_free         ( w_DcacheBank2_writeBack_selector_free_L2Bank5        ),.o_driveNext_DCache  ( w_L2Bank5_drive_DcacheBank2  ),
@@ -1429,6 +1530,10 @@ module CacheTop(
         .init_PA_34                       ( init_PA_34                        ),
         .init_datain_256                  ( init_datain_256                   ),
 
+        .init_SRAM_sign                  (init_SRAM_sign                  ),
+        .init_SRAM_clk                   (init_SRAM_clk                   ),
+        .init_SRAM_addr_10               (init_SRAM_addr_10               ),
+
         .i_DCache_miss_drive             ( w_DcacheBank3_miss_selector_drive_L2Bank6 ),.i_DCache_writeBack_drive( w_DcacheBank3_writeBack_selector_drive_L2Bank6  ),.i_freeNext_DCache    ( w_L2Bank6_free_DcacheBank3    ),
         .o_DCache_miss_free              ( w_DcacheBank3_miss_selector_free_L2Bank6  ),.o_DCache_writeBack_free ( w_DcacheBank3_writeBack_selector_free_L2Bank6  ),.o_driveNext_DCache   ( w_L2Bank6_drive_DcacheBank3   ),
         
@@ -1502,6 +1607,10 @@ module CacheTop(
         .init_wea                         ( init_wea                                 ),
         .init_PA_34                       ( init_PA_34                        ),
         .init_datain_256                  ( init_datain_256                   ),
+
+        .init_SRAM_sign                  (init_SRAM_sign                  ),
+        .init_SRAM_clk                   (init_SRAM_clk                   ),
+        .init_SRAM_addr_10               (init_SRAM_addr_10               ),
 
         .i_DCache_miss_drive             ( w_DcacheBank3_miss_selector_drive_L2Bank7 ),.i_DCache_writeBack_drive        ( w_DcacheBank3_writeBack_selector_drive_L2Bank7       ),.i_freeNext_DCache   ( w_L2Bank7_free_DcacheBank3   ),
         .o_DCache_miss_free              ( w_DcacheBank3_miss_selector_free_L2Bank7  ),.o_DCache_writeBack_free         ( w_DcacheBank3_writeBack_selector_free_L2Bank7        ),.o_driveNext_DCache  ( w_L2Bank7_drive_DcacheBank3  ),

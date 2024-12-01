@@ -25,6 +25,10 @@
 module Icache(
     input rstn,
 
+    //init sram
+    input init_SRAM_sign, init_SRAM_clk,
+    input [9:0] init_SRAM_addr_10,
+
     //MMU  ʵ���ϸ�Ϊifu��������ٷ���
     input i_Itlb_drive,
     output o_Itlb_free, //��Dcache��ͬ����ҳ������Ҫ��Icache���ڰ�ָ���ifuǰ��������һ�����룬���ÿ�ס
@@ -178,13 +182,23 @@ module Icache(
 
     assign w_fifo_replace = r_fifo_buffer_data_out;//��Selector1���ֵ�����������ַ
 
+    //init_sram
+    wire w_withInit_clk, w_withInit_wea;
+    wire [7:0] w_withInit_addr_8;
+    wire [276:0] w_withInit_dina;
+
+    assign w_withInit_clk = init_SRAM_sign ? init_SRAM_clk : w_cFifo2_fire_2[1];
+    assign w_withInit_wea = init_SRAM_sign ? 1'b1 : r_write_enable;
+    assign w_withInit_addr_8 = init_SRAM_sign ? init_SRAM_addr_10[7:0] : w_Icache_SRAM_addr_8;
+    assign w_withInit_dina = init_SRAM_sign ? 277'd0 : { i_L2Cache_refillLine_32B, w_Icache_addr_tag_20, 1'b1 }; 
+
     //fire1
     Icache_SRAM_bank u_Icache_SRAM_bank (
-  .clka(w_cFifo2_fire_2[1]),    // input wire clka
+  .clka(w_withInit_clk),    // input wire clka
   .ena(1'b1),      // input wire ena
-  .wea(o_write_enable),      // input wire [0 : 0] wea
-  .addra(w_Icache_SRAM_addr_8),  // input wire [7 : 0] addra
-  .dina({ i_L2Cache_refillLine_32B, w_Icache_addr_tag_20, 1'b1 }),    // input wire [276 : 0] dina
+  .wea(w_withInit_wea),      // input wire [0 : 0] wea
+  .addra(w_withInit_addr_8),  // input wire [7 : 0] addra
+  .dina(w_withInit_dina),    // input wire [276 : 0] dina
   .douta(Icache_SRAM_data_out_554)  // output wire [553 : 0] douta
 );
     //Icache�������ʱ���üĴ����棬�����洢�����ļĴ���
